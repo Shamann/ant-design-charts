@@ -40,12 +40,6 @@ export default defineConfig({
     ga: 'UA-72788897-12',
   },
   menus: {
-    '/zh-CN/demos': [
-      {
-        title: '面积图',
-        path: '/zh-CN/demos/area',
-      },
-    ],
     '/demos': [
       {
         title: 'Area',

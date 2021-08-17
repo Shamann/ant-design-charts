@@ -34,6 +34,8 @@
     "test:coverage": "umi-test --coverage"
   },
   "dependencies": {
+    "@ali/xflow-core": "0.0.1-beta.0.12-13",
+    "@ali/xflow-extension": "0.0.1-beta.0.12-13",
     "@antv/x6": "^1.25.0"
   },
   "peerDependencies": {
