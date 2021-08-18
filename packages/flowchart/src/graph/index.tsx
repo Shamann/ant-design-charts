@@ -11,19 +11,21 @@ import {
   WorkspacePanel,
   NodeTreePanel,
 } from '@ali/xflow-extension';
+import { useGraphConfig } from './graph';
 
-import { useToolbarConfigInstance } from '../components/toolbar';
 import { useMenuConfig } from '../components/menu';
 
 import { FlowchartConfig } from '../interface';
 
+export { WorkspacePanel };
+
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { onReady, render, className = 'user-custom-clz' } = props;
+  const { onReady, render, className, contextServiceConfig, commandConfig, graphPlugins } = props;
   const graphConfig = useGraphConfig();
   const menuConfig = useMenuConfig();
 
   return (
-    <XFlow className={className} onAppReadyCallback={onReady}>
+    <XFlow className={className} graphPluginConfig={graphPlugins} onAppReadyCallback={onReady}>
       <XFlowCanvas config={graphConfig} position={{ top: 40, left: 290, right: 290, bottom: 40 }}>
         <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
         <ContextMenuPanel config={menuConfig} />

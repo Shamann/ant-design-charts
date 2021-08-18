@@ -1,4 +1,4 @@
 // X6
-import { X6Graph } from './flowChart';
+import Flowchart, { WorkspacePanel } from './graph';
 
-export { X6Graph };
+export { Flowchart, WorkspacePanel };

@@ -5,6 +5,7 @@ import {
   IAppReadyCallback,
   GraphConfig,
   IConfigReadyCallback,
+  ContextServiceConfig,
 } from '@ali/xflow-core';
 
 import { GraphPluginConfig } from '@ali/xflow-core/es/graph-plugin-module/config';
