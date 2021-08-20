@@ -9,9 +9,10 @@ import {
   INodeConfig,
 } from '@ali/xflow-core';
 import { Edge } from '@antv/x6';
+import { CUSTOMNODE } from '../components/nodePanel';
 /** 自定义React节点 */
 
-// import { DndNode } from './react-node/dnd-node';
+import { DndNode } from '../components/nodes/rect';
 // import { DND_RENDER_ID } from './constant';
 
 export namespace NsAddEdgeEvent {
@@ -30,6 +31,7 @@ export const useGraphConfig = createGraphConfig((config) => {
   config.setNodeTypeParser((node: INodeConfig) => node?.renderKey);
   config.setEdgeTypeParser((edge: INodeConfig) => edge?.renderKey);
   // config.setNodeRender(DND_RENDER_ID, DndNode);
+  config.setEdgeRender(CUSTOMNODE, DndNode);
   config.setX6Config({
     grid: true,
     connecting: {

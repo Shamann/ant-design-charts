@@ -22,13 +22,4 @@
  * ```
  */
 
-import React from 'react';
-import { usePanelContext } from '@ali/xflow-extension';
-
-interface IProps {}
-
-export const NodePanel: React.FC<IProps> = () => {
-  const context = usePanelContext();
-  console.log(context);
-  return <div>Node pool</div>;
-};
+export const CUSTOMNODE = 'customNode';
