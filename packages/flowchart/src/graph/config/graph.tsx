@@ -1,4 +1,6 @@
 import React from 'react';
+import { ConfigProvider, Tooltip } from 'antd';
+import { TooltipPlacement } from 'antd/es/tooltip';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import {
@@ -6,14 +8,17 @@ import {
   EDGE_PATH_TYPE,
   NsGraph,
   XFlowEdge,
-  INodeConfig,
+  DisposableCollection,
+  createHookConfig,
 } from '@ali/xflow-core';
 import { Edge } from '@antv/x6';
-import { CUSTOMNODE } from '../components/nodePanel';
+import { IEvent } from '@ali/xflow-core/es/hooks/interface';
+import { RECT_NODE, DIAMOND_NODE, RectNode, DiamondNode } from '../../components/nodePanel';
+import { Edge1 } from '../../components/edgePanel';
+
 /** 自定义React节点 */
 
-import { DndNode } from '../components/nodes/rect';
-// import { DND_RENDER_ID } from './constant';
+const ANT_PREFIX = 'ant';
 
 export namespace NsAddEdgeEvent {
   export const EVENT_NAME = 'ADD_EDGE_CMD_EVENT';
@@ -26,12 +31,28 @@ export namespace NsAddEdgeEvent {
   }
 }
 
+export const useGraphHook = createHookConfig((config) => {
+  config.setRegisterHook((hooks) => {
+    const todo = new DisposableCollection();
+    const d = hooks.afterGraphInit.registerHook({
+      name: 'your biz logic',
+      handler: async (args) => {
+        const { graph, commands, contextService } = args;
+        // 可以绑定事件
+      },
+    });
+    todo.push(d);
+    return todo;
+  });
+});
+
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config) => {
-  config.setNodeTypeParser((node: INodeConfig) => node?.renderKey);
-  config.setEdgeTypeParser((edge: INodeConfig) => edge?.renderKey);
-  // config.setNodeRender(DND_RENDER_ID, DndNode);
-  config.setEdgeRender(CUSTOMNODE, DndNode);
+  config.setNodeTypeParser((node) => node?.renderKey);
+  config.setEdgeTypeParser((edge) => edge?.renderKey);
+  config.setEdgeRender('EDGE1', Edge1);
+  config.setNodeRender(RECT_NODE, RectNode);
+  config.setNodeRender(DIAMOND_NODE, DiamondNode);
   config.setX6Config({
     grid: true,
     connecting: {
@@ -73,7 +94,7 @@ export const useGraphConfig = createGraphConfig((config) => {
             const portId = edge.getTargetPortId();
             const targetNode = edge.getTargetCell();
             if (targetNode && targetNode.isNode()) {
-              targetNode.setPortProp(portId, 'connected', true);
+              targetNode.setPortProp(portId, 'connected', false);
               edge.attr({
                 line: {
                   strokeDasharray: '',
@@ -152,10 +173,30 @@ export const useGraphConfig = createGraphConfig((config) => {
       const { port } = args;
       const { contentSelectors } = args;
       const container = contentSelectors && contentSelectors.content;
+      const placement = port.group as TooltipPlacement;
       const clz = classnames('xflow-port', { connected: (port as any).connected });
       if (container) {
-        ReactDOM.render((<span className={clz} />) as React.ReactElement, container as HTMLElement);
+        ReactDOM.render(
+          (
+            <ConfigProvider prefixCls={ANT_PREFIX}>
+              <Tooltip title={(port as any).tooltip} placement={placement}>
+                <span className={clz} />
+              </Tooltip>
+            </ConfigProvider>
+          ) as React.ReactElement,
+          container as HTMLElement,
+        );
       }
     },
   });
+  config.setEvents([
+    {
+      eventName: 'node:click',
+      callback: (e, cmds, ctx) => {
+        console.log('click');
+
+        // 可以绑定事件
+      },
+    } as IEvent<'node:click'>,
+  ]);
 });

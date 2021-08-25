@@ -1,4 +1,11 @@
 // X6
-import Flowchart, { WorkspacePanel, XFlowNodeCommands } from './graph';
+import Flowchart, {
+  WorkspacePanel,
+  XFlowNodeCommands,
+  XFlowGraphCommands,
+  usePanelContext,
+} from './graph';
+export { Flowchart, WorkspacePanel, XFlowNodeCommands, XFlowGraphCommands, usePanelContext };
 
-export { Flowchart, WorkspacePanel, XFlowNodeCommands };
+// import Demo from './copy/basic';
+// export { Demo };

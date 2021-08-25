@@ -15,7 +15,7 @@ export const ToolbarPanel: React.FC<IProps> = (props) => {
     config,
     layout = 'horizontal',
     position = { top: 0, left: 290, right: 290, bottom: 0 },
-    className = 'xflow-workspace-toolbar-top',
+    className,
     style,
   } = props;
   const toolbarConfig = config instanceof Array ? useToolbarConfigInstance(config) : config;
