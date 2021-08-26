@@ -37,7 +37,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
   return [
     {
       id: 'rect',
-      label: '自定义节点1',
+      label: 'rect',
       renderKey: RECT_NODE,
       popoverContent: RectNodePopover,
       width: NODE_WIDTH,
@@ -83,7 +83,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
     },
     {
       id: 'diamond',
-      label: '自定义节点2',
+      label: 'diamond',
       renderKey: DIAMOND_NODE,
       popoverContent: DiamondNodePopover,
       width: NODE_WIDTH,

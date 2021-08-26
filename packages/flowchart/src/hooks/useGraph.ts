@@ -2,14 +2,7 @@ import { NsAddNode, NsLoadData, XFlowGraphCommands, XFlowNodeCommands } from '@a
 import { FrontendApplication } from '@ali/xflow-core/es/xflow-main/application';
 import { ExtensionRegistry } from '@ali/xflow-core/es/xflow-main/components/extension-registry';
 import { Datum } from '../interface';
-
-interface IGraph {
-  __proto__: {
-    [key: string]: (params: any) => unknown;
-  };
-  app: FrontendApplication;
-  registry: ExtensionRegistry;
-}
+import { IGraph } from '../interface';
 
 /** 向 app 原型上挂载方法，方便上层调用 */
 export const useGraph = (app: FrontendApplication, registry: ExtensionRegistry) => {

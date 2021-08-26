@@ -4,8 +4,21 @@ import Flowchart, {
   XFlowNodeCommands,
   XFlowGraphCommands,
   usePanelContext,
+  FormItemWrapper,
+  ConfigFormPanel,
+  ContextServiceUtils,
 } from './graph';
-export { Flowchart, WorkspacePanel, XFlowNodeCommands, XFlowGraphCommands, usePanelContext };
+export { ToolbarPanel } from './components/toolbar';
+export {
+  Flowchart,
+  WorkspacePanel,
+  XFlowNodeCommands,
+  XFlowGraphCommands,
+  usePanelContext,
+  FormItemWrapper,
+  ConfigFormPanel,
+  ContextServiceUtils,
+};
 
 // import Demo from './copy/basic';
 // export { Demo };

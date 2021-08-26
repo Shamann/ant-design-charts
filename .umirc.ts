@@ -42,8 +42,8 @@ export default defineConfig({
   menus: {
     '/demos': [
       {
-        title: 'Area',
-        path: '/demos/area',
+        title: 'Flowchart',
+        path: '/demos/flowchart',
       },
     ],
   },

@@ -1,16 +1,9 @@
 import React from 'react';
 import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
-import { IProps } from '@ali/xflow-extension/es/toolbar-panel/components';
-import { useToolbarConfigInstance } from './util';
-import { Command } from '../../interface';
+import { useToolbarConfig } from './util';
+import { ToolbarPanelConfig } from '../../interface';
 
-export type CommandItem = { command: Command; text?: string };
-
-export interface ToolbarPanelConfig extends Omit<IProps, 'config'> {
-  config?: IProps['config'] | Array<CommandItem>;
-}
-
-export const ToolbarPanel: React.FC<IProps> = (props) => {
+export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
   const {
     config,
     layout = 'horizontal',
@@ -18,13 +11,13 @@ export const ToolbarPanel: React.FC<IProps> = (props) => {
     className,
     style,
   } = props;
-  const toolbarConfig = config instanceof Array ? useToolbarConfigInstance(config) : config;
+  const toolbarConfig = config instanceof Array ? useToolbarConfig(config) : config;
   return (
     <XFlowToolbarPanel
       className={className}
       layout={layout}
       config={toolbarConfig}
-      style={{ ...style }}
+      style={{ borderBottom: '1px solid #ccc', ...style }}
       position={position}
     />
   );
