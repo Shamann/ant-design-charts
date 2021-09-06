@@ -61,8 +61,6 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
   const hookConfig = useGraphHook();
   const cmdConfig = useCmdConfig();
 
-  console.log(editorPanelConfig?.onUpdated, '999');
-
   return (
     <XFlow
       className={className}
@@ -76,7 +74,7 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
       meta={meta}
     >
       {toolbarConfig && <ToolbarPanel {...toolbarConfig} />}
-      <DagGraphExtension />
+      {/* <DagGraphExtension /> */}
       <NodeTreePanel
         searchService={searchService}
         treeDataService={treeDataService}

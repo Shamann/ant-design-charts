@@ -11,9 +11,18 @@ import {
   DisposableCollection,
   createHookConfig,
 } from '@ali/xflow-core';
-import { Edge } from '@antv/x6';
+import { Edge, Markup, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
-import { RECT_NODE, DIAMOND_NODE, RectNode, DiamondNode } from '../../components/nodePanel';
+import {
+  RECT_NODE,
+  DIAMOND_NODE,
+  CIRCLE_NODE,
+  PARALLELOGRAM_NODE,
+  RectNode,
+  DiamondNode,
+  CircleNode,
+  ParallelogramNode,
+} from '../../components/nodePanel';
 import { Edge1 } from '../../components/edgePanel';
 
 /** 自定义React节点 */
@@ -53,80 +62,69 @@ export const useGraphConfig = createGraphConfig((config) => {
   config.setEdgeRender('EDGE1', Edge1);
   config.setNodeRender(RECT_NODE, RectNode);
   config.setNodeRender(DIAMOND_NODE, DiamondNode);
+  config.setNodeRender(CIRCLE_NODE, CircleNode);
+  config.setNodeRender(PARALLELOGRAM_NODE, ParallelogramNode);
   config.setX6Config({
     grid: true,
+    onEdgeLabelRendered: (args) => {
+      const { selectors } = args;
+      const content = selectors.foContent as HTMLDivElement;
+      if (content) {
+        const btn = document.createElement('button');
+        btn.appendChild(document.createTextNode('HTML Button'));
+        btn.style.width = '100%';
+        btn.style.height = '100%';
+        btn.style.lineHeight = '1';
+        btn.style.borderRadius = '4px';
+        btn.style.textAlign = 'center';
+        btn.style.color = '#000';
+        btn.style.background = '#ffd591';
+        btn.style.border = '2px solid #ffa940';
+        btn.addEventListener('click', () => {
+          alert('clicked');
+        });
+        content.appendChild(btn);
+      }
+    },
     connecting: {
-      //链接桩的位置 https://x6.antv.vision/zh/docs/api/registry/node-anchor
-      sourceAnchor: 'bottom',
-      //链接桩的位置 https://x6.antv.vision/zh/docs/api/registry/node-anchor
-      targetAnchor: 'center',
-      connectionPoint: 'anchor',
-      snap: { radius: 20 },
-      router: { name: 'manhattan' },
+      router: 'manhattan',
       connector: {
-        name: EDGE_PATH_TYPE.VERTICAL_NODE,
+        name: 'rounded',
         args: {
-          radius: 15,
+          radius: 8,
         },
       },
-      highlight: true,
-      dangling: false,
+      anchor: 'center',
+      connectionPoint: 'anchor',
+      allowBlank: false,
+      snap: {
+        radius: 20,
+      },
       createEdge() {
-        const graph = this;
-        const edge = new XFlowEdge({
+        return new Shape.Edge({
           attrs: {
             line: {
-              strokeDasharray: '5 5',
-              stroke: '#808080',
-              strokeWidth: 1,
+              stroke: '#A2B1C3',
+              strokeWidth: 2,
               targetMarker: {
                 name: 'block',
-                args: {
-                  size: '6',
-                },
+                width: 12,
+                height: 8,
               },
             },
           },
+          zIndex: 0,
         });
-        graph.once('edge:connected', (args) => {
-          const { edge, isNew } = args;
-          if (isNew && edge.isEdge()) {
-            const portId = edge.getTargetPortId();
-            const targetNode = edge.getTargetCell();
-            if (targetNode && targetNode.isNode()) {
-              targetNode.setPortProp(portId, 'connected', false);
-              edge.attr({
-                line: {
-                  strokeDasharray: '',
-                  targetMarker: '',
-                  stroke: '#808080',
-                },
-              });
-              const targetPortId = edge.getTargetPortId();
-              const sourcePortId = edge.getSourcePortId();
-              const sourceCellId = edge.getSourceCellId();
-              const targetCellId = edge.getTargetCellId();
-              graph.trigger(NsAddEdgeEvent.EVENT_NAME, {
-                targetPortId,
-                sourcePortId,
-                source: sourceCellId,
-                target: targetCellId,
-                edge: edge,
-              } as NsAddEdgeEvent.IArgs);
-            }
-          }
-        });
-        return edge;
       },
       validateEdge: (args) => {
         const { edge } = args;
-        console.log(edge?.target);
         return !!(edge?.target as any)?.port;
       },
       // 是否触发交互事件
       validateMagnet({ magnet }) {
-        console.log(magnet.getAttribute('port-group'));
-        return magnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP;
+        // 所有锚点均可触发
+        return true;
+        // return magnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP;
       },
       // 显示可用的链接桩
       validateConnection({ sourceView, targetView, sourceMagnet, targetMagnet }) {
@@ -134,17 +132,17 @@ export const useGraphConfig = createGraphConfig((config) => {
         if (sourceView === targetView) {
           return false;
         }
-        // 只能从上游节点的输出链接桩创建连接
-        if (!sourceMagnet || sourceMagnet.getAttribute('port-group') === NsGraph.AnchorGroup.TOP) {
-          return false;
-        }
-        // 只能连接到下游节点的输入桩
-        if (!targetMagnet || targetMagnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP) {
-          return false;
-        }
+        // // 只能从上游节点的输出链接桩创建连接
+        // if (!sourceMagnet || sourceMagnet.getAttribute('port-group') === NsGraph.AnchorGroup.TOP) {
+        //   return false;
+        // }
+        // // 只能连接到下游节点的输入桩
+        // if (!targetMagnet || targetMagnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP) {
+        //   return false;
+        // }
         const node = targetView!.cell as any;
         // 判断目标链接桩是否可连接
-        const portId = targetMagnet.getAttribute('port')!;
+        const portId = targetMagnet?.getAttribute('port')!;
         const port = node.getPort(portId);
         return !(port && port.connected);
       },
@@ -189,14 +187,32 @@ export const useGraphConfig = createGraphConfig((config) => {
       }
     },
   });
+
+  const changePortsVisible = (visible: boolean) => {
+    const container = document.getElementsByClassName('xflow-canvas-root')[0];
+    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>;
+    for (let i = 0, len = ports.length; i < len; i = i + 1) {
+      ports[i].style.visibility = visible ? 'visible' : 'hidden';
+    }
+  };
   config.setEvents([
     {
       eventName: 'node:click',
       callback: (e, cmds, ctx) => {
         console.log('click');
-
-        // 可以绑定事件
       },
     } as IEvent<'node:click'>,
+    {
+      eventName: 'node:mouseenter',
+      callback: (e, cmds, ctx) => {
+        changePortsVisible(true);
+      },
+    } as IEvent<'node:mouseenter'>,
+    {
+      eventName: 'node:mouseleave',
+      callback: (e, cmds, ctx) => {
+        changePortsVisible(false);
+      },
+    } as IEvent<'node:mouseleave'>,
   ]);
 });
