@@ -77,7 +77,7 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
   };
 };
 
-export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: any) => {
+export const treeDataService = async () => {
   return [
     {
       id: 'circle',
@@ -87,6 +87,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
       width: NODE_HEIGHT,
       height: NODE_HEIGHT,
       ports: getPorts(),
+      name: 'custom-circle',
     },
     {
       id: 'diamond',
@@ -96,6 +97,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
       width: NODE_HEIGHT,
       height: NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
+      name: 'custom-diamond',
     },
     {
       id: 'parallelogram',
@@ -105,6 +107,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
       width: NODE_WIDTH,
       height: NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
+      name: 'custom-parallelogram',
     },
 
     {
@@ -115,6 +118,7 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async (meta: an
       width: NODE_WIDTH,
       height: NODE_HEIGHT,
       ports: getPorts(),
+      name: 'custom-rect',
     },
   ];
 };

@@ -17,14 +17,9 @@ import {
   NodeTreePanel,
   usePanelContext,
   DagGraphExtension,
-  ConfigFormPanel,
   FormItemWrapper,
 } from '@ali/xflow-extension';
-import {
-  formSchemaService,
-  formValueUpdateService,
-  controlMapService,
-} from '../components/editorPanel';
+
 import { searchService, contextServiceConfig } from '../service';
 import { useGraphConfig, keybindingConfig, useGraphHook } from './config';
 import { onNodeDrop, useCmdConfig } from '../command';
@@ -43,7 +38,6 @@ export {
   XFlowGraphCommands,
   usePanelContext,
   FormItemWrapper,
-  ConfigFormPanel,
   ContextServiceUtils,
 };
 

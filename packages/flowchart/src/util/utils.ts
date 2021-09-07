@@ -79,3 +79,6 @@ export const setPath = (source: object, path: string[], value: any) => {
   });
   return source;
 };
+
+// 创建节点路径
+export const createPath = (paths: [string, string][]) => {};

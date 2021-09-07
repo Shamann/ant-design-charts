@@ -1,25 +1,31 @@
 import React from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
-import { NODE_HEIGHT } from '../../constants';
+import { createPath } from '../../util';
+import { NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
 export const DiamondNode: NsGraphConfig.INodeRender = (props) => {
+  const { size = { width: NODE_HEIGHT, height: NODE_HEIGHT }, data } = props;
+  const { width, height } = size;
+
+  const path = [
+    ['M', width / 2, NODE_PADDING], // top
+    ['L', width - 2 * NODE_PADDING, height / 2], // right
+    ['L', width / 2, height - 2 * NODE_PADDING], // bottom
+    ['L', NODE_PADDING, height / 2], // left
+    ['Z'],
+  ];
+
   return (
-    <svg height={NODE_HEIGHT} width={NODE_HEIGHT}>
-      <path
-        d={`M${NODE_HEIGHT / 2} 1 L${NODE_HEIGHT} ${NODE_HEIGHT / 2} L${
-          NODE_HEIGHT / 2
-        } ${NODE_HEIGHT} L0 ${NODE_HEIGHT / 2} Z`}
-        fill="#fff"
-        stroke="#eae8e8"
-      />
+    <svg width={width} height={height}>
+      <path d={createPath(path)} fill="#fff" stroke="#eae8e8" />
       <text
-        x={NODE_HEIGHT / 2}
-        y={NODE_HEIGHT / 2}
+        x={width / 2}
+        y={height / 2}
         fill="#000"
         text-anchor="middle"
         alignment-baseline="middle"
       >
-        {props.data.label}
+        {data?.label}
       </text>
       Sorry, your browser does not support inline SVG.
     </svg>

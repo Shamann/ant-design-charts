@@ -38,8 +38,9 @@
     "@ali/xflow-extension": "~0.0.3",
     "@antv/x6": "^1.25.0",
     "@antv/x6-react-components": "^1.1.13",
-    "@antv/x6-react-shape": "^1.4.5"
-  },  
+    "@antv/x6-react-shape": "^1.4.5",
+    "lodash-es": "^4.17.21"
+  },
   "peerDependencies": {
     "react": ">=16.8.4",
     "react-dom": ">=16.8.4"

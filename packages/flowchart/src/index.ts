@@ -5,10 +5,10 @@ import Flowchart, {
   XFlowGraphCommands,
   usePanelContext,
   FormItemWrapper,
-  ConfigFormPanel,
   ContextServiceUtils,
 } from './graph';
 export { ToolbarPanel } from './components/toolbar';
+export { ConfigFormPanel, WrapEditor } from './components/editorPanel';
 export {
   Flowchart,
   WorkspacePanel,
@@ -16,9 +16,5 @@ export {
   XFlowGraphCommands,
   usePanelContext,
   FormItemWrapper,
-  ConfigFormPanel,
   ContextServiceUtils,
 };
-
-// import Demo from './copy/basic';
-// export { Demo };
