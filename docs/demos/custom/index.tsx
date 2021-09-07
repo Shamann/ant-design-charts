@@ -1,12 +1,8 @@
-import { NsConfigFormPanel } from '@ant-design/charts';
-import { EditorShape } from './custom-editor';
+// import { EditorShape } from './custom-editor';
+import { Editor } from './editor';
 
 /** 自定义form控件 */
-export enum ControlShapeEnum {
-  'RENAME' = 'rename',
-}
-
-export const controlMapService: NsConfigFormPanel.IControlMapService = (controlMap) => {
-  controlMap.set(ControlShapeEnum.RENAME, EditorShape);
+export const controlMapService = (controlMap) => {
+  controlMap.set('custom-editor', Editor);
   return controlMap;
 };

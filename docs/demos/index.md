@@ -3,6 +3,6 @@
   order: 1
 ---
 
-## DAG 建模 解决方案
+## Flowchart
 
 <code src="./flowchart.tsx" />

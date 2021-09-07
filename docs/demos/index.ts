@@ -3,6 +3,8 @@ import { controlMapService, ControlShapeEnum } from './custom';
 
 export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
   const { currentNode, contextService } = args;
+  console.log(args);
+
   /** 获取 graphMeta */
 
   const nodeSchema: NsConfigFormPanel.ISchema = {
@@ -17,7 +19,7 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
                 label: '重命名',
                 name: 'Tab1-0',
                 /** 使用自定义shape */
-                shape: 'rename',
+                shape: 'custom-editor',
                 disabled: false,
                 required: false,
                 tooltip: 'rename',
@@ -60,8 +62,6 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
     ],
   };
 
-  console.log(currentNode);
-
   if (currentNode) {
     return nodeSchema;
   }
@@ -71,8 +71,8 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
   };
 };
 
-export const formValueUpdateService: NsConfigFormPanel.IFormValueUpdateService = async (args) => {
-  // console.log('formValueUpdateService', args);
+export const formValueUpdateService: NsConfigFormPanel.IFormValueUpdateService = (args) => {
+  console.log('formValueUpdateService33', args);
 };
 
 export { controlMapService };
