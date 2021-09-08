@@ -25,6 +25,9 @@ import {
   NODE_HEIGHT,
 } from '../../components/nodePanel';
 import { Edge1 } from '../../components/edgePanel';
+import { nodeMove } from './events';
+
+const { move, moved } = nodeMove();
 
 /** 自定义React节点 */
 
@@ -221,5 +224,17 @@ export const useGraphConfig = createGraphConfig((config) => {
         changePortsVisible(false);
       },
     } as IEvent<'node:mouseleave'>,
+    {
+      eventName: 'node:move',
+      callback: (e, cmds, ctx) => {
+        move(e, cmds, ctx);
+      },
+    } as IEvent<'node:move'>,
+    {
+      eventName: 'node:moved',
+      callback: (e, cmds, ctx) => {
+        moved(e, cmds, ctx);
+      },
+    } as IEvent<'node:moved'>,
   ]);
 });

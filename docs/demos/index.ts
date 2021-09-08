@@ -3,6 +3,9 @@ import { controlMapService, ControlShapeEnum } from './custom';
 
 export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
   const { currentNode, contextService } = args;
+  const { useContext } = contextService;
+  // const data = await useContext();
+  // console.log();
   console.log(args);
 
   /** 获取 graphMeta */
@@ -25,7 +28,7 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
                 tooltip: 'rename',
                 placeholder: 'please write something',
                 value: '',
-                defaultValue: '', // 可以认为是默认值
+                defaultValue: '12', // 可以认为是默认值
                 hidden: false,
                 options: [{ title: '', value: '' }],
                 originData: {}, // 原始数据

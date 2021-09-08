@@ -39,7 +39,8 @@
     "@antv/x6": "^1.25.0",
     "@antv/x6-react-components": "^1.1.13",
     "@antv/x6-react-shape": "^1.4.5",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "react-use": "^17.3.1"
   },
   "peerDependencies": {
     "react": ">=16.8.4",
@@ -53,5 +54,8 @@
     "contents": "dist"
   },
   "sideEffects": false,
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.4"
+  }
 }

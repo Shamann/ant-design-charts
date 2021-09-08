@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   NsGraphCmd,
   XFlowGraphCommands,
@@ -7,6 +7,8 @@ import {
   XFlowEdgeCommands,
   NsEdgeCmd,
 } from '@ali/xflow-core';
+// import { useAsync } from 'react-use';
+import useAsync from './useAsync';
 import { usePanelContext, FormItemWrapper } from '@ali/xflow-extension';
 import type { IControlProps } from '@ali/xflow-extension/es/canvas-config-form-panel/interface';
 
@@ -19,14 +21,14 @@ export interface IEditor {
 
 export const WrapEditor: React.FC<IControlProps & IEditor> = (props) => {
   const { controlSchema, children } = props;
-  const [data, setData] = useState();
-
   const { commands, contextService } = usePanelContext();
 
-  const getSelectNode = async () => {
+  const getSelectNode = useCallback(async () => {
     const { data: shape } = await ContextServiceUtils.useSelectedNodes(contextService);
     return shape?.[0]?.data;
-  };
+  }, [props]);
+
+  const { value, loading } = useAsync(getSelectNode);
 
   const getSelectEdge = async () => {
     const { data: shape } = await ContextServiceUtils.useSelectedNodes(contextService);
@@ -43,6 +45,8 @@ export const WrapEditor: React.FC<IControlProps & IEditor> = (props) => {
 
   const updateNode = async (value: Object) => {
     const currentNodeData = await getSelectNode();
+    console.log(currentNodeData);
+
     commands.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
       nodeConfig: {
         ...currentNodeData,
@@ -61,11 +65,14 @@ export const WrapEditor: React.FC<IControlProps & IEditor> = (props) => {
     } as NsEdgeCmd.UpdateEdge.IArgs);
   };
 
-  console.log('props', controlSchema);
+  if (loading) {
+    return null;
+  }
+
   return (
     <FormItemWrapper schema={controlSchema}>
       {(config) => {
-        return children(config, { updateNode, updateEdge });
+        return children({ ...controlSchema, data: value }, { updateNode, updateEdge });
       }}
     </FormItemWrapper>
   );

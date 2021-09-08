@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 // 类型检测
 export const isType = (value: any, type: string): boolean => {
   const { toString } = {};

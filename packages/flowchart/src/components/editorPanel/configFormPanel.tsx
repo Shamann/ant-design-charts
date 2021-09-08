@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigFormPanel as XFlowConfigFormPanel } from '@ali/xflow-extension';
+import { ConfigFormPanel as XFlowConfigFormPanel } from '../canvas-config-form-panel';
 import { IPosition } from '@ali/xflow-core';
 import {
   IFormValueUpdateService,

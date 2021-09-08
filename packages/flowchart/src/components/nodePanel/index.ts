@@ -22,7 +22,6 @@
  * ```
  */
 
-import { NsNodeTreePanel } from '@ali/xflow-extension';
 import {
   RectNodePopover,
   DiamondNodePopover,

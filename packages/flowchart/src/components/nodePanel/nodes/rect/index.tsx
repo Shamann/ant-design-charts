@@ -6,6 +6,7 @@ import './index.less';
 
 export const RectNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
+
   const { width, height } = size;
 
   const path = [

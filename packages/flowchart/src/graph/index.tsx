@@ -14,12 +14,11 @@ import {
   ContextMenuPanel,
   CanvasScaleToolbar,
   WorkspacePanel,
-  NodeTreePanel,
   usePanelContext,
   DagGraphExtension,
   FormItemWrapper,
 } from '@ali/xflow-extension';
-
+import { NodeTreePanel } from '../components/canvas-node-tree-panel';
 import { searchService, contextServiceConfig } from '../service';
 import { useGraphConfig, keybindingConfig, useGraphHook } from './config';
 import { onNodeDrop, useCmdConfig } from '../command';
