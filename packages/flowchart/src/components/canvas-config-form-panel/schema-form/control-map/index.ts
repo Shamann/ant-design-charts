@@ -1,20 +1,7 @@
-import { StringInput } from './string-input';
-import { Checkbox } from './checkbox';
-import { TextArea } from './text-area';
-import { Select } from './select';
-import { Datetime } from './datetime';
-import { Float } from './float';
 import React from 'react';
 import { IControlProps } from '../../interface';
 
-export const controls: [string, React.FC<IControlProps>][] = [
-  ['input', StringInput],
-  ['checkbox', Checkbox],
-  ['textArea', TextArea],
-  ['select', Select],
-  ['datetime', Datetime],
-  ['float', Float],
-];
+export const controls: [string, React.FC<IControlProps>][] = [];
 
 export type IControlMap = Map<string, React.FC<IControlProps>>;
 

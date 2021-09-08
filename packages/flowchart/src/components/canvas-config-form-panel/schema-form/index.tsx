@@ -34,6 +34,8 @@ export const SchemaForm: React.FC<Props> = (props) => {
 
   const { tabs } = schema;
   const [form] = Form.useForm(formInstance);
+  console.log(999, props.controlMap);
+
   const controlMap = React.useMemo(
     () => (props.controlMap ? props.controlMap : makeControlMap(controls)),
     [],

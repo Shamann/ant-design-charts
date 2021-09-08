@@ -30,12 +30,8 @@ export const useFormPanelData = (props: IProps) => {
       },
       createContext: async (onCtxChange, useContext, self) => {
         const SelectedNodeModel = await useContext(ContextServiceConstant.SELECTED_NODE.id);
-        // const SelectedEdgesModel = await useContext(ContextServiceConstant.SELECTED_EDGES.id);
-        // console.log(8888, SelectedEdgesModel);
-
         const nodeDisposable = SelectedNodeModel.onDidChange(async (nodeData) => {
           const data: NsFormPanel.IState = await self.getValidValue();
-
           onCtxChange({
             ...data,
             loading: true,
@@ -46,7 +42,7 @@ export const useFormPanelData = (props: IProps) => {
             contextService,
             commands,
           });
-
+          debugger;
           onCtxChange({
             loading: false,
             schema: schema,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 /** app 核心组件 */
 /** app 核心组件 */
 import {
@@ -27,6 +27,8 @@ import { ToolbarPanel } from '../components/toolbar';
 import { useMenuConfig } from '../components/menu';
 import { useGraph } from '../hooks/useGraph';
 
+import AppContext from '../context';
+
 import { FlowchartConfig } from '../interface';
 
 import './index.less';
@@ -53,43 +55,47 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
   const cmdConfig = useCmdConfig();
-
+  const graph = useRef();
   return (
-    <XFlow
-      className={className}
-      contextConfig={contextServiceConfig}
-      commandConfig={cmdConfig}
-      hookConfig={hookConfig}
-      // onAppReadyCallback={(app, registry) => {
-      //   onReady?.(useGraph(app, registry), registry);
-      // }}
-      onAppReadyCallback={onReady}
-      meta={meta}
-    >
-      {toolbarConfig && <ToolbarPanel {...toolbarConfig} />}
-      {/* <DagGraphExtension /> */}
-      <NodeTreePanel
-        searchService={searchService}
-        treeDataService={treeDataService}
-        onNodeDrop={onNodeDrop}
-        position={{ width: 290, top: 0, bottom: 0, left: 0 }}
-      />
-      <XFlowCanvas config={graphConfig} position={{ top: 40, left: 290, right: 290, bottom: 40 }}>
-        <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
-        <ContextMenuPanel config={menuConfig} />
-      </XFlowCanvas>
-      {/* <ConfigFormPanel
-        // controlMapService={controlMapService}
-        // formSchemaService={formSchemaService}
-        // formValueUpdateService={formValueUpdateService}
-        controlMapService={editorPanelConfig?.register}
-        formSchemaService={editorPanelConfig?.panelService}
-        formValueUpdateService={editorPanelConfig?.onUpdated}
-        position={{ width: 290, top: 0, bottom: 0, right: 0 }}
-      /> */}
-      {render && render()}
-      <KeyBindings config={keybindingConfig} />
-    </XFlow>
+    <AppContext.Provider value={{ app: graph.current }}>
+      <XFlow
+        className={className}
+        contextConfig={contextServiceConfig}
+        commandConfig={cmdConfig}
+        hookConfig={hookConfig}
+        // onAppReadyCallback={(app, registry) => {
+        //   onReady?.(useGraph(app, registry), registry);
+        // }}
+        onAppReadyCallback={(app) => {
+          graph.current = app;
+        }}
+        meta={meta}
+      >
+        {toolbarConfig && <ToolbarPanel {...toolbarConfig} />}
+        {/* <DagGraphExtension /> */}
+        <NodeTreePanel
+          searchService={searchService}
+          treeDataService={treeDataService}
+          onNodeDrop={onNodeDrop}
+          position={{ width: 290, top: 0, bottom: 0, left: 0 }}
+        />
+        <XFlowCanvas config={graphConfig} position={{ top: 40, left: 290, right: 290, bottom: 40 }}>
+          <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
+          <ContextMenuPanel config={menuConfig} />
+        </XFlowCanvas>
+        {/* <ConfigFormPanel
+      // controlMapService={controlMapService}
+      // formSchemaService={formSchemaService}
+      // formValueUpdateService={formValueUpdateService}
+      controlMapService={editorPanelConfig?.register}
+      formSchemaService={editorPanelConfig?.panelService}
+      formValueUpdateService={editorPanelConfig?.onUpdated}
+      position={{ width: 290, top: 0, bottom: 0, right: 0 }}
+    /> */}
+        {render && render()}
+        <KeyBindings config={keybindingConfig} />
+      </XFlow>
+    </AppContext.Provider>
   );
 };
 

@@ -1,8 +1,8 @@
 import { WrapEditor } from '@ant-design/charts';
 import { Form, Input } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
-const RenameInput: React.FC<any> = (props) => {
+const InputComponent: React.FC<any> = (props) => {
   const { config, plugin = {} } = props;
   const { placeholder, disabled, data } = config;
   const { updateNode } = plugin;
@@ -20,14 +20,17 @@ const RenameInput: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <Input value={label} onChange={onLabelChange} placeholder={placeholder} disabled={disabled} />
+    <Fragment>
+      <label>标签: </label>
+      <Input value={label} onChange={onLabelChange} placeholder={placeholder} disabled={disabled} />
+    </Fragment>
   );
 };
 
-export const Editor: React.FC = (props) => {
+export const Rename: React.FC = (props) => {
   return (
     <WrapEditor {...props}>
-      {(config, plugin) => <RenameInput {...props} plugin={plugin} config={config} />}
+      {(config, plugin) => <InputComponent {...props} plugin={plugin} config={config} />}
     </WrapEditor>
   );
 };

@@ -27,6 +27,7 @@ import {
   DiamondNodePopover,
   CircleNodePopover,
   ParallelogramNodePopover,
+  IndicatorNodePopover,
 } from './nodes';
 import {
   RECT_NODE,
@@ -35,6 +36,9 @@ import {
   PARALLELOGRAM_NODE,
   NODE_WIDTH,
   NODE_HEIGHT,
+  INDICATRO_NODE,
+  INDICATOR_WIDTH,
+  INDICATOR_HEIGHT,
 } from './constants';
 
 export * from './constants';
@@ -108,7 +112,6 @@ export const treeDataService = async () => {
       ports: getPorts(['top', 'bottom']),
       name: 'custom-parallelogram',
     },
-
     {
       id: 'rect',
       label: 'rect',
@@ -118,6 +121,26 @@ export const treeDataService = async () => {
       height: NODE_HEIGHT,
       ports: getPorts(),
       name: 'custom-rect',
+    },
+
+    {
+      id: 'indicator',
+      label: 'indicator',
+      renderKey: INDICATRO_NODE,
+      popoverContent: IndicatorNodePopover,
+      width: INDICATOR_WIDTH,
+      height: INDICATOR_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-indicator',
+      init: {
+        title: 'XXX',
+        baseRelative: [
+          {
+            name: 'xxx',
+            value: '',
+          },
+        ],
+      },
     },
   ];
 };

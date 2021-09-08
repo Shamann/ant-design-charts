@@ -23,6 +23,8 @@ import {
   CircleNode,
   ParallelogramNode,
   NODE_HEIGHT,
+  INDICATRO_NODE,
+  IndicatorNode,
 } from '../../components/nodePanel';
 import { Edge1 } from '../../components/edgePanel';
 import { nodeMove } from './events';
@@ -68,6 +70,7 @@ export const useGraphConfig = createGraphConfig((config) => {
   config.setNodeRender(DIAMOND_NODE, DiamondNode);
   config.setNodeRender(CIRCLE_NODE, CircleNode);
   config.setNodeRender(PARALLELOGRAM_NODE, ParallelogramNode);
+  config.setNodeRender(INDICATRO_NODE, IndicatorNode);
   config.setX6Config({
     grid: true,
     resizing: {

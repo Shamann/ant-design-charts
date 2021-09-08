@@ -6,3 +6,5 @@ export { CircleNode } from './circle';
 export { CircleNodePopover } from './circle/popover';
 export { ParallelogramNode } from './parallelogram';
 export { ParallelogramNodePopover } from './parallelogram/popover';
+export { IndicatorNode } from './indicator';
+export { IndicatorNodePopover } from './indicator/popover';

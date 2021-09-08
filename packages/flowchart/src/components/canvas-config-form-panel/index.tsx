@@ -90,8 +90,8 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
         prefixClz={props.prefixClz}
         loading={state.loading}
         schema={state.schema}
-        triggerUpdate={triggerUpdate}
-        onFieldsChange={onFieldsChange}
+        // triggerUpdate={triggerUpdate}
+        // onFieldsChange={onFieldsChange}
       />
       <PanelFooter {...props} state={state} style={footerStyle} />
     </React.Fragment>

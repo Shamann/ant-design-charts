@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
+import GraphContext from '../../../../context';
 import './index.less';
 
 export const RectNode: NsGraphConfig.INodeRender = (props) => {
@@ -16,6 +17,8 @@ export const RectNode: NsGraphConfig.INodeRender = (props) => {
     ['L', NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
     ['Z'],
   ];
+  const value = useContext(GraphContext);
+  console.log('value', value);
 
   return (
     <svg
@@ -27,7 +30,7 @@ export const RectNode: NsGraphConfig.INodeRender = (props) => {
     >
       <defs>
         <filter id="shadow">
-          <feDropShadow dx="0" dy="0" stdDeviation="0.5" flood-color="cyan" />
+          <feDropShadow dx="0" dy="0" stdDeviation="0.5" floodColor="cyan" />
         </filter>
       </defs>
       <path
