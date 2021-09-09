@@ -1,5 +1,6 @@
 import React from 'react';
-import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
+// import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
+import { ToolbarPanel as XFlowToolbarPanel } from '../toolbar-panel/components';
 import { useToolbarConfig } from './util';
 import { ToolbarPanelConfig } from '../../interface';
 

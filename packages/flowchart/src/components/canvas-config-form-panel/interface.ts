@@ -2,6 +2,7 @@ import { IPosition, NsGraph, ContextRegistry, GraphCommandRegistry } from '@ali/
 import { PanelConfig } from '@ali/xflow-extension/es/workspace-panel/module';
 import { FormInstance } from 'antd';
 import React from 'react';
+import { Cell } from '@antv/x6';
 
 /** Panel 布局 */
 export interface IPanelProps {
@@ -9,6 +10,8 @@ export interface IPanelProps {
   bodyPosition: IPosition;
   footerPosition: IPosition;
 }
+
+export type TargetType = 'node' | 'edge' | null;
 
 export type IControlMap = Map<string, React.FC<IControlProps>>;
 /** Panel Props */
@@ -30,6 +33,7 @@ export interface IProps extends Partial<IPanelProps> {
   formValueUpdateService?: IFormValueUpdateService;
   controlMapService?: IControlMapService;
   defaultControls?: IDefaultControls;
+  targetType?: 'node' | 'edge' | 'all';
 }
 
 /** Custom Panel Body Props */
@@ -65,7 +69,9 @@ export interface IFormItemProps {
 /** service: 返回 json form schema */
 export interface IFormSchamaService {
   (args: {
-    currentNode: NsGraph.INodeConfig;
+    cell: Cell;
+    targetType: TargetType;
+    targetData: NsGraph.INodeConfig | NsGraph.IEdgeConfig | null;
     contextService: ContextRegistry;
     commands: GraphCommandRegistry;
   }): Promise<ISchema>;
@@ -75,7 +81,8 @@ export interface IControlMapService {
 }
 export interface ICustomRender {
   (
-    currentNode: NsGraph.INodeConfig,
+    targetType: TargetType,
+    target: NsGraph.INodeConfig | NsGraph.IEdgeConfig | null,
     contextService: ContextRegistry,
     commands: GraphCommandRegistry,
   ): React.FC<ICustomProps>;
@@ -86,7 +93,8 @@ export interface ICustomProps {
   bodyStyle: React.CSSProperties;
   footerStyle: React.CSSProperties;
   config?: PanelConfig;
-  currentNode: NsGraph.INodeConfig | null;
+  targetType: TargetType;
+  target: NsGraph.INodeConfig | NsGraph.IEdgeConfig | null;
   contextService: ContextRegistry;
   commands: GraphCommandRegistry;
 }
@@ -95,7 +103,8 @@ export interface ICustomProps {
 export interface IFormValueUpdateService {
   (args: {
     values: Record<string, any>;
-    currentNode: NsGraph.INodeConfig | null;
+    targetType: TargetType;
+    target: NsGraph.INodeConfig | NsGraph.IEdgeConfig | null;
     contextService: ContextRegistry;
     commands: GraphCommandRegistry;
   }): Promise<any>;

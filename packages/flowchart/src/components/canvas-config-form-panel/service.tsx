@@ -1,19 +1,46 @@
 import React from 'react';
-import { Disposable, ContextServiceConstant, useContextAsState, NsGraph } from '@ali/xflow-core';
+import { IGraphCommandService } from '@ali/xflow-core/es/command/interface';
+import {
+  XFlowObservableCommands,
+  Disposable,
+  ContextServiceConstant,
+  ContextServiceUtils,
+  useContextAsState,
+  NsGraph,
+  RxModel,
+} from '@ali/xflow-core';
 import { usePanelContext } from '@ali/xflow-extension';
 import { IProps, ISchema } from './interface';
-
+import { NsUpdateObsevableCommand } from '@ali/xflow-core/es/command-contributions/observable/update-observable';
+import { Cell } from '@antv/x6';
 export namespace NsFormPanel {
   export const id = 'CONFIG_FORM_PANEL_STATE';
   export interface IState {
     loading: boolean;
     schema: ISchema;
-    nodeData: NsGraph.INodeConfig | null;
+    targetType: 'node' | 'edge' | null;
+    target: NsGraph.INodeConfig | NsGraph.IEdgeConfig | null;
+    targetCell: Cell | null;
   }
 }
 
+export const executePanelCommand = (
+  cmds: IGraphCommandService,
+  updateObservable: (state: NsFormPanel.IState) => Promise<void>,
+) => {
+  cmds.executeCommand<NsUpdateObsevableCommand.IArgs<NsFormPanel.IState>>(
+    XFlowObservableCommands.UPDATE_OBSERVABLE.id,
+    {
+      getModel: (contextService) => {
+        return contextService.useContext(NsFormPanel.id);
+      },
+      updateObservable: updateObservable,
+    },
+  );
+};
+
 export const useFormPanelData = (props: IProps) => {
-  const { formSchemaService: panelSchemaService } = props;
+  const { formSchemaService: panelSchemaService, targetType = 'node' } = props;
   const { contextService, commands } = usePanelContext();
   React.useEffect(() => {
     /** 已注册时直接返回 */
@@ -25,29 +52,48 @@ export const useFormPanelData = (props: IProps) => {
       id: NsFormPanel.id,
       initialValue: {
         schema: { tabs: [] },
-        nodeData: null,
+        target: null,
+        targetCell: null,
+        targetType: null,
         loading: false,
       },
       createContext: async (onCtxChange, useContext, self) => {
-        const SelectedNodeModel = await useContext(ContextServiceConstant.SELECTED_NODE.id);
-        const nodeDisposable = SelectedNodeModel.onDidChange(async (nodeData) => {
-          const data: NsFormPanel.IState = await self.getValidValue();
-          onCtxChange({
-            ...data,
-            loading: true,
-          });
+        const { ctx: selectedCellModel } = await ContextServiceUtils.useSelectedCell(
+          contextService,
+        );
+        console.log(selectedCellModel);
 
-          const schema = await panelSchemaService({
-            currentNode: nodeData,
-            contextService,
-            commands,
-          });
-          debugger;
-          onCtxChange({
-            loading: false,
-            schema: schema,
-            nodeData: nodeData,
-          });
+        const nodeDisposable = selectedCellModel.onDidChange(async (cell) => {
+          const data: NsFormPanel.IState = await self.getValidValue();
+
+          const updateState = async (cell: Cell, type: 'node' | 'edge') => {
+            onCtxChange({
+              ...data,
+              loading: true,
+            });
+
+            const schema = await panelSchemaService({
+              cell: cell,
+              targetData: cell.getData(),
+              targetType: type,
+              contextService,
+              commands,
+            });
+
+            onCtxChange({
+              loading: false,
+              schema: schema,
+              targetType: type,
+              target: cell.getData(),
+              targetCell: cell,
+            });
+          };
+
+          if (['all', 'node'].includes(targetType) && cell.isNode()) {
+            await updateState(cell, 'node');
+          } else if (['all', 'edge'].includes(targetType) && cell.isEdge()) {
+            await updateState(cell, 'edge');
+          }
         });
 
         return Disposable.create(() => {
@@ -60,7 +106,9 @@ export const useFormPanelData = (props: IProps) => {
   /** 已注册时直接返回 */
   const [state, setState] = useContextAsState<NsFormPanel.IState>(NsFormPanel.id, contextService, {
     schema: { tabs: [] },
-    nodeData: null,
+    targetType: null,
+    target: null,
+    targetCell: null,
     loading: false,
   });
 

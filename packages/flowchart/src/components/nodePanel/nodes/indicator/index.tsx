@@ -46,7 +46,7 @@ export const IndicatorNode: NsGraphConfig.INodeRender = (props) => {
   //       x={width / 2}
   //       y={height / 2}
   //       fill="#000"
-  //       text-anchor="middle"
+  //       textAnchor="middle"
   //       alignment-baseline="middle"
   //     >
   //       {data?.label}

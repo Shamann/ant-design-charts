@@ -2,7 +2,7 @@ import type { NsConfigFormPanel } from '@ant-design/charts';
 import { controlMapService, ControlShapeEnum } from './custom';
 
 export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
-  const { currentNode, contextService } = args;
+  const { targetData, contextService } = args;
   /** 获取 graphMeta */
   const nodeSchema: NsConfigFormPanel.ISchema = {
     tabs: [
@@ -41,7 +41,7 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
     ],
   };
 
-  if (currentNode) {
+  if (targetData) {
     return nodeSchema;
   }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { IProps, IPanelProps, ITriggerUpdate } from './interface';
 import { useXflowPrefixCls } from '@ali/xflow-core';
-// import { WorkspacePanel } from '../workspace-panel/components';
 import { WorkspacePanel } from '@ali/xflow-extension';
 import { PanelHeader } from './panel-header';
 import { PanelBody } from './panel-body';
@@ -9,7 +8,7 @@ import { PanelFooter } from './panel-footer';
 import { usePanelLyaoutStyle } from './utils';
 import { useFormPanelData } from './service';
 export { FormItemWrapper } from './schema-form';
-
+export { executePanelCommand as executeJsonFormCommand } from './service';
 import './style/index';
 
 /** useFormPanelData获取数据 */
@@ -23,7 +22,8 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
       form.setFieldsValue(values);
       const result = await formValueUpdateService({
         values,
-        currentNode: state.nodeData,
+        target: state.target,
+        targetType: state.targetType,
         contextService,
         commands,
       });
@@ -31,7 +31,7 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
         afterUpdatingCb(result);
       }
     },
-    [state.nodeData],
+    [state.target],
   );
 
   // 在fields change时的回调
@@ -39,7 +39,8 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
     async (values) => {
       const result = await formValueUpdateService({
         values,
-        currentNode: state.nodeData,
+        target: state.target,
+        targetType: state.targetType,
         contextService,
         commands,
       });
@@ -47,7 +48,7 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
         afterUpdatingCb(result);
       }
     },
-    [state.nodeData],
+    [state.target],
   );
 
   /** schema为空的情况  */
@@ -66,7 +67,7 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
 
   /** 支持自定义渲染 */
   if (getCustomRender) {
-    const Component = getCustomRender(state.nodeData, contextService, commands);
+    const Component = getCustomRender(state.targetType, state.target, contextService, commands);
     if (Component) {
       return React.createElement(Component, {
         ...props,
@@ -74,7 +75,8 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
         bodyStyle,
         footerStyle,
         config: config,
-        currentNode: state.nodeData,
+        target: state.target,
+        targetType: state.targetType,
         contextService: contextService,
         commands: commands,
       });
@@ -90,8 +92,8 @@ export const FormPanelMain: React.FC<IProps> = (props) => {
         prefixClz={props.prefixClz}
         loading={state.loading}
         schema={state.schema}
-        // triggerUpdate={triggerUpdate}
-        // onFieldsChange={onFieldsChange}
+        triggerUpdate={triggerUpdate}
+        onFieldsChange={onFieldsChange}
       />
       <PanelFooter {...props} state={state} style={footerStyle} />
     </React.Fragment>

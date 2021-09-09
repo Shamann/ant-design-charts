@@ -1,24 +1,27 @@
 import React from 'react';
 import { Tree, Empty, Popover } from 'antd';
 import { FolderFilled, FolderOpenFilled } from '@ant-design/icons';
-import { IProps, ITreeNode, IOnFolderExpand } from './interface';
+import { IProps, ITreeNode, IOnFolderExpand, INodeFactoryArgs } from './interface';
 import { Addon } from '@antv/x6';
 import {
   ContextServiceConstant,
   ContextRegistry,
   GraphCommandRegistry,
-  XFlowNode,
   IGraphConfig,
   NsGraph,
   getNodeReactComponent,
   useContextAsState,
 } from '@ali/xflow-core';
 import { NsTreePanelData } from './service';
-import { usePanelContext } from '@ali/xflow-extension';
+import { usePanelContext, XFlowNode } from '@ali/xflow-extension';
 const { DirectoryTree, TreeNode } = Tree;
 
 const FolderIcon = ({ expanded }: { expanded: boolean }) => {
   return expanded ? <FolderOpenFilled /> : <FolderFilled />;
+};
+
+export const defaultNodeFactory = (args: INodeFactoryArgs) => {
+  return new XFlowNode(args);
 };
 
 interface IConfigRenderOptions {
@@ -118,7 +121,7 @@ export interface IBodyProps extends IProps {
 }
 
 export const NodePanelBody: React.FC<IBodyProps> = (props) => {
-  const { dndOptions, onNodeDrop, state, onFolderExpand, prefixClz } = props;
+  const { x6NodeFactory, dndOptions, onNodeDrop, state, onFolderExpand, prefixClz } = props;
   const { contextService, commands } = usePanelContext();
 
   const [dnd, setDnd] = React.useState<Addon.Dnd>();
@@ -171,15 +174,17 @@ export const NodePanelBody: React.FC<IBodyProps> = (props) => {
       const { width = 180, height = 40 } = nodeConfig;
       const renderKey = graphConfig.nodeTypeParser(nodeConfig);
       const reactComponent = graphConfig.nodeRender.get(renderKey);
-      const Node = new XFlowNode({
+      const wrappedComponent = getNodeReactComponent(reactComponent, commands, contextService);
+      const nodeData = {
         data: nodeConfig,
         width,
         height,
         // X6_NODE_PORTAL_NODE_VIEW
         view: graphConfig.flowId,
-        component: getNodeReactComponent(reactComponent, commands, contextService),
-      });
-      dnd.start(Node, e.nativeEvent as any);
+        component: wrappedComponent,
+      };
+      const x6Node = x6NodeFactory ? x6NodeFactory(nodeData) : defaultNodeFactory(nodeData);
+      dnd.start(x6Node, e.nativeEvent as any);
     };
 
   const renderTree = React.useCallback(

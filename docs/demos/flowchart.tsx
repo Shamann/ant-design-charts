@@ -57,6 +57,12 @@ const DemoArea: React.FC = () => {
                 update={formValueUpdateService}
                 position={{ width: 290, top: 0, bottom: 0, right: 0 }}
               />
+              {/* <ConfigFormPanel
+                controlMapService={controlMapService}
+                formSchemaService={formSchemaService}
+                formValueUpdateService={formValueUpdateService}
+                position={{ width: 290, top: 0, bottom: 0, right: 0 }}
+              /> */}
               <WorkspacePanel
                 className="xflow-workspace-toolbar-bottom"
                 position={{ bottom: 0, left: 290, right: 290, height: 40, lineHeight: 40 }}

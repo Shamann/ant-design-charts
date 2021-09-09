@@ -9,6 +9,8 @@ import Flowchart, {
 } from './graph';
 export { ToolbarPanel } from './components/toolbar';
 export { ConfigFormPanel, WrapEditor } from './components/editorPanel';
+// export { WrapEditor } from './components/editorPanel';
+// export { ConfigFormPanel } from '@ali/xflow-extension';
 export {
   Flowchart,
   WorkspacePanel,

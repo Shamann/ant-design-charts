@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
-import GraphContext from '../../../../context';
 import './index.less';
 
 export const RectNode: NsGraphConfig.INodeRender = (props) => {
@@ -17,8 +16,6 @@ export const RectNode: NsGraphConfig.INodeRender = (props) => {
     ['L', NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
     ['Z'],
   ];
-  const value = useContext(GraphContext);
-  console.log('value', value);
 
   return (
     <svg
@@ -46,7 +43,7 @@ export const RectNode: NsGraphConfig.INodeRender = (props) => {
         x={width / 2}
         y={height / 2}
         fill="#000"
-        text-anchor="middle"
+        textAnchor="middle"
         alignment-baseline="middle"
       >
         {data?.label}
