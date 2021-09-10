@@ -12,9 +12,10 @@ export default defineConfig({
     '@s-site-menu-width': '262px',
   },
   styles: [
-    '__dumi-default-previewer-demo {padding: 24px;}',
+    '.__dumi-default-layout-hero {padding: 0 !important; }',
+    '.__dumi-default-previewer-demo {padding: 24px;}',
     '.__dumi-default-previewer-demo > div > div { min-height: 100px; }',
-    '.__dumi-default-layout-content {overflow: hidden; overflow-x: auto;}',
+    '.__dumi-default-layout-content {overflow: hidden; overflow-x: auto; max-width: 8000px !important}',
     '.__dumi-default-layout-content h2 {margin: 32px 0 18px;}',
     '.__dumi-default-layout-content .gallery-item-box {display: grid;grid-gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 0.25fr));}',
     '.__dumi-default-layout-content .gallery-item-box a {display: block; padding: 12px; border: 1px solid #f0f0f0; border-radius: 4px;text-align: center;overflow: hidden;}',

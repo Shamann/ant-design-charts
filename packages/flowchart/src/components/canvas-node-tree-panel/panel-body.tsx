@@ -55,7 +55,7 @@ export const renderNode = (props: IConfigRenderOptions) => {
 };
 
 interface ITitleProps {
-  prefixClz: string;
+  prefixClz?: string;
   item: any;
   graphConfig: any;
   contextService: ContextRegistry;
@@ -68,6 +68,7 @@ export const NodeTitle = (props: ITitleProps) => {
   const [isVisible, setVisible] = React.useState(false);
   const { prefixClz, graphConfig, commands, contextService, popoverContent, onMouseDown, item } =
     props;
+
   return (
     <>
       {popoverContent && (
@@ -121,7 +122,7 @@ export interface IBodyProps extends IProps {
 }
 
 export const NodePanelBody: React.FC<IBodyProps> = (props) => {
-  const { x6NodeFactory, dndOptions, onNodeDrop, state, onFolderExpand, prefixClz } = props;
+  const { x6NodeFactory, dndOptions, onNodeDrop, state, prefixClz } = props;
   const { contextService, commands } = usePanelContext();
 
   const [dnd, setDnd] = React.useState<Addon.Dnd>();
@@ -174,76 +175,47 @@ export const NodePanelBody: React.FC<IBodyProps> = (props) => {
       const { width = 180, height = 40 } = nodeConfig;
       const renderKey = graphConfig.nodeTypeParser(nodeConfig);
       const reactComponent = graphConfig.nodeRender.get(renderKey);
-      const wrappedComponent = getNodeReactComponent(reactComponent, commands, contextService);
-      const nodeData = {
-        data: nodeConfig,
-        width,
-        height,
-        // X6_NODE_PORTAL_NODE_VIEW
-        view: graphConfig.flowId,
-        component: wrappedComponent,
-      };
-      const x6Node = x6NodeFactory ? x6NodeFactory(nodeData) : defaultNodeFactory(nodeData);
-      dnd.start(x6Node, e.nativeEvent as any);
+      if (reactComponent) {
+        const wrappedComponent = getNodeReactComponent(reactComponent, commands, contextService);
+        const nodeData = {
+          data: nodeConfig,
+          width,
+          height,
+          // X6_NODE_PORTAL_NODE_VIEW
+          view: graphConfig.flowId,
+          component: wrappedComponent,
+        };
+        const x6Node = x6NodeFactory ? x6NodeFactory(nodeData) : defaultNodeFactory(nodeData);
+        dnd.start(x6Node, e.nativeEvent as any);
+      }
     };
 
   const renderTree = React.useCallback(
     (treeList: ITreeNode[] = []) => {
       return treeList.map((item) => {
-        const { isDirectory, children, popoverContent } = item;
-
-        if (isDirectory) {
-          return (
-            <TreeNode
-              icon={FolderIcon}
-              key={item.id}
-              title={item.label}
-              className={`${prefixClz}-tree-folder`}
-            >
-              {renderTree(children)}
-            </TreeNode>
-          );
-        }
-
+        const { popoverContent } = item;
         return (
-          <TreeNode
-            isLeaf
+          <NodeTitle
+            item={item}
             key={item.id}
-            className={`${prefixClz}-tree-leaf`}
-            icon={<span />}
-            title={
-              <NodeTitle
-                item={item}
-                onMouseDown={onMouseDown(item)}
-                popoverContent={popoverContent}
-                prefixClz={prefixClz}
-                contextService={contextService}
-                commands={commands}
-                graphConfig={graphConfig}
-              />
-            }
+            onMouseDown={onMouseDown(item)}
+            popoverContent={popoverContent}
+            prefixClz={prefixClz}
+            contextService={contextService}
+            commands={commands}
+            graphConfig={graphConfig}
           />
         );
       });
     },
     [graphConfig],
   );
+  console.log(prefixClz, 'prefixClz');
 
   return (
     <React.Fragment>
       <div className={`${prefixClz}-body`} style={props.style}>
-        {!state.keyword && (
-          <DirectoryTree
-            showIcon
-            selectable={false}
-            autoExpandParent={false}
-            onExpand={onFolderExpand}
-            expandedKeys={state.expandedKeys}
-            className={`${prefixClz}-tree`}
-          >
-            {renderTree(state.treeData)}
-          </DirectoryTree>
-        )}
+        {!state.keyword && renderTree(state.treeData)}
         {state.searchList.length > 0 && (
           <ul className={`${prefixClz}-body-list`}>
             {state.searchList.map((treeNode) => (

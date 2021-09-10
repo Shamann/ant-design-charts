@@ -1,5 +1,5 @@
-import { WrapEditor } from '@ant-design/charts';
-import { Form, InputNumber } from 'antd';
+import { FormWrapper } from '@ant-design/charts';
+import { InputNumber } from 'antd';
 import React, { useState, useEffect, Fragment } from 'react';
 
 const PositionComponent: React.FC<any> = (props) => {
@@ -42,8 +42,8 @@ const PositionComponent: React.FC<any> = (props) => {
 
 export const Position: React.FC = (props) => {
   return (
-    <WrapEditor {...props}>
+    <FormWrapper {...props}>
       {(config, plugin) => <PositionComponent {...props} plugin={plugin} config={config} />}
-    </WrapEditor>
+    </FormWrapper>
   );
 };

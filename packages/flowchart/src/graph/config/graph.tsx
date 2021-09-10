@@ -7,29 +7,35 @@ import {
   createGraphConfig,
   EDGE_PATH_TYPE,
   NsGraph,
-  XFlowEdge,
+  // XFlowEdge,
   DisposableCollection,
   createHookConfig,
 } from '@ali/xflow-core';
 import { Edge, Markup, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
 import {
-  RECT_NODE,
-  DIAMOND_NODE,
-  CIRCLE_NODE,
-  PARALLELOGRAM_NODE,
-  RectNode,
-  DiamondNode,
-  CircleNode,
-  ParallelogramNode,
+  PROCESS_NODE,
+  DECISION_NODE,
+  CONNECTOR_NODE,
+  DATAIO_NODE,
   NODE_HEIGHT,
   INDICATRO_NODE,
+  DATABASE_NODE,
+  TERMINATOR_NODE,
+} from '../../components/nodePanel';
+import {
+  ProcessNode,
+  DecisionNode,
+  ConnectorNode,
+  DataIONode,
   IndicatorNode,
+  DataBaseNode,
+  TerminatorNode,
 } from '../../components/nodePanel';
 import { Edge1 } from '../../components/edgePanel';
-import { nodeMove } from './events';
+import { moveNode, resizeNode } from './events';
 
-const { move, moved } = nodeMove();
+const { move, moved } = moveNode();
 
 /** 自定义React节点 */
 
@@ -61,16 +67,45 @@ export const useGraphHook = createHookConfig((config) => {
   });
 });
 
+const XFlowEdge = Shape.Edge.registry.register(
+  'xflow',
+  Shape.Edge.define({
+    zIndex: 1,
+    highlight: true,
+    shape: 'EDGE1',
+    name: 'custom-edge',
+    label: 'label',
+    attrs: {
+      line: {
+        stroke: '#A2B1C3',
+        targetMarker: {
+          name: 'block',
+          width: 12,
+          height: 8,
+        },
+        strokeDasharray: '5 5',
+        strokeWidth: 1,
+      },
+    },
+    data: {
+      label: 'label',
+    },
+  }),
+  true,
+);
+
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config) => {
-  config.setNodeTypeParser((node) => node?.renderKey);
-  config.setEdgeTypeParser((edge) => edge?.renderKey);
+  // config.setNodeTypeParser((node) => node?.renderKey);
+  // config.setEdgeTypeParser((edge) => edge?.renderKey);
   config.setEdgeRender('EDGE1', Edge1);
-  config.setNodeRender(RECT_NODE, RectNode);
-  config.setNodeRender(DIAMOND_NODE, DiamondNode);
-  config.setNodeRender(CIRCLE_NODE, CircleNode);
-  config.setNodeRender(PARALLELOGRAM_NODE, ParallelogramNode);
+  config.setNodeRender(PROCESS_NODE, ProcessNode);
+  config.setNodeRender(DECISION_NODE, DecisionNode);
+  config.setNodeRender(CONNECTOR_NODE, ConnectorNode);
+  config.setNodeRender(DATAIO_NODE, DataIONode);
   config.setNodeRender(INDICATRO_NODE, IndicatorNode);
+  config.setNodeRender(DATABASE_NODE, DataBaseNode);
+  config.setNodeRender(TERMINATOR_NODE, TerminatorNode);
   config.setX6Config({
     grid: true,
     resizing: {
@@ -81,6 +116,9 @@ export const useGraphConfig = createGraphConfig((config) => {
         const { data } = shape;
         return data?.name === 'custom-circle';
       },
+    },
+    snapline: {
+      enabled: true,
     },
     // selecting: {
     //   enabled: true,
@@ -102,19 +140,36 @@ export const useGraphConfig = createGraphConfig((config) => {
         radius: 20,
       },
       createEdge() {
+        const edge = new XFlowEdge({
+          // attrs: {
+          //   line: {
+          //     strokeDasharray: '5 5',
+          //     stroke: '#808080',
+          //     strokeWidth: 1,
+          //     targetMarker: {
+          //       name: 'block',
+          //       args: {
+          //         size: '6',
+          //       },
+          //     },
+          //   },
+          // },
+        });
+        return edge;
         return new Shape.Edge({
-          labels: [
-            {
-              attrs: {
-                line: {
-                  stroke: '#73d13d',
-                },
-                text: {
-                  text: 'label',
-                },
-              },
-            },
-          ],
+          // labels: [
+          //   {
+          //     attrs: {
+          //       line: {
+          //         stroke: '#73d13d',
+          //       },
+          //       text: {
+          //         text: 'label',
+          //       },
+          //     },
+          //   },
+          // ],
+          label: 'label',
           attrs: {
             line: {
               stroke: '#A2B1C3',
@@ -239,5 +294,11 @@ export const useGraphConfig = createGraphConfig((config) => {
         moved(e, cmds, ctx);
       },
     } as IEvent<'node:moved'>,
+    {
+      eventName: 'node:resized',
+      callback: (e, cmds, ctx) => {
+        resizeNode(e, cmds, ctx);
+      },
+    } as IEvent<'node:resized'>,
   ]);
 });

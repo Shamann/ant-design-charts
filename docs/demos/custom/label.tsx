@@ -5,12 +5,12 @@ import React, { useState, useEffect, Fragment } from 'react';
 const InputComponent: React.FC<any> = (props) => {
   const { config, plugin = {} } = props;
   const { placeholder, disabled, data } = config;
-  const { updateNode } = plugin;
+  const { updateEdge } = plugin;
   const [label, setLabel] = useState<string>(data?.label);
 
   const onLabelChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
-    updateNode({
+    updateEdge({
       label: e.target.value,
     });
   };
@@ -27,9 +27,9 @@ const InputComponent: React.FC<any> = (props) => {
   );
 };
 
-export const Rename: React.FC = (props) => {
+export const EdgeLabel: React.FC = (props) => {
   return (
-    <FormWrapper {...props}>
+    <FormWrapper {...props} type="edge">
       {(config, plugin) => <InputComponent {...props} plugin={plugin} config={config} />}
     </FormWrapper>
   );

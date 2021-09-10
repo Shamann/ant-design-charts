@@ -7,11 +7,11 @@ import {
   usePanelContext,
   ToolbarPanel,
   FormItemWrapper,
-  ConfigFormPanel,
+  FormPanel,
 } from '@ant-design/charts';
 import { Form, Input } from 'antd';
 // import { EditorShape } from './rename';
-import { formSchemaService, formValueUpdateService, controlMapService } from './index';
+import { formSchemaService, controlMapService } from './service';
 
 const DemoArea: React.FC = () => {
   return (
@@ -51,11 +51,10 @@ const DemoArea: React.FC = () => {
         render={() => {
           return (
             <Fragment>
-              <ConfigFormPanel
+              <FormPanel
                 register={controlMapService}
                 config={formSchemaService}
-                update={formValueUpdateService}
-                position={{ width: 290, top: 0, bottom: 0, right: 0 }}
+                position={{ width: 240, top: 0, bottom: 0, right: 0 }}
               />
               {/* <ConfigFormPanel
                 controlMapService={controlMapService}
@@ -65,7 +64,7 @@ const DemoArea: React.FC = () => {
               /> */}
               <WorkspacePanel
                 className="xflow-workspace-toolbar-bottom"
-                position={{ bottom: 0, left: 290, right: 290, height: 40, lineHeight: 40 }}
+                position={{ bottom: 0, left: 240, right: 240, height: 40, lineHeight: 40 }}
                 style={{ borderTop: '1px solid #ccc' }}
               >
                 <div> Bottom Toolbar </div>

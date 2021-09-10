@@ -1,0 +1,79 @@
+import React, { useCallback } from 'react';
+import {
+  NsGraphCmd,
+  XFlowGraphCommands,
+  ContextServiceUtils,
+  XFlowNodeCommands,
+  XFlowEdgeCommands,
+  NsEdgeCmd,
+} from '@ali/xflow-core';
+import useAsync from './useAsync';
+import { usePanelContext, FormItemWrapper } from '@ali/xflow-extension';
+import type { IControlProps } from '@ali/xflow-extension/es/canvas-config-form-panel/interface';
+
+export interface IFormWrapper {
+  children: (
+    config: Object,
+    plugin: { updateNode: (params: Object) => void; updateEdge: (params: Object) => void },
+  ) => React.ReactElement;
+}
+
+export const FormWrapper: React.FC<IControlProps & IFormWrapper & { type: string }> = (props) => {
+  const { controlSchema, children, type = 'node' } = props;
+  const { commands, contextService } = usePanelContext();
+
+  const getSelectNode = useCallback(async () => {
+    const { data } = await ContextServiceUtils.useSelectedNode(contextService);
+    return data as object;
+  }, [props]);
+
+  const getSelectEdge = useCallback(async () => {
+    const { cell, data } = await ContextServiceUtils.useSelectedCell(contextService);
+    return {
+      id: cell.id,
+      ...(data as object),
+    };
+  }, [props]);
+
+  const { data, loading } = useAsync(type === 'edge' ? getSelectEdge : getSelectNode);
+
+  React.useEffect(() => {
+    commands.executeCommand(XFlowGraphCommands.SAVE_GRAPH_DATA.id, {
+      saveGraphDataService: async (meta, graph) => {
+        return { err: null, data: graph, meta };
+      },
+    } as NsGraphCmd.SaveGraphData.IArgs);
+  }, [props]);
+
+  const updateNode = async (value: object) => {
+    const currentNodeData = await getSelectNode();
+    commands.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
+      nodeConfig: {
+        ...currentNodeData,
+        ...value,
+      },
+    });
+  };
+
+  const updateEdge = async (value: object) => {
+    const currentEdgeData = await getSelectEdge();
+    commands.executeCommand(XFlowEdgeCommands.UPDATE_EDGE.id, {
+      edgeConfig: {
+        ...currentEdgeData,
+        ...value,
+      },
+    } as NsEdgeCmd.UpdateEdge.IArgs);
+  };
+
+  if (loading) {
+    return null;
+  }
+
+  return (
+    <FormItemWrapper schema={controlSchema}>
+      {(config) => {
+        return children({ ...config, ...controlSchema, data }, { updateNode, updateEdge });
+      }}
+    </FormItemWrapper>
+  );
+};

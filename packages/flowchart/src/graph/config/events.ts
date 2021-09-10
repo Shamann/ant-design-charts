@@ -5,7 +5,7 @@ import { NodeView } from '@antv/x6';
 /**
  * 节点移动时，实时更新位置信息
  */
-export const nodeMove = () => {
+export const moveNode = () => {
   const startPosition = {
     x: 0,
     y: 0,
@@ -47,4 +47,26 @@ export const nodeMove = () => {
   };
 
   return { move, moved };
+};
+
+/**
+ * 修改节点大小
+ */
+export const resizeNode = (
+  e: NodeView.TranslateEventArgs<any>,
+  cmds: IGraphCommandService,
+  ctx: IContextService,
+) => {
+  const { node } = e;
+  if (!node) {
+    return;
+  }
+  const { width, height } = node.size();
+  cmds.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
+    nodeConfig: {
+      ...node.data,
+      width,
+      height,
+    },
+  });
 };

@@ -15,8 +15,11 @@ export const createPath = (paths: (string | number)[][]) => {
   }
   let path = '';
   paths.forEach((item) => {
-    const [c, x, y] = item;
+    const [c, x, y, c2x, c2y] = item;
     path += isNumber(y) ? ` ${c} ${x} ${y}` : ` ${c}`;
+    if (c2y) {
+      path += ` ${c2x} ${c2y}`;
+    }
   });
 
   return path;

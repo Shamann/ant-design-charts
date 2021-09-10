@@ -8,7 +8,7 @@ import Flowchart, {
   ContextServiceUtils,
 } from './graph';
 export { ToolbarPanel } from './components/toolbar';
-export { ConfigFormPanel, WrapEditor } from './components/editorPanel';
+export { FormPanel, FormWrapper } from './components/editorPanel';
 // export { WrapEditor } from './components/editorPanel';
 // export { ConfigFormPanel } from '@ali/xflow-extension';
 export {

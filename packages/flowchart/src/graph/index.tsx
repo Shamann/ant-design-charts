@@ -17,15 +17,17 @@ import {
   usePanelContext,
   DagGraphExtension,
   FormItemWrapper,
+  // NodeTreePanel
 } from '@ali/xflow-extension';
 import { NodeTreePanel } from '../components/canvas-node-tree-panel';
 import { searchService, contextServiceConfig } from '../service';
 import { useGraphConfig, keybindingConfig, useGraphHook } from './config';
-import { onNodeDrop, useCmdConfig } from '../command';
+import { onNodeDrop } from '../command';
 import { treeDataService } from '../components/nodePanel';
 import { ToolbarPanel } from '../components/toolbar';
 // import { CanvasScaleToolbar } from '../components/canvas-scale-toolbar/components';
 import { useMenuConfig } from '../components/menu';
+import { LightTheme, DarkTheme } from '../theme';
 import { useGraph } from '../hooks/useGraph';
 
 import AppContext from '../context';
@@ -44,33 +46,23 @@ export {
 };
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const {
-    onReady,
-    render,
-    className,
-    meta = { flowId: 'meta-flow-id' },
-    toolbarConfig,
-    editorPanelConfig,
-  } = props;
+  const { onReady, render, className, toolbarConfig, editorPanelConfig } = props;
   const graphConfig = useGraphConfig();
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
-  const cmdConfig = useCmdConfig();
+  // const cmdConfig = useCmdConfig();
   const graph = useRef();
   return (
-    <AppContext.Provider value={{ app: graph.current }}>
+    <AppContext.Provider value={{ theme: LightTheme }}>
       <XFlow
         className={className}
         contextConfig={contextServiceConfig}
-        commandConfig={cmdConfig}
+        // commandConfig={cmdConfig}
         hookConfig={hookConfig}
         // onAppReadyCallback={(app, registry) => {
         //   onReady?.(useGraph(app, registry), registry);
         // }}
-        onAppReadyCallback={(app) => {
-          graph.current = app;
-        }}
-        meta={meta}
+        // meta={{ flowId: 'meta-flow-id' }}
       >
         {toolbarConfig && <ToolbarPanel {...toolbarConfig} />}
         {/* <DagGraphExtension /> */}
@@ -78,9 +70,9 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
           searchService={searchService}
           treeDataService={treeDataService}
           onNodeDrop={onNodeDrop}
-          position={{ width: 290, top: 0, bottom: 0, left: 0 }}
+          position={{ width: 240, top: 0, bottom: 0, left: 0 }}
         />
-        <XFlowCanvas config={graphConfig} position={{ top: 40, left: 290, right: 290, bottom: 40 }}>
+        <XFlowCanvas config={graphConfig} position={{ top: 40, left: 240, right: 240, bottom: 40 }}>
           <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
           <ContextMenuPanel config={menuConfig} />
         </XFlowCanvas>

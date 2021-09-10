@@ -23,23 +23,31 @@
  */
 
 import {
-  RectNodePopover,
-  DiamondNodePopover,
-  CircleNodePopover,
-  ParallelogramNodePopover,
+  ProcessNodePopover,
+  DecisionNodePopover,
+  ConnectorNodePopover,
+  DataIONodePopover,
   IndicatorNodePopover,
+  TerminalNodePopover,
+  DataBaseNodePopover,
 } from './nodes';
 import {
-  RECT_NODE,
-  DIAMOND_NODE,
-  CIRCLE_NODE,
-  PARALLELOGRAM_NODE,
+  PROCESS_NODE,
+  DECISION_NODE,
+  CONNECTOR_NODE,
+  DATAIO_NODE,
   NODE_WIDTH,
   NODE_HEIGHT,
   INDICATRO_NODE,
   INDICATOR_WIDTH,
   INDICATOR_HEIGHT,
+  DATABASE_NODE,
+  TERMINATOR_NODE,
 } from './constants';
+
+import AppContext from '../../context';
+
+export { AppContext };
 
 export * from './constants';
 
@@ -83,64 +91,83 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
 export const treeDataService = async () => {
   return [
     {
-      id: 'circle',
-      label: 'circle',
-      renderKey: CIRCLE_NODE,
-      popoverContent: CircleNodePopover,
+      id: 'connector',
+      label: '',
+      renderKey: CONNECTOR_NODE,
+      popoverContent: ConnectorNodePopover,
       width: NODE_HEIGHT,
       height: NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-circle',
+      name: 'custom-connector',
     },
     {
-      id: 'diamond',
-      label: 'diamond',
-      renderKey: DIAMOND_NODE,
-      popoverContent: DiamondNodePopover,
+      id: 'decision',
+      label: '',
+      renderKey: DECISION_NODE,
+      popoverContent: DecisionNodePopover,
       width: NODE_HEIGHT,
       height: NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
-      name: 'custom-diamond',
+      name: 'custom-decision',
     },
     {
-      id: 'parallelogram',
-      label: 'parallelogram',
-      renderKey: PARALLELOGRAM_NODE,
-      popoverContent: ParallelogramNodePopover,
+      id: 'terminator',
+      label: '',
+      renderKey: TERMINATOR_NODE,
+      popoverContent: TerminalNodePopover,
+      width: NODE_WIDTH,
+      height: NODE_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-terminator',
+    },
+    {
+      id: 'database',
+      label: '',
+      renderKey: DATABASE_NODE,
+      popoverContent: DataBaseNodePopover,
+      width: NODE_WIDTH,
+      height: NODE_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-database',
+    },
+    {
+      id: 'dataIO',
+      label: '',
+      renderKey: DATAIO_NODE,
+      popoverContent: DataIONodePopover,
       width: NODE_WIDTH,
       height: NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
-      name: 'custom-parallelogram',
+      name: 'custom-dataIO',
     },
     {
-      id: 'rect',
-      label: 'rect',
-      renderKey: RECT_NODE,
-      popoverContent: RectNodePopover,
+      id: 'process',
+      label: '',
+      renderKey: PROCESS_NODE,
+      popoverContent: ProcessNodePopover,
       width: NODE_WIDTH,
       height: NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-rect',
+      name: 'custom-process',
     },
-
-    {
-      id: 'indicator',
-      label: 'indicator',
-      renderKey: INDICATRO_NODE,
-      popoverContent: IndicatorNodePopover,
-      width: INDICATOR_WIDTH,
-      height: INDICATOR_HEIGHT,
-      ports: getPorts(),
-      name: 'custom-indicator',
-      init: {
-        title: 'XXX',
-        baseRelative: [
-          {
-            name: 'xxx',
-            value: '',
-          },
-        ],
-      },
-    },
+    // {
+    //   id: 'indicator',
+    //   label: 'indicator',
+    //   renderKey: INDICATRO_NODE,
+    //   popoverContent: IndicatorNodePopover,
+    //   width: INDICATOR_WIDTH,
+    //   height: INDICATOR_HEIGHT,
+    //   ports: getPorts(),
+    //   name: 'custom-indicator',
+    //   init: {
+    //     title: 'XXX',
+    //     baseRelative: [
+    //       {
+    //         name: 'xxx',
+    //         value: '',
+    //       },
+    //     ],
+    //   },
+    // },
   ];
 };

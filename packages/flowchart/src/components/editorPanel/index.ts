@@ -1,2 +1,2 @@
-export { ConfigFormPanel } from './configFormPanel';
-export { WrapEditor } from './wrapEditor';
+export { FormPanel } from './formPanel';
+export { FormWrapper } from './formWrapper';

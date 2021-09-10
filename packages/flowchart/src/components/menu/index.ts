@@ -133,13 +133,11 @@ export namespace NsCutomMenu {
 export const useMenuConfig = createCtxMenuConfig((config) => {
   config.setMenuIdParser((data) => {
     try {
-      console.log('setMenuIdParser', data);
       const cell = data.cell;
       if (cell) {
         /** 节点菜单 */
         if (cell.isNode()) {
           const nodeData = cell.getData();
-          console.log(nodeData);
           /** 判断节点数据决定返回的menu id */
           return NsCutomMenu.NodeMenu.id;
         }

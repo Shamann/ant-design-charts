@@ -34,8 +34,8 @@
     "test:coverage": "umi-test --coverage"
   },
   "dependencies": {
-    "@ali/xflow-core": "0.0.3-alpha.1",
-    "@ali/xflow-extension": "0.0.3-alpha.1",
+    "@ali/xflow-core": "0.0.3-alpha.3",
+    "@ali/xflow-extension": "0.0.3-alpha.3",
     "@antv/x6": "^1.25.0",
     "@antv/x6-react-components": "^1.1.13",
     "@antv/x6-react-shape": "^1.4.5",

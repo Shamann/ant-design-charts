@@ -1,22 +1,20 @@
 import { NsAddNode, uuidv4, NsGraph } from '@ali/xflow-core';
-import { RECT_NODE, NODE_WIDTH, NODE_HEIGHT } from '../nodePanel';
+import { PROCESS_NODE, NODE_WIDTH, NODE_HEIGHT } from '../nodePanel';
 
 /** mock 后端接口调用 */
 export namespace MockApi {
   export const NODE_COMMON_PROPS = {
-    renderKey: RECT_NODE,
+    renderKey: PROCESS_NODE,
     width: NODE_WIDTH,
     height: NODE_HEIGHT,
   } as const;
 
   /** 查图的meta元信息 */
   export const queryMeta = async (args: any) => {
-    console.log('queryMeta', args);
     return { ...args, flowId: args.flowId };
   };
   /** 加载图数据的api */
   export const loadGraphData = async (meta: NsGraph.IGraphMeta) => {
-    console.log(meta);
     const nodes: NsGraph.INodeConfig[] = [
       {
         ...NODE_COMMON_PROPS,

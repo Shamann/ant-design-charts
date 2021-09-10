@@ -52,7 +52,6 @@ export const useTreePanelData = (props: IProps) => {
             currentState.expandedKeys.length > 0
               ? currentState.expandedKeys
               : rootNodes.map((i) => i.id);
-
           return { listData, treeData, expandedKeys };
         };
 

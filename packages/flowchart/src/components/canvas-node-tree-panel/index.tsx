@@ -30,7 +30,7 @@ export const NodeTreePanelMain: React.FC<IProps> = (props) => {
 };
 
 export const NodeTreePanel: React.FC<IProps> = (props) => {
-  const prefixClz = useXflowPrefixCls('node-dnd-panel');
+  const prefixClz = useXflowPrefixCls('node-panel');
   return (
     <WorkspacePanel {...props} className={prefixClz}>
       <NodeTreePanelMain {...props} prefixClz={prefixClz} />
