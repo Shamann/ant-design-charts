@@ -9,9 +9,9 @@
  *           id: 'node1',
  *           x: 100,
  *           y: 30,
- *           width: 100,
+ *           width: NodeConstants.100,
  *           height: 40,
- *           renderKey: 'NODE1',
+ *           renderKey: NodeConstants.'NODE1',
  *         },
  *       }
  *       return [null, execArgs]
@@ -22,36 +22,11 @@
  * ```
  */
 
-import {
-  ProcessNodePopover,
-  DecisionNodePopover,
-  ConnectorNodePopover,
-  DataIONodePopover,
-  IndicatorNodePopover,
-  TerminalNodePopover,
-  DataBaseNodePopover,
-} from './nodes';
-import {
-  PROCESS_NODE,
-  DECISION_NODE,
-  CONNECTOR_NODE,
-  DATAIO_NODE,
-  NODE_WIDTH,
-  NODE_HEIGHT,
-  INDICATRO_NODE,
-  INDICATOR_WIDTH,
-  INDICATOR_HEIGHT,
-  DATABASE_NODE,
-  TERMINATOR_NODE,
-} from './constants';
-
 import AppContext from '../../context';
+import * as NodeConstants from './constants';
+import * as Nodes from './nodes';
 
-export { AppContext };
-
-export * from './constants';
-
-export * from './nodes';
+export { Nodes, NodeConstants, AppContext };
 
 /** 和 graph config 注册的节点保持一致 */
 
@@ -93,70 +68,100 @@ export const treeDataService = async () => {
     {
       id: 'connector',
       label: '',
-      renderKey: CONNECTOR_NODE,
-      popoverContent: ConnectorNodePopover,
-      width: NODE_HEIGHT,
-      height: NODE_HEIGHT,
+      renderKey: NodeConstants.CONNECTOR_NODE,
+      popoverContent: Nodes.ConnectorNodePopover,
+      width: NodeConstants.NODE_HEIGHT,
+      height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
       name: 'custom-connector',
     },
     {
       id: 'decision',
       label: '',
-      renderKey: DECISION_NODE,
-      popoverContent: DecisionNodePopover,
-      width: NODE_HEIGHT,
-      height: NODE_HEIGHT,
-      ports: getPorts(['top', 'bottom']),
+      renderKey: NodeConstants.DECISION_NODE,
+      popoverContent: Nodes.DecisionNodePopover,
+      width: NodeConstants.NODE_HEIGHT,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
       name: 'custom-decision',
     },
     {
       id: 'terminator',
       label: '',
-      renderKey: TERMINATOR_NODE,
-      popoverContent: TerminalNodePopover,
-      width: NODE_WIDTH,
-      height: NODE_HEIGHT,
+      renderKey: NodeConstants.TERMINATOR_NODE,
+      popoverContent: Nodes.TerminalNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
       name: 'custom-terminator',
     },
     {
       id: 'database',
       label: '',
-      renderKey: DATABASE_NODE,
-      popoverContent: DataBaseNodePopover,
-      width: NODE_WIDTH,
-      height: NODE_HEIGHT,
+      renderKey: NodeConstants.DATABASE_NODE,
+      popoverContent: Nodes.DataBaseNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
       name: 'custom-database',
     },
     {
+      id: 'hard-disk',
+      label: '',
+      renderKey: NodeConstants.HARDDISK_NODE,
+      popoverContent: Nodes.HardDiskNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-hard-disk',
+    },
+    {
+      id: 'stored-data',
+      label: '',
+      renderKey: NodeConstants.STORED_NODE,
+      popoverContent: Nodes.StroedDataNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-stored-data',
+    },
+    {
+      id: 'document',
+      label: '',
+      renderKey: NodeConstants.DOCUMENT_NODE,
+      popoverContent: Nodes.DocumentNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-document',
+    },
+    {
       id: 'dataIO',
       label: '',
-      renderKey: DATAIO_NODE,
-      popoverContent: DataIONodePopover,
-      width: NODE_WIDTH,
-      height: NODE_HEIGHT,
+      renderKey: NodeConstants.DATAIO_NODE,
+      popoverContent: Nodes.DataIONodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
       name: 'custom-dataIO',
     },
     {
       id: 'process',
       label: '',
-      renderKey: PROCESS_NODE,
-      popoverContent: ProcessNodePopover,
-      width: NODE_WIDTH,
-      height: NODE_HEIGHT,
+      renderKey: NodeConstants.PROCESS_NODE,
+      popoverContent: Nodes.ProcessNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
       name: 'custom-process',
     },
     // {
     //   id: 'indicator',
     //   label: 'indicator',
-    //   renderKey: INDICATRO_NODE,
-    //   popoverContent: IndicatorNodePopover,
-    //   width: INDICATOR_WIDTH,
-    //   height: INDICATOR_HEIGHT,
+    //   renderKey: NodeConstants.INDICATRO_NODE,
+    //   popoverContent: Nodes.IndicatorNodePopover,
+    //   width: NodeConstants.INDICATOR_WIDTH,
+    //   height: NodeConstants.INDICATOR_HEIGHT,
     //   ports: getPorts(),
     //   name: 'custom-indicator',
     //   init: {

@@ -5,6 +5,9 @@ export const DATAIO_NODE = 'dataIO';
 export const TERMINATOR_NODE = 'terminator';
 export const DATABASE_NODE = 'database';
 export const INDICATRO_NODE = 'indicator';
+export const HARDDISK_NODE = 'hard-disk';
+export const STORED_NODE = 'stored';
+export const DOCUMENT_NODE = 'document';
 
 export const NODE_WIDTH = 60;
 export const NODE_HEIGHT = 40;

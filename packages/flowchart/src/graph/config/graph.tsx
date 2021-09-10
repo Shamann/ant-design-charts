@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import {
   createGraphConfig,
-  EDGE_PATH_TYPE,
   NsGraph,
   // XFlowEdge,
   DisposableCollection,
@@ -13,25 +12,8 @@ import {
 } from '@ali/xflow-core';
 import { Edge, Markup, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
-import {
-  PROCESS_NODE,
-  DECISION_NODE,
-  CONNECTOR_NODE,
-  DATAIO_NODE,
-  NODE_HEIGHT,
-  INDICATRO_NODE,
-  DATABASE_NODE,
-  TERMINATOR_NODE,
-} from '../../components/nodePanel';
-import {
-  ProcessNode,
-  DecisionNode,
-  ConnectorNode,
-  DataIONode,
-  IndicatorNode,
-  DataBaseNode,
-  TerminatorNode,
-} from '../../components/nodePanel';
+import { Nodes, NodeConstants } from '../../components/nodePanel';
+
 import { Edge1 } from '../../components/edgePanel';
 import { moveNode, resizeNode } from './events';
 
@@ -99,19 +81,22 @@ export const useGraphConfig = createGraphConfig((config) => {
   // config.setNodeTypeParser((node) => node?.renderKey);
   // config.setEdgeTypeParser((edge) => edge?.renderKey);
   config.setEdgeRender('EDGE1', Edge1);
-  config.setNodeRender(PROCESS_NODE, ProcessNode);
-  config.setNodeRender(DECISION_NODE, DecisionNode);
-  config.setNodeRender(CONNECTOR_NODE, ConnectorNode);
-  config.setNodeRender(DATAIO_NODE, DataIONode);
-  config.setNodeRender(INDICATRO_NODE, IndicatorNode);
-  config.setNodeRender(DATABASE_NODE, DataBaseNode);
-  config.setNodeRender(TERMINATOR_NODE, TerminatorNode);
+  config.setNodeRender(NodeConstants.PROCESS_NODE, Nodes.ProcessNode);
+  config.setNodeRender(NodeConstants.DECISION_NODE, Nodes.DecisionNode);
+  config.setNodeRender(NodeConstants.CONNECTOR_NODE, Nodes.ConnectorNode);
+  config.setNodeRender(NodeConstants.DATAIO_NODE, Nodes.DataIONode);
+  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
+  config.setNodeRender(NodeConstants.DATABASE_NODE, Nodes.DataBaseNode);
+  config.setNodeRender(NodeConstants.TERMINATOR_NODE, Nodes.TerminatorNode);
+  config.setNodeRender(NodeConstants.HARDDISK_NODE, Nodes.HardDiskNode);
+  config.setNodeRender(NodeConstants.STORED_NODE, Nodes.StroedDataNode);
+  config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
   config.setX6Config({
     grid: true,
     resizing: {
       enabled: true,
-      minWidth: NODE_HEIGHT,
-      minHeight: NODE_HEIGHT,
+      minWidth: NodeConstants.NODE_HEIGHT,
+      minHeight: NodeConstants.NODE_HEIGHT,
       preserveAspectRatio: (shape) => {
         const { data } = shape;
         return data?.name === 'custom-circle';
@@ -130,7 +115,7 @@ export const useGraphConfig = createGraphConfig((config) => {
       connector: {
         name: 'rounded',
         args: {
-          radius: 8,
+          radius: 2,
         },
       },
       anchor: 'center',
