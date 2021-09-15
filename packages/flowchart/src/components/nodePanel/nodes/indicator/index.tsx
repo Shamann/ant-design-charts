@@ -5,6 +5,7 @@ import { CaretDownOutlined } from '@ant-design/icons';
 import { NODE_HEIGHT, NODE_PADDING } from '../../constants';
 import './index.less';
 
+export { popover as IndicatorNodePopover } from './popover';
 interface IndicatorItem {
   name: string;
   value: string | number;

@@ -5,6 +5,8 @@ import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 import './index.less';
 
+export { popover as ProcessNodePopover } from './popover';
+
 export const ProcessNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {

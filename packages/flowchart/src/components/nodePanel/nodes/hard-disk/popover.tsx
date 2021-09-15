@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const HardDiskNodePopover = () => {
+export const popover = () => {
   return <div>hard disk</div>;
 };

@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const ProcessNodePopover = () => {
+export const popover = () => {
   return <div>process</div>;
 };

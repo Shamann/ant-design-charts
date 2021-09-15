@@ -4,6 +4,8 @@ import { AppContext } from '../../index';
 import { createPath } from '../../util';
 import { NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
+export { popover as DecisionNodePopover } from './popover';
+
 export const DecisionNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_HEIGHT, height: NODE_HEIGHT }, data } = props;
   const {

@@ -210,7 +210,6 @@ export const NodePanelBody: React.FC<IBodyProps> = (props) => {
     },
     [graphConfig],
   );
-  console.log(prefixClz, 'prefixClz');
 
   return (
     <React.Fragment>

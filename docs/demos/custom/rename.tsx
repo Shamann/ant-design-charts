@@ -20,10 +20,10 @@ const InputComponent: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <Fragment>
+    <div style={{ padding: '0 12px' }}>
       <label>标签: </label>
       <Input value={label} onChange={onLabelChange} placeholder={placeholder} disabled={disabled} />
-    </Fragment>
+    </div>
   );
 };
 

@@ -4,7 +4,9 @@ import { AppContext } from '../../index';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 import './index.less';
 
-export const TerminatorNode: NsGraphConfig.INodeRender = (props) => {
+export { popover as TerminalNodePopover } from './popover';
+
+export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },

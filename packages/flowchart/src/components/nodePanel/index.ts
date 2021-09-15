@@ -21,7 +21,7 @@
  *   return app
  * ```
  */
-
+import { GraphConfig, uuidv4 } from '@ali/xflow-core';
 import AppContext from '../../context';
 import * as NodeConstants from './constants';
 import * as Nodes from './nodes';
@@ -52,7 +52,7 @@ const getAnchorStyle = (position: string) => {
 const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
   return {
     items: position.map((name) => {
-      return { group: name, id: name };
+      return { group: name, id: uuidv4() };
     }),
     groups: {
       top: getAnchorStyle('top'),
@@ -66,94 +66,104 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
 export const treeDataService = async () => {
   return [
     {
-      id: 'connector',
-      label: '',
+      id: NodeConstants.CONNECTOR_NODE,
       renderKey: NodeConstants.CONNECTOR_NODE,
+      name: `custom-${NodeConstants.CONNECTOR_NODE}`,
+      label: '',
       popoverContent: Nodes.ConnectorNodePopover,
       width: NodeConstants.NODE_HEIGHT,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-connector',
     },
     {
-      id: 'decision',
-      label: '',
+      id: NodeConstants.DECISION_NODE,
       renderKey: NodeConstants.DECISION_NODE,
+      name: `custom-${NodeConstants.DECISION_NODE}`,
+      label: '',
       popoverContent: Nodes.DecisionNodePopover,
       width: NodeConstants.NODE_HEIGHT,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-decision',
     },
     {
-      id: 'terminator',
-      label: '',
+      id: NodeConstants.TERMINATOR_NODE,
       renderKey: NodeConstants.TERMINATOR_NODE,
+      name: `custom-${NodeConstants.TERMINATOR_NODE}`,
+      label: '',
       popoverContent: Nodes.TerminalNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-terminator',
     },
     {
-      id: 'database',
-      label: '',
+      id: NodeConstants.DATABASE_NODE,
       renderKey: NodeConstants.DATABASE_NODE,
+      name: `custom-${NodeConstants.DATABASE_NODE}`,
+      label: '',
       popoverContent: Nodes.DataBaseNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-database',
     },
     {
-      id: 'hard-disk',
-      label: '',
+      id: NodeConstants.HARDDISK_NODE,
       renderKey: NodeConstants.HARDDISK_NODE,
+      name: `custom-${NodeConstants.HARDDISK_NODE}`,
+      label: '',
       popoverContent: Nodes.HardDiskNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-hard-disk',
     },
     {
-      id: 'stored-data',
-      label: '',
+      id: NodeConstants.STORED_NODE,
       renderKey: NodeConstants.STORED_NODE,
+      name: `custom-${NodeConstants.STORED_NODE}`,
+      label: '',
       popoverContent: Nodes.StroedDataNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-stored-data',
     },
     {
-      id: 'document',
-      label: '',
+      id: NodeConstants.DOCUMENT_NODE,
       renderKey: NodeConstants.DOCUMENT_NODE,
+      name: `custom-${NodeConstants.DOCUMENT_NODE}`,
+      label: '',
       popoverContent: Nodes.DocumentNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-document',
     },
     {
-      id: 'dataIO',
-      label: '',
+      id: NodeConstants.DATAIO_NODE,
       renderKey: NodeConstants.DATAIO_NODE,
+      name: `custom-${NodeConstants.DATAIO_NODE}`,
+      label: '',
       popoverContent: Nodes.DataIONodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(['top', 'bottom']),
-      name: 'custom-dataIO',
     },
     {
-      id: 'process',
-      label: '',
+      id: NodeConstants.PROCESS_NODE,
       renderKey: NodeConstants.PROCESS_NODE,
+      name: `custom-${NodeConstants.PROCESS_NODE}`,
+      label: '',
       popoverContent: Nodes.ProcessNodePopover,
       width: NodeConstants.NODE_WIDTH,
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
-      name: 'custom-process',
+    },
+    {
+      id: NodeConstants.PREDEFINED_PROCESS_NODE,
+      renderKey: NodeConstants.PREDEFINED_PROCESS_NODE,
+      name: `custom-${NodeConstants.PREDEFINED_PROCESS_NODE}`,
+      label: '',
+      popoverContent: Nodes.PredefinedProcessNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
     },
     // {
     //   id: 'indicator',
@@ -175,4 +185,18 @@ export const treeDataService = async () => {
     //   },
     // },
   ];
+};
+
+export const registerNode = (config: GraphConfig) => {
+  config.setNodeRender(NodeConstants.PROCESS_NODE, Nodes.ProcessNode);
+  config.setNodeRender(NodeConstants.DECISION_NODE, Nodes.DecisionNode);
+  config.setNodeRender(NodeConstants.CONNECTOR_NODE, Nodes.ConnectorNode);
+  config.setNodeRender(NodeConstants.DATAIO_NODE, Nodes.DataIONode);
+  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
+  config.setNodeRender(NodeConstants.DATABASE_NODE, Nodes.DataBaseNode);
+  config.setNodeRender(NodeConstants.TERMINATOR_NODE, Nodes.TerminalNode);
+  config.setNodeRender(NodeConstants.HARDDISK_NODE, Nodes.HardDiskNode);
+  config.setNodeRender(NodeConstants.STORED_NODE, Nodes.StroedDataNode);
+  config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
+  config.setNodeRender(NodeConstants.PREDEFINED_PROCESS_NODE, Nodes.PredefinedProcessNode);
 };

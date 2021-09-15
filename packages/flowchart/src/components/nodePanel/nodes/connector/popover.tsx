@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const ConnectorNodePopover = () => {
+export const popover = () => {
   return <div>connector</div>;
 };

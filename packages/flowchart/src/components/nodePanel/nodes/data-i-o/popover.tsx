@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const DataIONodePopover = () => {
+export const popover = () => {
   return <div>dataIO</div>;
 };

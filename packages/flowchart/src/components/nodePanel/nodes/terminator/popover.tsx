@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const TerminalNodePopover = () => {
+export const popover = () => {
   return <div>terminator</div>;
 };

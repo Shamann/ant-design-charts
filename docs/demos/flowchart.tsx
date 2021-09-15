@@ -9,7 +9,7 @@ import {
   FormItemWrapper,
   FormPanel,
 } from '@ant-design/charts';
-import { Form, Input } from 'antd';
+import { data } from './data';
 // import { EditorShape } from './rename';
 import { formSchemaService, controlMapService } from './service';
 
@@ -17,6 +17,7 @@ const DemoArea: React.FC = () => {
   return (
     <div style={{ height: 600 }}>
       <Flowchart
+        // data={data}
         toolbarConfig={{
           config: [
             {

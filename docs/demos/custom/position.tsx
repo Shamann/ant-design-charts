@@ -15,7 +15,7 @@ const PositionComponent: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <Fragment>
+    <div style={{ padding: '0 12px' }}>
       <label>X: </label>
       <InputNumber
         value={x}
@@ -36,7 +36,7 @@ const PositionComponent: React.FC<any> = (props) => {
           });
         }}
       />
-    </Fragment>
+    </div>
   );
 };
 

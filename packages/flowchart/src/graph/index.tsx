@@ -7,6 +7,8 @@ import {
   XFlowNodeCommands,
   XFlowGraphCommands,
   ContextServiceUtils,
+  NsGraphCmd,
+  NsGraph,
 } from '@ali/xflow-core';
 import { KeyBindings } from '@ali/xflow-core';
 /** app 图缩放组件 */
@@ -46,7 +48,7 @@ export {
 };
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { onReady, render, className, toolbarConfig, editorPanelConfig } = props;
+  const { onReady, render, className, toolbarConfig, editorPanelConfig, data } = props;
   const graphConfig = useGraphConfig();
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
@@ -59,9 +61,21 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
         contextConfig={contextServiceConfig}
         // commandConfig={cmdConfig}
         hookConfig={hookConfig}
-        // onAppReadyCallback={(app, registry) => {
-        //   onReady?.(useGraph(app, registry), registry);
-        // }}
+        onAppReadyCallback={async (app, registry) => {
+          // onReady?.(useGraph(app, registry), registry);
+          // if (data) {
+          //   const res = await app.executeCommand(XFlowGraphCommands.LOAD_DATA.id, {
+          //     loadDataService: async (meta) => {
+          //       return data;
+          //     },
+          //   } as NsGraphCmd.GraphLoadData.IArgs);
+          //   const { graphData } = res?.contextProvider()?.getResult();
+          //   /** 3. 画布内容渲染 */
+          //   await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+          //     graphData,
+          //   });
+          // }
+        }}
         // meta={{ flowId: 'meta-flow-id' }}
       >
         {toolbarConfig && <ToolbarPanel {...toolbarConfig} />}

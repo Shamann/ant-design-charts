@@ -4,6 +4,8 @@ import { AppContext } from '../../index';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
+export { popover as DataIONodePopover } from './popover';
+
 export const DataIONode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {

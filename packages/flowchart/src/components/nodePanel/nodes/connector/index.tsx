@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { AppContext } from '../../index';
 import { NODE_HEIGHT } from '../../constants';
+export { popover as ConnectorNodePopover } from './popover';
 
 export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_HEIGHT, height: NODE_HEIGHT }, data } = props;

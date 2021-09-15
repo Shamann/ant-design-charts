@@ -5,16 +5,17 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import {
   createGraphConfig,
-  NsGraph,
   // XFlowEdge,
   DisposableCollection,
   createHookConfig,
+  XFlowEdgeCommands,
+  NsGraph,
 } from '@ali/xflow-core';
-import { Edge, Markup, Shape } from '@antv/x6';
+import { Edge, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
-import { Nodes, NodeConstants } from '../../components/nodePanel';
+import { NodeConstants, registerNode } from '../../components/nodePanel';
 
-import { Edge1 } from '../../components/edgePanel';
+import { registerEdge } from '../../components/edgePanel';
 import { moveNode, resizeNode } from './events';
 
 const { move, moved } = moveNode();
@@ -38,10 +39,21 @@ export const useGraphHook = createHookConfig((config) => {
   config.setRegisterHook((hooks) => {
     const todo = new DisposableCollection();
     const d = hooks.afterGraphInit.registerHook({
-      name: 'your biz logic',
+      name: 'call add edge to replace temp edge',
       handler: async (args) => {
-        const { graph, commands, contextService } = args;
-        // 可以绑定事件
+        const { commands, graph } = args;
+        graph.on(NsAddEdgeEvent.EVENT_NAME, (args: NsAddEdgeEvent.IArgs) => {
+          console.log(args);
+          const cellFactory = (edgeConfig: NsGraph.IEdgeConfig) => {
+            return new XFlowEdge(edgeConfig);
+          };
+          const { edge, ...config } = args;
+          commands.executeCommand(XFlowEdgeCommands.ADD_EDGE.id, {
+            cellFactory,
+            edgeConfig: config,
+          });
+          args.edge.remove();
+        });
       },
     });
     todo.push(d);
@@ -56,7 +68,7 @@ const XFlowEdge = Shape.Edge.registry.register(
     highlight: true,
     shape: 'EDGE1',
     name: 'custom-edge',
-    label: 'label',
+    label: '',
     attrs: {
       line: {
         stroke: '#A2B1C3',
@@ -70,7 +82,7 @@ const XFlowEdge = Shape.Edge.registry.register(
       },
     },
     data: {
-      label: 'label',
+      label: '',
     },
   }),
   true,
@@ -80,17 +92,8 @@ const XFlowEdge = Shape.Edge.registry.register(
 export const useGraphConfig = createGraphConfig((config) => {
   // config.setNodeTypeParser((node) => node?.renderKey);
   // config.setEdgeTypeParser((edge) => edge?.renderKey);
-  config.setEdgeRender('EDGE1', Edge1);
-  config.setNodeRender(NodeConstants.PROCESS_NODE, Nodes.ProcessNode);
-  config.setNodeRender(NodeConstants.DECISION_NODE, Nodes.DecisionNode);
-  config.setNodeRender(NodeConstants.CONNECTOR_NODE, Nodes.ConnectorNode);
-  config.setNodeRender(NodeConstants.DATAIO_NODE, Nodes.DataIONode);
-  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
-  config.setNodeRender(NodeConstants.DATABASE_NODE, Nodes.DataBaseNode);
-  config.setNodeRender(NodeConstants.TERMINATOR_NODE, Nodes.TerminatorNode);
-  config.setNodeRender(NodeConstants.HARDDISK_NODE, Nodes.HardDiskNode);
-  config.setNodeRender(NodeConstants.STORED_NODE, Nodes.StroedDataNode);
-  config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
+  registerEdge(config);
+  registerNode(config);
   config.setX6Config({
     grid: true,
     resizing: {
@@ -139,6 +142,30 @@ export const useGraphConfig = createGraphConfig((config) => {
           //     },
           //   },
           // },
+        });
+        const graph = this;
+        console.log(graph, 'graph');
+
+        graph.once('edge:connected', (args) => {
+          const { edge, isNew } = args;
+          if (isNew && edge.isEdge()) {
+            const targetNode = edge.getTargetCell();
+            if (targetNode && targetNode.isNode()) {
+              console.log(edge);
+              const targetPortId = edge.getTargetPortId();
+              debugger;
+              const sourcePortId = edge.getSourcePortId();
+              const sourceCellId = edge.getSourceCellId();
+              const targetCellId = edge.getTargetCellId();
+              graph.trigger(NsAddEdgeEvent.EVENT_NAME, {
+                targetPortId,
+                sourcePortId,
+                source: sourceCellId,
+                target: targetCellId,
+                edge: edge,
+              } as NsAddEdgeEvent.IArgs);
+            }
+          }
         });
         return edge;
         return new Shape.Edge({
