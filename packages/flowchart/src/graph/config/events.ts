@@ -5,48 +5,21 @@ import { NodeView } from '@antv/x6';
 /**
  * 节点移动时，实时更新位置信息
  */
-export const moveNode = () => {
-  const startPosition = {
-    x: 0,
-    y: 0,
-  };
-  // 开始移动
-  const move = (
-    e: NodeView.TranslateEventArgs<any>,
-    cmds: IGraphCommandService,
-    ctx: IContextService,
-  ) => {
-    const { x, y, node } = e;
-    if (!node) {
-      return;
-    }
-    startPosition.x = x;
-    startPosition.y = y;
-  };
-
-  // 移动结束
-  const moved = (
-    e: NodeView.TranslateEventArgs<any>,
-    cmds: IGraphCommandService,
-    ctx: IContextService,
-  ) => {
-    const { x, y, node } = e;
-    if (!node) {
-      return;
-    }
-    const diffX = x - startPosition.x;
-    const diffY = y - startPosition.y;
-    const { x: originX, y: originY } = node.data ?? {};
-    cmds.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
-      nodeConfig: {
-        ...node.data,
-        x: originX + diffX,
-        y: originY + diffY,
-      },
-    });
-  };
-
-  return { move, moved };
+export const movedNode = (
+  e: NodeView.TranslateEventArgs<any>,
+  cmds: IGraphCommandService,
+  ctx: IContextService,
+) => {
+  const { node } = e;
+  if (!node) {
+    return;
+  }
+  cmds.executeCommand(XFlowNodeCommands.UPDATE_NODE.id, {
+    nodeConfig: {
+      ...node.data,
+      ...node.getPosition(),
+    },
+  });
 };
 
 /**
@@ -69,4 +42,13 @@ export const resizeNode = (
       height,
     },
   });
+};
+
+/** 设置 ports visible */
+export const changePortsVisible = (visible: boolean) => {
+  const container = document.getElementsByClassName('xflow-canvas-root')[0];
+  const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>;
+  for (let i = 0, len = ports.length; i < len; i = i + 1) {
+    ports[i].style.visibility = visible ? 'visible' : 'hidden';
+  }
 };

@@ -70,31 +70,6 @@ export namespace NsCustomMenuItems {
     },
   };
 
-  export const RENAME_NODE: IMenuItem = {
-    id: CustomCommands.SHOW_RENAME_MODAL.id,
-    command: CustomCommands.SHOW_RENAME_MODAL.id,
-    type: MenuItemType.command,
-    label: '重命名',
-    isVisible: true,
-    iconName: 'EditOutlined',
-    /** cmdOptions 返回的是 command执行的入参 */
-    cmdOptions: async (menuItem, contextService, cmds) => {
-      const ctx = await ContextServiceUtils.useContextMenuCell(contextService);
-      return {
-        args: {
-          nodeConfig: { id: ctx.cell.id, ...ctx.cell.getData<NsGraph.INodeConfig>() },
-          updateNodeNameService: MockApi.renameNode,
-        },
-      };
-    },
-    useContext: async (ctx, setState) => {
-      const target = await ContextServiceUtils.useContextMenuCell(ctx);
-      setState((state) => {
-        state.isEnabled = ['node'].includes(target.type);
-      });
-    },
-  };
-
   export const SEPARATOR: IMenuItem = {
     id: 'separator',
     type: MenuItemType.separator,
@@ -118,7 +93,7 @@ export namespace NsCutomMenu {
   };
   export const NodeMenu: IMenu = {
     id: MenuEnum.NODE,
-    items: [NsCustomMenuItems.DELETE_NODE, NsCustomMenuItems.RENAME_NODE],
+    items: [NsCustomMenuItems.DELETE_NODE],
   };
   export const EdgeMenu: IMenu = {
     id: MenuEnum.EDGE,
@@ -162,7 +137,6 @@ export const useMenuConfig = createCtxMenuConfig((config) => {
     /** Node Menu */
     registry.registerMenu(NsCutomMenu.NodeMenu);
     registry.registerMenuItem(NsCustomMenuItems.DELETE_NODE);
-    registry.registerMenuItem(NsCustomMenuItems.RENAME_NODE);
     /** Edge Menu */
     registry.registerMenu(NsCutomMenu.EdgeMenu);
     registry.registerMenuItem(NsCustomMenuItems.DELETE_EDGE);

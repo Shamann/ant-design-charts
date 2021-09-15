@@ -1,6 +1,5 @@
 import React from 'react';
 import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
-// import { ToolbarPanel as XFlowToolbarPanel } from '../toolbar-panel/components';
 import { useToolbarConfig } from './util';
 import { ToolbarPanelConfig } from '../../interface';
 
@@ -16,7 +15,7 @@ export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
         text: '撤销',
       },
       {
-        command: 'forward',
+        command: 'front',
         text: '置前',
       },
       {
@@ -29,7 +28,8 @@ export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
     className,
     style,
   } = props;
-  const toolbarConfig = config instanceof Array ? useToolbarConfig(config) : config;
+  const toolbarConfig = config instanceof Array ? useToolbarConfig() : config;
+
   return (
     <XFlowToolbarPanel
       className={className}

@@ -1,5 +1,6 @@
-export const PROCESS_NODE = 'rect';
+export const PROCESS_NODE = 'process';
 export const DECISION_NODE = 'decision';
+export const MULTI_DECISION_NODE = 'multi-decision';
 export const CONNECTOR_NODE = 'connector';
 export const DATAIO_NODE = 'dataIO';
 export const TERMINATOR_NODE = 'terminator';

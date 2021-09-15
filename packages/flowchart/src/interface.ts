@@ -90,6 +90,8 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
     flowId?: string;
     [id: string]: any;
   };
+  /** 模式 */
+  mode: 'edit' | 'scan';
   /** 是否开启动画 */
   animate?: boolean;
   /** 图表渲染完成回调 */

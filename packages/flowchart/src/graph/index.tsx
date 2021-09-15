@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 /** app 核心组件 */
 /** app 核心组件 */
 import {
@@ -30,7 +30,8 @@ import { ToolbarPanel } from '../components/toolbar';
 // import { CanvasScaleToolbar } from '../components/canvas-scale-toolbar/components';
 import { useMenuConfig } from '../components/menu';
 import { LightTheme, DarkTheme } from '../theme';
-import { useGraph } from '../hooks/useGraph';
+import { setProps } from '../util';
+// import { useGraph } from '../hooks/useGraph';
 
 import AppContext from '../context';
 
@@ -48,14 +49,16 @@ export {
 };
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { onReady, render, className, toolbarConfig, editorPanelConfig, data } = props;
-  const graphConfig = useGraphConfig();
+  const { onReady, render, className, toolbarConfig, editorPanelConfig, data, mode } = props;
+  const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
+  setProps(props);
   // const cmdConfig = useCmdConfig();
-  const graph = useRef();
+
   return (
     <AppContext.Provider value={{ theme: LightTheme }}>
+      {/* <AppContext.Provider value={{ theme: LightTheme }}> */}
       <XFlow
         className={className}
         contextConfig={contextServiceConfig}
@@ -63,18 +66,18 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
         hookConfig={hookConfig}
         onAppReadyCallback={async (app, registry) => {
           // onReady?.(useGraph(app, registry), registry);
-          // if (data) {
-          //   const res = await app.executeCommand(XFlowGraphCommands.LOAD_DATA.id, {
-          //     loadDataService: async (meta) => {
-          //       return data;
-          //     },
-          //   } as NsGraphCmd.GraphLoadData.IArgs);
-          //   const { graphData } = res?.contextProvider()?.getResult();
-          //   /** 3. 画布内容渲染 */
-          //   await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
-          //     graphData,
-          //   });
-          // }
+          if (data) {
+            const res = await app.executeCommand(XFlowGraphCommands.LOAD_DATA.id, {
+              loadDataService: async (meta) => {
+                return data;
+              },
+            } as NsGraphCmd.GraphLoadData.IArgs);
+            const { graphData } = res?.contextProvider()?.getResult();
+            /** 3. 画布内容渲染 */
+            await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+              graphData,
+            });
+          }
         }}
         // meta={{ flowId: 'meta-flow-id' }}
       >

@@ -28,7 +28,7 @@ export const FormPanel: React.FC<ConfigFormPanelProps> = (props) => {
   } = props;
   return (
     <XFlowConfigFormPanel
-      targetType={['node', 'edge']}
+      targetType={['node', 'edge', 'canvas']}
       controlMapService={register}
       formSchemaService={config}
       formValueUpdateService={defaultUpdateService}

@@ -4,44 +4,36 @@ import {
   XFlowGraphCommands,
   ContextServiceConstant,
   ContextRegistry,
-  IconStore,
   ContextServiceUtils,
   NsGraph,
-  NsNodeCmd,
 } from '@ali/xflow-core';
 import { NsGraphCmd } from '@ali/xflow-core/es/command-contributions/interface';
 import { IToolbarItemProps } from '@ali/xflow-core/es/toolbar/interface';
 import { ICommandConfig } from '@ali/xflow-core/es/command/interface';
-import {
-  SaveOutlined,
-  RedoOutlined,
-  RollbackOutlined,
-  BackwardOutlined,
-  ForwardOutlined,
-} from '@ant-design/icons';
+import { getProps } from '../../util';
+
 export namespace TOOLBAR_ITEMS {
+  export const BACK_NODE = XFlowNodeCommands.BACK_NODE.id;
+  export const FRONT_NODE = XFlowNodeCommands.FRONT_NODE.id;
   export const SAVE = XFlowGraphCommands.SAVE_GRAPH_DATA.id;
   export const REDO = `${XFlowGraphCommands.REDO_CMD.id}`;
   export const UNDO = `${XFlowGraphCommands.UNDO_CMD.id}`;
-  export const MOVE_BACK = `${XFlowNodeCommands.MOVE_NODE.id}_back`;
-  export const MOVE_FORWARD = `${XFlowNodeCommands.MOVE_NODE.id}_forward`;
 }
 
 export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
   /** 生产 toolbar item */
   toolbarConfig.setToolbarItemRegisterFn((registry) => {
-    /** 注册icon 类型 */
-    IconStore.set('SaveOutlined', SaveOutlined);
-    IconStore.set('RollbackOutlined', RollbackOutlined);
-    IconStore.set('RedoOutlined', RedoOutlined);
-    IconStore.set('BackwardOutlined', BackwardOutlined);
-    IconStore.set('ForwardOutlined', ForwardOutlined);
-
+    const { config = [] } = getProps('toolbarConfig');
+    const getIconName = (commandName: string) => {
+      return config.find(
+        (item: { command: string; iconName: string }) => item.command === commandName,
+      );
+    };
+    /** 撤销 */
     registry.registerToolbarItem({
-      ...XFlowGraphCommands.UNDO_CMD,
-      iconName: 'RollbackOutlined',
-      command: XFlowGraphCommands.UNDO_CMD.id,
-      text: XFlowGraphCommands.UNDO_CMD.label,
+      ...getIconName('undo'),
+      id: TOOLBAR_ITEMS.UNDO,
+      command: TOOLBAR_ITEMS.UNDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.UndoCmd.IArgs>),
       useContext: async (ctxService: ContextRegistry, setState: any) => {
         const ctx = await ctxService.useContext<ContextServiceConstant.COMMAND_UNDOABLE.IState>(
@@ -54,11 +46,11 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+    /** 重做 */
     registry.registerToolbarItem({
-      ...XFlowGraphCommands.REDO_CMD,
-      iconName: 'RedoOutlined',
-      command: XFlowGraphCommands.REDO_CMD.id,
-      text: XFlowGraphCommands.REDO_CMD.label,
+      ...getIconName('redo'),
+      id: TOOLBAR_ITEMS.REDO,
+      command: TOOLBAR_ITEMS.REDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.RedoCmd.IArgs>),
       useContext: async (ctxService: ContextRegistry, setState: any) => {
         const ctx = await ctxService.useContext<ContextServiceConstant.COMMAND_REDOABLE.IState>(
@@ -71,19 +63,17 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
-
-    /** 保存数据toolbar按钮 */
+    /** 保存数据 */
     registry.registerToolbarItem({
-      iconName: 'SaveOutlined',
-      id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-      text: XFlowGraphCommands.SAVE_GRAPH_DATA.label,
-      command: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
+      ...getIconName('save'),
+      id: TOOLBAR_ITEMS.SAVE,
+      command: TOOLBAR_ITEMS.SAVE,
       /** cmdOptions 返回的是 command执行的入参 */
       cmdOptions: async (item, contextService) => {
         return {
           args: {
             saveGraphDataService: (meta, graphData) => {
-              console.log(graphData?.edges);
+              console.log(JSON.stringify(graphData));
             },
           },
         } as ICommandConfig<NsGraphCmd.SaveGraphData.IArgs>;
@@ -108,11 +98,11 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+    /** 前置 */
     registry.registerToolbarItem({
-      id: TOOLBAR_ITEMS.MOVE_FORWARD,
-      iconName: 'ForwardOutlined',
-      command: XFlowNodeCommands.MOVE_NODE.id,
-      text: '置前',
+      ...getIconName('front'),
+      id: TOOLBAR_ITEMS.FRONT_NODE,
+      command: TOOLBAR_ITEMS.FRONT_NODE,
       cmdOptions: async (item, contextService) => {
         const { data } = await ContextServiceUtils.useSelectedNode<NsGraph.INodeConfig>(
           contextService,
@@ -120,10 +110,9 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         const nodeId = data?.id || '-1';
         return {
           args: {
-            id: nodeId,
-            position: { dx: 50, dy: 100 },
+            nodeId,
           },
-        } as ICommandConfig<NsNodeCmd.MoveNode.IArgs>;
+        };
       },
       useContext: async (ctxService, setState) => {
         const ctx = await ctxService.useContext<ContextServiceConstant.SELECTED_NODES.IState>(
@@ -136,11 +125,11 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+    /** 后置 */
     registry.registerToolbarItem({
-      id: TOOLBAR_ITEMS.MOVE_BACK,
-      iconName: 'BackwardOutlined',
-      text: '置后',
-      command: XFlowNodeCommands.MOVE_NODE.id,
+      ...getIconName('back'),
+      id: TOOLBAR_ITEMS.BACK_NODE,
+      command: TOOLBAR_ITEMS.BACK_NODE,
       cmdOptions: async (item, contextService) => {
         const { data } = await ContextServiceUtils.useSelectedNode<NsGraph.INodeConfig>(
           contextService,
@@ -148,10 +137,9 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         const nodeId = data?.id || '-1';
         return {
           args: {
-            id: nodeId,
-            position: { dx: -50, dy: -100 },
+            nodeId,
           },
-        } as ICommandConfig<NsNodeCmd.MoveNode.IArgs>;
+        };
       },
     });
   });
@@ -164,8 +152,8 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
           TOOLBAR_ITEMS.SAVE,
           TOOLBAR_ITEMS.REDO,
           TOOLBAR_ITEMS.UNDO,
-          TOOLBAR_ITEMS.MOVE_FORWARD,
-          TOOLBAR_ITEMS.MOVE_BACK,
+          TOOLBAR_ITEMS.FRONT_NODE,
+          TOOLBAR_ITEMS.BACK_NODE,
         ],
       },
     ],

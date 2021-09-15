@@ -15,10 +15,8 @@ import { Edge, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
 import { NodeConstants, registerNode } from '../../components/nodePanel';
 
-import { registerEdge } from '../../components/edgePanel';
-import { moveNode, resizeNode } from './events';
-
-const { move, moved } = moveNode();
+import { registerEdge, DefaultEdgeConfig } from '../../components/edgePanel';
+import { movedNode, resizeNode, changePortsVisible } from './events';
 
 /** 自定义React节点 */
 
@@ -43,14 +41,42 @@ export const useGraphHook = createHookConfig((config) => {
       handler: async (args) => {
         const { commands, graph } = args;
         graph.on(NsAddEdgeEvent.EVENT_NAME, (args: NsAddEdgeEvent.IArgs) => {
-          console.log(args);
-          const cellFactory = (edgeConfig: NsGraph.IEdgeConfig) => {
-            return new XFlowEdge(edgeConfig);
-          };
-          const { edge, ...config } = args;
+          const { edge, ...edgeConfig } = args;
           commands.executeCommand(XFlowEdgeCommands.ADD_EDGE.id, {
-            cellFactory,
-            edgeConfig: config,
+            edgeConfig: {
+              ...edgeConfig,
+              source: {
+                cell: edgeConfig.source,
+                port: edgeConfig.sourcePortId,
+              },
+              target: {
+                cell: edgeConfig.target,
+                port: edgeConfig.targetPortId,
+              },
+              attrs: {
+                line: {
+                  stroke: '#A2B1C3',
+                  targetMarker: {
+                    name: 'block',
+                    width: 12,
+                    height: 8,
+                  },
+                  strokeDasharray: '5 5',
+                  strokeWidth: 1,
+                },
+              },
+              data: { ...edgeConfig },
+            },
+            source: {
+              cell: edgeConfig.source,
+              port: edgeConfig.sourcePortId,
+            },
+            target: {
+              cell: edgeConfig.target,
+              port: edgeConfig.targetPortId,
+            },
+            attrs: DefaultEdgeConfig,
+            data: { ...edgeConfig },
           });
           args.edge.remove();
         });
@@ -69,18 +95,13 @@ const XFlowEdge = Shape.Edge.registry.register(
     shape: 'EDGE1',
     name: 'custom-edge',
     label: '',
-    attrs: {
-      line: {
-        stroke: '#A2B1C3',
-        targetMarker: {
-          name: 'block',
-          width: 12,
-          height: 8,
-        },
-        strokeDasharray: '5 5',
-        strokeWidth: 1,
+    anchor: {
+      name: 'midSide',
+      args: {
+        dx: 10,
       },
     },
+    attrs: DefaultEdgeConfig,
     data: {
       label: '',
     },
@@ -89,7 +110,8 @@ const XFlowEdge = Shape.Edge.registry.register(
 );
 
 /**  graphConfig hook  */
-export const useGraphConfig = createGraphConfig((config) => {
+export const useGraphConfig = createGraphConfig((config, getProps) => {
+  const { mode = 'edit' } = getProps();
   // config.setNodeTypeParser((node) => node?.renderKey);
   // config.setEdgeTypeParser((edge) => edge?.renderKey);
   registerEdge(config);
@@ -128,32 +150,14 @@ export const useGraphConfig = createGraphConfig((config) => {
         radius: 20,
       },
       createEdge() {
-        const edge = new XFlowEdge({
-          // attrs: {
-          //   line: {
-          //     strokeDasharray: '5 5',
-          //     stroke: '#808080',
-          //     strokeWidth: 1,
-          //     targetMarker: {
-          //       name: 'block',
-          //       args: {
-          //         size: '6',
-          //       },
-          //     },
-          //   },
-          // },
-        });
+        const edge = new XFlowEdge({});
         const graph = this;
-        console.log(graph, 'graph');
-
         graph.once('edge:connected', (args) => {
           const { edge, isNew } = args;
           if (isNew && edge.isEdge()) {
             const targetNode = edge.getTargetCell();
             if (targetNode && targetNode.isNode()) {
-              console.log(edge);
               const targetPortId = edge.getTargetPortId();
-              debugger;
               const sourcePortId = edge.getSourcePortId();
               const sourceCellId = edge.getSourceCellId();
               const targetCellId = edge.getTargetCellId();
@@ -168,33 +172,6 @@ export const useGraphConfig = createGraphConfig((config) => {
           }
         });
         return edge;
-        return new Shape.Edge({
-          // labels: [
-          //   {
-          //     attrs: {
-          //       line: {
-          //         stroke: '#73d13d',
-          //       },
-          //       text: {
-          //         text: 'label',
-          //       },
-          //     },
-          //   },
-          // ],
-          label: 'label',
-          attrs: {
-            line: {
-              stroke: '#A2B1C3',
-              strokeWidth: 2,
-              targetMarker: {
-                name: 'block',
-                width: 12,
-                height: 8,
-              },
-            },
-          },
-          zIndex: 0,
-        });
       },
       validateEdge: (args) => {
         const { edge } = args;
@@ -204,7 +181,6 @@ export const useGraphConfig = createGraphConfig((config) => {
       validateMagnet({ magnet }) {
         // 所有锚点均可触发
         return true;
-        // return magnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP;
       },
       // 显示可用的链接桩
       validateConnection({ sourceView, targetView, sourceMagnet, targetMagnet }) {
@@ -212,14 +188,6 @@ export const useGraphConfig = createGraphConfig((config) => {
         if (sourceView === targetView) {
           return false;
         }
-        // // 只能从上游节点的输出链接桩创建连接
-        // if (!sourceMagnet || sourceMagnet.getAttribute('port-group') === NsGraph.AnchorGroup.TOP) {
-        //   return false;
-        // }
-        // // 只能连接到下游节点的输入桩
-        // if (!targetMagnet || targetMagnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP) {
-        //   return false;
-        // }
         const node = targetView!.cell as any;
         // 判断目标链接桩是否可连接
         const portId = targetMagnet?.getAttribute('port')!;
@@ -267,49 +235,38 @@ export const useGraphConfig = createGraphConfig((config) => {
       }
     },
   });
-
-  const changePortsVisible = (visible: boolean) => {
-    const container = document.getElementsByClassName('xflow-canvas-root')[0];
-    const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>;
-    for (let i = 0, len = ports.length; i < len; i = i + 1) {
-      ports[i].style.visibility = visible ? 'visible' : 'hidden';
-    }
-  };
+  const isEdit = mode === 'edit';
   config.setEvents([
     {
       eventName: 'node:click',
       callback: (e, cmds, ctx) => {
-        console.log('click');
+        const nodeData: NsGraph.INodeConfig = e?.node?.getData();
+        const props = getProps();
+        props.handleNodeClick?.(nodeData);
       },
     } as IEvent<'node:click'>,
     {
       eventName: 'node:mouseenter',
-      callback: (e, cmds, ctx) => {
-        changePortsVisible(true);
+      callback: () => {
+        isEdit && changePortsVisible(true);
       },
     } as IEvent<'node:mouseenter'>,
     {
       eventName: 'node:mouseleave',
       callback: (e, cmds, ctx) => {
-        changePortsVisible(false);
+        isEdit && changePortsVisible(false);
       },
     } as IEvent<'node:mouseleave'>,
     {
-      eventName: 'node:move',
-      callback: (e, cmds, ctx) => {
-        move(e, cmds, ctx);
-      },
-    } as IEvent<'node:move'>,
-    {
       eventName: 'node:moved',
       callback: (e, cmds, ctx) => {
-        moved(e, cmds, ctx);
+        isEdit && movedNode(e, cmds, ctx);
       },
     } as IEvent<'node:moved'>,
     {
       eventName: 'node:resized',
       callback: (e, cmds, ctx) => {
-        resizeNode(e, cmds, ctx);
+        isEdit && resizeNode(e, cmds, ctx);
       },
     } as IEvent<'node:resized'>,
   ]);

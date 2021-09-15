@@ -29,13 +29,12 @@ import * as Nodes from './nodes';
 export { Nodes, NodeConstants, AppContext };
 
 /** 和 graph config 注册的节点保持一致 */
-
 const getAnchorStyle = (position: string) => {
   return {
     position: { name: position },
     attrs: {
       circle: {
-        r: 6,
+        r: 4,
         magnet: true,
         stroke: '#31d0c6',
         strokeWidth: 2,
@@ -136,6 +135,16 @@ export const treeDataService = async () => {
       ports: getPorts(),
     },
     {
+      id: NodeConstants.MULTI_DECISION_NODE,
+      renderKey: NodeConstants.MULTI_DECISION_NODE,
+      name: `custom-${NodeConstants.MULTI_DECISION_NODE}`,
+      label: '',
+      popoverContent: Nodes.MultiDocumentNodePopover,
+      width: NodeConstants.NODE_WIDTH,
+      height: NodeConstants.NODE_HEIGHT,
+      ports: getPorts(),
+    },
+    {
       id: NodeConstants.DATAIO_NODE,
       renderKey: NodeConstants.DATAIO_NODE,
       name: `custom-${NodeConstants.DATAIO_NODE}`,
@@ -199,4 +208,5 @@ export const registerNode = (config: GraphConfig) => {
   config.setNodeRender(NodeConstants.STORED_NODE, Nodes.StroedDataNode);
   config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
   config.setNodeRender(NodeConstants.PREDEFINED_PROCESS_NODE, Nodes.PredefinedProcessNode);
+  config.setNodeRender(NodeConstants.MULTI_DECISION_NODE, Nodes.MultiDocumentNode);
 };

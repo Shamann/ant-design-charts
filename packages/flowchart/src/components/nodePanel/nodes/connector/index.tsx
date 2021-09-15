@@ -8,10 +8,12 @@ export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_HEIGHT, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },
+    global,
   } = useContext(AppContext) as any;
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
+
   return (
     <svg width={width} height={height}>
       <circle

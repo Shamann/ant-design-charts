@@ -82,3 +82,20 @@ export const setPath = (source: object, path: string[], value: any) => {
 
 // 创建节点路径
 export const createPath = (paths: [string, string][]) => {};
+
+type Datum = any;
+export class globalData {
+  data: Datum;
+  constructor(data?: Datum) {
+    data && this.set(data);
+  }
+  get(key?: string): Datum {
+    if (key) {
+      return this.data[key];
+    }
+    return this.data;
+  }
+  set(data: Datum) {
+    this.data = data;
+  }
+}

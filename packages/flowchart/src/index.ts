@@ -1,4 +1,5 @@
 // X6
+import { IconStore } from '@ali/xflow-core';
 import Flowchart, {
   WorkspacePanel,
   XFlowNodeCommands,
@@ -19,4 +20,5 @@ export {
   usePanelContext,
   FormItemWrapper,
   ContextServiceUtils,
+  IconStore,
 };
