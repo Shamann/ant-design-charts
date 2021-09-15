@@ -8,25 +8,56 @@ import {
   ToolbarPanel,
   FormItemWrapper,
   FormPanel,
+  IconStore,
 } from '@ant-design/charts';
+
+import {
+  SaveOutlined,
+  RedoOutlined,
+  RollbackOutlined,
+  BackwardOutlined,
+  ForwardOutlined,
+} from '@ant-design/icons';
 import { data } from './data';
 // import { EditorShape } from './rename';
 import { formSchemaService, controlMapService } from './service';
 
+/** 注册icon 类型 */
+const registerIcon = () => {
+  IconStore.set('SaveOutlined', SaveOutlined);
+  IconStore.set('RollbackOutlined', RollbackOutlined);
+  IconStore.set('RedoOutlined', RedoOutlined);
+  IconStore.set('BackwardOutlined', BackwardOutlined);
+  IconStore.set('ForwardOutlined', ForwardOutlined);
+};
+
+registerIcon();
+
 const DemoArea: React.FC = () => {
+  const [mode, setMode] = useState('edit');
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMode('scan');
+    }, 1000);
+  }, []);
+
   return (
     <div style={{ height: 600 }}>
       <Flowchart
-        // data={data}
+        data={data}
+        mode={mode}
         toolbarConfig={{
           config: [
             {
               command: 'redo',
               text: '重做',
+              // iconName: 'RedoOutlined',
             },
             {
               command: 'undo',
               text: '撤销',
+              // iconName: 'RollbackOutlined',
             },
           ],
         }}
