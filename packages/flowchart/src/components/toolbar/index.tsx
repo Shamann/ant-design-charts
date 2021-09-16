@@ -1,26 +1,31 @@
 import React from 'react';
 import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
 import { useToolbarConfig } from './util';
+import { CommandPool } from './constants';
 import { ToolbarPanelConfig } from '../../interface';
 
 export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
   const {
     config = [
       {
-        command: 'redo',
+        command: CommandPool.REDO_CMD,
         text: '重做',
       },
       {
-        command: 'undo',
+        command: CommandPool.UNDO_CMD,
         text: '撤销',
       },
       {
-        command: 'front',
+        command: CommandPool.FRONT_NODE,
         text: '置前',
       },
       {
-        command: 'back',
+        command: CommandPool.BACK_NODE,
         text: '置后',
+      },
+      {
+        command: CommandPool.SAVE_GRAPH_DATA,
+        text: '保存',
       },
     ],
     layout = 'horizontal',

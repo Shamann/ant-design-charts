@@ -50,14 +50,32 @@ const DemoArea: React.FC = () => {
         toolbarConfig={{
           config: [
             {
-              command: 'redo',
+              command: 'redo-cmd',
               text: '重做',
               // iconName: 'RedoOutlined',
             },
             {
-              command: 'undo',
+              command: 'undo-cmd',
               text: '撤销',
               // iconName: 'RollbackOutlined',
+            },
+            {
+              command: 'front-node',
+              text: '置前',
+              // iconName: 'RedoOutlined',
+            },
+            {
+              command: 'back-node',
+              text: '置后',
+              // iconName: 'RedoOutlined',
+            },
+            {
+              command: 'save-graph-data',
+              text: '保存',
+              callback: (graphData) => {
+                console.log(graphData);
+              },
+              // iconName: 'RedoOutlined',
             },
           ],
         }}

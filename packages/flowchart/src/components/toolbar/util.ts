@@ -11,6 +11,7 @@ import { NsGraphCmd } from '@ali/xflow-core/es/command-contributions/interface';
 import { IToolbarItemProps } from '@ali/xflow-core/es/toolbar/interface';
 import { ICommandConfig } from '@ali/xflow-core/es/command/interface';
 import { getProps } from '../../util';
+import { CommandPool } from './constants';
 
 export namespace TOOLBAR_ITEMS {
   export const BACK_NODE = XFlowNodeCommands.BACK_NODE.id;
@@ -21,17 +22,21 @@ export namespace TOOLBAR_ITEMS {
 }
 
 export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
+  const { config = [] } = getProps('toolbarConfig');
+  const getIconName = (commandName: string) => {
+    if (!Object.values(CommandPool).includes(commandName)) {
+      console.warn(`unknown command: ${commandName}`);
+      return {};
+    }
+    return config.find(
+      (item: { command: string; iconName: string }) => item.command === commandName,
+    );
+  };
   /** 生产 toolbar item */
   toolbarConfig.setToolbarItemRegisterFn((registry) => {
-    const { config = [] } = getProps('toolbarConfig');
-    const getIconName = (commandName: string) => {
-      return config.find(
-        (item: { command: string; iconName: string }) => item.command === commandName,
-      );
-    };
     /** 撤销 */
     registry.registerToolbarItem({
-      ...getIconName('undo'),
+      ...getIconName(CommandPool.UNDO_CMD),
       id: TOOLBAR_ITEMS.UNDO,
       command: TOOLBAR_ITEMS.UNDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.UndoCmd.IArgs>),
@@ -48,7 +53,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
     });
     /** 重做 */
     registry.registerToolbarItem({
-      ...getIconName('redo'),
+      ...getIconName(CommandPool.REDO_CMD),
       id: TOOLBAR_ITEMS.REDO,
       command: TOOLBAR_ITEMS.REDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.RedoCmd.IArgs>),
@@ -65,7 +70,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
     });
     /** 保存数据 */
     registry.registerToolbarItem({
-      ...getIconName('save'),
+      ...getIconName(CommandPool.SAVE_GRAPH_DATA),
       id: TOOLBAR_ITEMS.SAVE,
       command: TOOLBAR_ITEMS.SAVE,
       /** cmdOptions 返回的是 command执行的入参 */
@@ -73,7 +78,10 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         return {
           args: {
             saveGraphDataService: (meta, graphData) => {
-              console.log(JSON.stringify(graphData));
+              const { callback } = getIconName(CommandPool.SAVE_GRAPH_DATA);
+              if (callback) {
+                callback(graphData);
+              }
             },
           },
         } as ICommandConfig<NsGraphCmd.SaveGraphData.IArgs>;
@@ -100,7 +108,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
     });
     /** 前置 */
     registry.registerToolbarItem({
-      ...getIconName('front'),
+      ...getIconName(CommandPool.FRONT_NODE),
       id: TOOLBAR_ITEMS.FRONT_NODE,
       command: TOOLBAR_ITEMS.FRONT_NODE,
       cmdOptions: async (item, contextService) => {
@@ -127,7 +135,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
     });
     /** 后置 */
     registry.registerToolbarItem({
-      ...getIconName('back'),
+      ...getIconName(CommandPool.BACK_NODE),
       id: TOOLBAR_ITEMS.BACK_NODE,
       command: TOOLBAR_ITEMS.BACK_NODE,
       cmdOptions: async (item, contextService) => {
@@ -148,13 +156,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
   toolbarConfig.setOptions({
     mainGroups: [
       {
-        items: [
-          TOOLBAR_ITEMS.SAVE,
-          TOOLBAR_ITEMS.REDO,
-          TOOLBAR_ITEMS.UNDO,
-          TOOLBAR_ITEMS.FRONT_NODE,
-          TOOLBAR_ITEMS.BACK_NODE,
-        ],
+        items: config.map((item: { command: string }) => `xflow:${item.command}`),
       },
     ],
   });
