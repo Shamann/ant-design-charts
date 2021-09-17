@@ -10,8 +10,6 @@ import {
 } from '@ali/xflow-core';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Edge, Node } from '@antv/x6';
-import { CustomCommands } from './constants';
-import { MockApi } from './service';
 
 /** menuitem 配置 */
 export namespace NsCustomMenuItems {
@@ -29,10 +27,6 @@ export namespace NsCustomMenuItems {
     cmdOptions: async (menuItem, contextService, cmds) => {
       const ctx = await ContextServiceUtils.useContextMenuCell(contextService);
       const cell = ctx.cell as Edge;
-      let targetNode: Node;
-      if (cell.isEdge()) {
-        targetNode = cell.getTargetNode();
-      }
       return {
         args: {
           edgeConfig: { ...cell.getData<NsGraph.IEdgeConfig>(), id: cell.id },
@@ -107,12 +101,14 @@ export namespace NsCutomMenu {
 
 export const useMenuConfig = createCtxMenuConfig((config) => {
   config.setMenuIdParser((data) => {
+    if (!data) {
+      return NsCutomMenu.Default.id;
+    }
     try {
       const cell = data.cell;
       if (cell) {
         /** 节点菜单 */
         if (cell.isNode()) {
-          const nodeData = cell.getData();
           /** 判断节点数据决定返回的menu id */
           return NsCutomMenu.NodeMenu.id;
         }

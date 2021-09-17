@@ -22,9 +22,12 @@
  * ```
  */
 import { GraphConfig, uuidv4 } from '@ali/xflow-core';
+import { getProps } from '../../util';
 import AppContext from '../../context';
 import * as NodeConstants from './constants';
 import * as Nodes from './nodes';
+
+import { FlowchartConfig } from '../../interface';
 
 export { Nodes, NodeConstants, AppContext };
 
@@ -62,8 +65,35 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
   };
 };
 
+export const getRegisterNodes = () => {
+  const { nodes = [] } = (getProps('registerNodes') as FlowchartConfig['registerNodes']) ?? {};
+  return nodes.map((item) => {
+    const {
+      name,
+      popover,
+      label = '',
+      width = NodeConstants.NODE_HEIGHT,
+      height = NodeConstants.NODE_HEIGHT,
+      ports,
+    } = item;
+    return {
+      id: uuidv4(),
+      renderKey: name,
+      name: uuidv4(),
+      label,
+      popoverContent: popover,
+      width,
+      height,
+      ports: ports || getPorts(),
+    };
+  });
+};
+
 export const treeDataService = async () => {
+  const customNodes = getRegisterNodes();
+
   return [
+    ...customNodes,
     {
       id: NodeConstants.CONNECTOR_NODE,
       renderKey: NodeConstants.CONNECTOR_NODE,
@@ -174,29 +204,41 @@ export const treeDataService = async () => {
       height: NodeConstants.NODE_HEIGHT,
       ports: getPorts(),
     },
-    // {
-    //   id: 'indicator',
-    //   label: 'indicator',
-    //   renderKey: NodeConstants.INDICATRO_NODE,
-    //   popoverContent: Nodes.IndicatorNodePopover,
-    //   width: NodeConstants.INDICATOR_WIDTH,
-    //   height: NodeConstants.INDICATOR_HEIGHT,
-    //   ports: getPorts(),
-    //   name: 'custom-indicator',
-    //   init: {
-    //     title: 'XXX',
-    //     baseRelative: [
-    //       {
-    //         name: 'xxx',
-    //         value: '',
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      id: NodeConstants.INDICATRO_NODE,
+      renderKey: NodeConstants.INDICATRO_NODE,
+      label: '',
+      popoverContent: Nodes.IndicatorNodePopover,
+      width: NodeConstants.INDICATOR_WIDTH,
+      height: NodeConstants.INDICATOR_HEIGHT,
+      ports: getPorts(),
+      name: 'custom-indicator',
+      init: {
+        title: 'XXX',
+        baseRelative: [
+          {
+            name: 'xxx',
+            value: '',
+          },
+        ],
+      },
+    },
   ];
 };
 
-export const registerNode = (config: GraphConfig) => {
+export const registerNode = (
+  config: GraphConfig,
+  registerNodes: FlowchartConfig['registerNodes'],
+) => {
+  // 自定义节点
+  const { nodes = [] } = registerNodes ?? {};
+  if (nodes.length) {
+    nodes.forEach((item) => {
+      const { name, component } = item;
+      config.setNodeRender(name, component);
+    });
+  }
+  // 默认节点
   config.setNodeRender(NodeConstants.PROCESS_NODE, Nodes.ProcessNode);
   config.setNodeRender(NodeConstants.DECISION_NODE, Nodes.DecisionNode);
   config.setNodeRender(NodeConstants.CONNECTOR_NODE, Nodes.ConnectorNode);
@@ -209,4 +251,7 @@ export const registerNode = (config: GraphConfig) => {
   config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
   config.setNodeRender(NodeConstants.PREDEFINED_PROCESS_NODE, Nodes.PredefinedProcessNode);
   config.setNodeRender(NodeConstants.MULTI_DECISION_NODE, Nodes.MultiDocumentNode);
+
+  // DI 节点
+  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
 };

@@ -111,11 +111,11 @@ const XFlowEdge = Shape.Edge.registry.register(
 
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config, getProps) => {
-  const { mode = 'edit' } = getProps();
+  const { mode = 'edit', registerNodes } = getProps();
   // config.setNodeTypeParser((node) => node?.renderKey);
   // config.setEdgeTypeParser((edge) => edge?.renderKey);
   registerEdge(config);
-  registerNode(config);
+  registerNode(config, registerNodes);
   config.setX6Config({
     grid: true,
     resizing: {

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, memo } from 'react';
 /** app 核心组件 */
 /** app 核心组件 */
 import {
@@ -19,7 +19,7 @@ import {
   usePanelContext,
   DagGraphExtension,
   FormItemWrapper,
-  // NodeTreePanel
+  // NodeTreePanel,
 } from '@ali/xflow-extension';
 import { NodeTreePanel } from '../components/canvas-node-tree-panel';
 import { searchService, contextServiceConfig } from '../service';
@@ -38,15 +38,6 @@ import AppContext from '../context';
 import { FlowchartConfig } from '../interface';
 
 import './index.less';
-
-export {
-  WorkspacePanel,
-  XFlowNodeCommands,
-  XFlowGraphCommands,
-  usePanelContext,
-  FormItemWrapper,
-  ContextServiceUtils,
-};
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
   const { onReady, render, className, toolbarConfig, editorPanelConfig, data, mode } = props;

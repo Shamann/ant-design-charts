@@ -8,6 +8,7 @@ import {
   ContextRegistry,
   NsGraph,
   GraphPluginConfig,
+  NsGraphConfig,
 } from '@ali/xflow-core';
 import { NsConfigFormPanel } from '@ali/xflow-extension';
 import { IProps as ToolbarConfig } from '@ali/xflow-extension/es/toolbar-panel/components';
@@ -68,6 +69,21 @@ export interface IGraph {
   registry: ExtensionRegistry;
 }
 
+export interface RegisrerNode {
+  name: string;
+  component: NsGraphConfig.INodeRender<any>;
+  popover?: React.Component<any>;
+  label?: string;
+  width?: number;
+  height?: number;
+  ports?: any;
+}
+
+export interface RegisrerNodes {
+  nodes: RegisrerNode[];
+  config: unknown;
+}
+
 // Flowchart 通用配置
 export interface FlowchartConfig extends FlowchartContainerConfig {
   /** 是否缩放节点大小自适应容器 */
@@ -83,6 +99,7 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
   contextConfig?: ContextConfig;
   commandConfig?: CommandConfig;
   toolbarConfig: ToolbarPanelConfig;
+  registerNodes: RegisrerNodes;
   /** editor */
   editorPanelConfig?: EditorPanelConfig;
   onAppConfigReadyCallback?: IConfigReadyCallback;

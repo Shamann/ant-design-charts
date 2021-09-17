@@ -19,8 +19,8 @@ import {
   ForwardOutlined,
 } from '@ant-design/icons';
 import { data } from './data';
-// import { EditorShape } from './rename';
 import { formSchemaService, controlMapService } from './service';
+import { RegisterNode1 } from './node';
 
 /** 注册icon 类型 */
 const registerIcon = () => {
@@ -47,6 +47,17 @@ const DemoArea: React.FC = () => {
       <Flowchart
         data={data}
         mode={mode}
+        registerNodes={{
+          nodes: [
+            {
+              component: RegisterNode1,
+              popover: () => <div>节点1</div>,
+              name: 'custom-node',
+              width: 60,
+              height: 40,
+            },
+          ],
+        }}
         toolbarConfig={{
           config: [
             {
@@ -106,12 +117,6 @@ const DemoArea: React.FC = () => {
                 config={formSchemaService}
                 position={{ width: 240, top: 0, bottom: 0, right: 0 }}
               />
-              {/* <ConfigFormPanel
-                controlMapService={controlMapService}
-                formSchemaService={formSchemaService}
-                formValueUpdateService={formValueUpdateService}
-                position={{ width: 290, top: 0, bottom: 0, right: 0 }}
-              /> */}
               <WorkspacePanel
                 className="xflow-workspace-toolbar-bottom"
                 position={{ bottom: 0, left: 240, right: 240, height: 40, lineHeight: 40 }}
