@@ -47,6 +47,16 @@ const DemoArea: React.FC = () => {
       <Flowchart
         data={data}
         mode={mode}
+        popoverConfig={{
+          title: () => {
+            return <div>title</div>;
+          },
+          content: () => {
+            return <div>123</div>;
+          },
+          // antd/popover 额外配置
+          extra: {},
+        }}
         registerNodes={{
           nodes: [
             {

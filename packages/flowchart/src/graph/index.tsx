@@ -13,12 +13,12 @@ import {
 import { KeyBindings } from '@ali/xflow-core';
 /** app 图缩放组件 */
 import {
-  ContextMenuPanel,
   CanvasScaleToolbar,
   WorkspacePanel,
   usePanelContext,
   DagGraphExtension,
   FormItemWrapper,
+  ContextMenuPanel,
   // NodeTreePanel,
 } from '@ali/xflow-extension';
 import { NodeTreePanel } from '../components/canvas-node-tree-panel';
@@ -40,11 +40,12 @@ import { FlowchartConfig } from '../interface';
 import './index.less';
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
+  setProps(props);
   const { onReady, render, className, toolbarConfig, editorPanelConfig, data, mode } = props;
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
-  setProps(props);
+
   // const cmdConfig = useCmdConfig();
 
   return (

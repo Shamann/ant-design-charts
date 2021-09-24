@@ -24,6 +24,7 @@
 import { GraphConfig, uuidv4 } from '@ali/xflow-core';
 import { getProps } from '../../util';
 import AppContext from '../../context';
+import { withPopover } from './withPopover';
 import * as NodeConstants from './constants';
 import * as Nodes from './nodes';
 
@@ -239,19 +240,44 @@ export const registerNode = (
     });
   }
   // 默认节点
-  config.setNodeRender(NodeConstants.PROCESS_NODE, Nodes.ProcessNode);
-  config.setNodeRender(NodeConstants.DECISION_NODE, Nodes.DecisionNode);
-  config.setNodeRender(NodeConstants.CONNECTOR_NODE, Nodes.ConnectorNode);
-  config.setNodeRender(NodeConstants.DATAIO_NODE, Nodes.DataIONode);
-  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
-  config.setNodeRender(NodeConstants.DATABASE_NODE, Nodes.DataBaseNode);
-  config.setNodeRender(NodeConstants.TERMINATOR_NODE, Nodes.TerminalNode);
-  config.setNodeRender(NodeConstants.HARDDISK_NODE, Nodes.HardDiskNode);
-  config.setNodeRender(NodeConstants.STORED_NODE, Nodes.StroedDataNode);
-  config.setNodeRender(NodeConstants.DOCUMENT_NODE, Nodes.DocumentNode);
-  config.setNodeRender(NodeConstants.PREDEFINED_PROCESS_NODE, Nodes.PredefinedProcessNode);
-  config.setNodeRender(NodeConstants.MULTI_DECISION_NODE, Nodes.MultiDocumentNode);
-
+  config.setNodeRender(NodeConstants.PROCESS_NODE, (props) => {
+    return withPopover(props)(Nodes.ProcessNode);
+  });
+  config.setNodeRender(NodeConstants.DECISION_NODE, (props) => {
+    return withPopover(props)(Nodes.DecisionNode);
+  });
+  config.setNodeRender(NodeConstants.CONNECTOR_NODE, (props) => {
+    return withPopover(props)(Nodes.ConnectorNode);
+  });
+  config.setNodeRender(NodeConstants.DATAIO_NODE, (props) => {
+    return withPopover(props)(Nodes.DataIONode);
+  });
+  config.setNodeRender(NodeConstants.INDICATRO_NODE, (props) => {
+    return withPopover(props)(Nodes.IndicatorNode);
+  });
+  config.setNodeRender(NodeConstants.DATABASE_NODE, (props) => {
+    return withPopover(props)(Nodes.DataBaseNode);
+  });
+  config.setNodeRender(NodeConstants.TERMINATOR_NODE, (props) => {
+    return withPopover(props)(Nodes.TerminalNode);
+  });
+  config.setNodeRender(NodeConstants.HARDDISK_NODE, (props) => {
+    return withPopover(props)(Nodes.HardDiskNode);
+  });
+  config.setNodeRender(NodeConstants.STORED_NODE, (props) => {
+    return withPopover(props)(Nodes.StroedDataNode);
+  });
+  config.setNodeRender(NodeConstants.DOCUMENT_NODE, (props) => {
+    return withPopover(props)(Nodes.DocumentNode);
+  });
+  config.setNodeRender(NodeConstants.PREDEFINED_PROCESS_NODE, (props) => {
+    return withPopover(props)(Nodes.PredefinedProcessNode);
+  });
+  config.setNodeRender(NodeConstants.MULTI_DECISION_NODE, (props) => {
+    return withPopover(props)(Nodes.MultiDocumentNode);
+  });
   // DI 节点
-  config.setNodeRender(NodeConstants.INDICATRO_NODE, Nodes.IndicatorNode);
+  config.setNodeRender(NodeConstants.INDICATRO_NODE, (props) => {
+    return withPopover(props)(Nodes.IndicatorNode);
+  });
 };

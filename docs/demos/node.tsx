@@ -11,8 +11,10 @@ export const RegisterNode1 = (props) => {
         height,
         border: '1px solid #ccc',
         display: 'flex',
+        borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#fff',
       }}
     >
       <span> {data?.label}</span>
