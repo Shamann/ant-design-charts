@@ -5,21 +5,19 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import {
   createGraphConfig,
-  // XFlowEdge,
   DisposableCollection,
   createHookConfig,
   XFlowEdgeCommands,
   NsGraph,
-} from '@ali/xflow-core';
+  IEvent,
+} from '@ali/xflow';
 import { Edge, Shape } from '@antv/x6';
-import { IEvent } from '@ali/xflow-core/es/hooks/interface';
 import { NODE_HEIGHT, setNodeRender } from '../../components/nodePanel';
 
-import { registerEdge, DefaultEdgeConfig } from '../../components/edgePanel';
-import { movedNode, resizeNode, changePortsVisible } from './events';
+import { registerEdge, DefaultEdgeConfig } from '../../components/edgePanel/index';
+import { movedNode, resizeNode, changePortsVisible, setEdgeSelected } from './events';
 
 /** 自定义React节点 */
-
 const ANT_PREFIX = 'ant';
 
 export namespace NsAddEdgeEvent {
@@ -32,60 +30,6 @@ export namespace NsAddEdgeEvent {
     edge: Edge;
   }
 }
-
-export const useGraphHook = createHookConfig((config) => {
-  config.setRegisterHook((hooks) => {
-    const todo = new DisposableCollection();
-    const d = hooks.afterGraphInit.registerHook({
-      name: 'call add edge to replace temp edge',
-      handler: async (args) => {
-        const { commands, graph } = args;
-        graph.on(NsAddEdgeEvent.EVENT_NAME, (args: NsAddEdgeEvent.IArgs) => {
-          const { edge, ...edgeConfig } = args;
-          commands.executeCommand(XFlowEdgeCommands.ADD_EDGE.id, {
-            edgeConfig: {
-              ...edgeConfig,
-              source: {
-                cell: edgeConfig.source,
-                port: edgeConfig.sourcePortId,
-              },
-              target: {
-                cell: edgeConfig.target,
-                port: edgeConfig.targetPortId,
-              },
-              attrs: {
-                line: {
-                  stroke: '#A2B1C3',
-                  targetMarker: {
-                    name: 'block',
-                    width: 12,
-                    height: 8,
-                  },
-                  strokeDasharray: '5 5',
-                  strokeWidth: 1,
-                },
-              },
-              data: { ...edgeConfig },
-            },
-            source: {
-              cell: edgeConfig.source,
-              port: edgeConfig.sourcePortId,
-            },
-            target: {
-              cell: edgeConfig.target,
-              port: edgeConfig.targetPortId,
-            },
-            attrs: DefaultEdgeConfig,
-            data: { ...edgeConfig },
-          });
-          args.edge.remove();
-        });
-      },
-    });
-    todo.push(d);
-    return todo;
-  });
-});
 
 const XFlowEdge = Shape.Edge.registry.register(
   'xflow',
@@ -109,11 +53,56 @@ const XFlowEdge = Shape.Edge.registry.register(
   true,
 );
 
+export const useGraphHook = createHookConfig((config) => {
+  config.setRegisterHook((hooks) => {
+    const todo = new DisposableCollection();
+    const edgeData = hooks.afterGraphInit.registerHook({
+      name: 'call add edge to replace temp edge',
+      handler: async (args) => {
+        const { commands, graph } = args;
+        graph.on(NsAddEdgeEvent.EVENT_NAME, (args: NsAddEdgeEvent.IArgs) => {
+          const { edge, ...edgeConfig } = args;
+
+          commands.executeCommand(XFlowEdgeCommands.ADD_EDGE.id, {
+            edgeConfig: {
+              ...edgeConfig,
+              source: {
+                cell: edgeConfig.source,
+                port: edgeConfig.sourcePortId,
+              },
+              target: {
+                cell: edgeConfig.target,
+                port: edgeConfig.targetPortId,
+              },
+              // renderKey: 'EDGE1',
+              attrs: {
+                line: {
+                  stroke: '#A2B1C3',
+                  targetMarker: {
+                    name: 'block',
+                    width: 12,
+                    height: 8,
+                  },
+                  strokeDasharray: '5 5',
+                  strokeWidth: 1,
+                },
+              },
+              data: { ...edgeConfig },
+            },
+          });
+          args.edge.remove();
+        });
+      },
+    });
+    todo.push(edgeData);
+    return todo;
+  });
+});
+
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config, getProps) => {
   const { mode = 'edit', registerNode } = getProps();
-  // config.setNodeTypeParser((node) => node?.renderKey);
-  // config.setEdgeTypeParser((edge) => edge?.renderKey);
+  config.setEdgeTypeParser((edge) => edge?.renderKey as string);
   registerEdge(config);
   setNodeRender(config, registerNode);
   config.setX6Config({
@@ -245,6 +234,12 @@ export const useGraphConfig = createGraphConfig((config, getProps) => {
         props.handleNodeClick?.(nodeData);
       },
     } as IEvent<'node:click'>,
+    {
+      eventName: 'edge:click',
+      callback: (e, cmds, ctx) => {
+        setEdgeSelected(e, cmds, ctx);
+      },
+    } as IEvent<'edge:click'>,
     {
       eventName: 'node:mouseenter',
       callback: () => {

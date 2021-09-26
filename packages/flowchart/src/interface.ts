@@ -10,12 +10,12 @@ import {
   GraphPluginConfig,
   IPosition,
   NsGraphConfig,
-} from '@ali/xflow-core';
-import { NsConfigFormPanel } from '@ali/xflow-extension';
-import { IProps as ToolbarConfig } from '@ali/xflow-extension/es/toolbar-panel/components';
-// import { GraphPluginConfig } from '@ali/xflow-core/es/graph-plugin-module/config';
-import { FrontendApplication } from '@ali/xflow-core/es/xflow-main/application';
-import { ExtensionRegistry } from '@ali/xflow-core/es/xflow-main/components/extension-registry';
+} from '@ali/xflow';
+import { NsConfigFormPanel } from '@ali/xflow';
+import { IProps as ToolbarConfig } from '@ali/xflow/es/toolbar-panel/components';
+// import { GraphPluginConfig } from '@ali/xflow/es/graph-plugin-module/config';
+import { FrontendApplication } from '@ali/xflow/es/xflow-main/application';
+import { ExtensionRegistry } from '@ali/xflow/es/xflow-main/components/extension-registry';
 
 export interface FlowchartContainerConfig {
   style?: React.CSSProperties;

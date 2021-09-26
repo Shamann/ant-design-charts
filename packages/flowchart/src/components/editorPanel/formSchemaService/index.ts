@@ -1,4 +1,4 @@
-import type { NsConfigFormPanel } from '@ali/xflow-extension';
+import type { NsConfigFormPanel } from '@ali/xflow';
 
 export const defaultFormSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
   const { targetType } = args;

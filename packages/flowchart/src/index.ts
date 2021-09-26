@@ -4,8 +4,10 @@ import {
   XFlowGraphCommands,
   ContextServiceUtils,
   IconStore,
-} from '@ali/xflow-core';
-import { WorkspacePanel, usePanelContext, FormItemWrapper } from '@ali/xflow-extension';
+  WorkspacePanel,
+  usePanelContext,
+  FormItemWrapper,
+} from '@ali/xflow';
 import Flowchart from './graph';
 
 export { ToolbarPanel } from './components/toolbar';

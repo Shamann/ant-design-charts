@@ -1,24 +1,19 @@
 import React from 'react';
-import { Tree, Empty, Popover } from 'antd';
-import { FolderFilled, FolderOpenFilled } from '@ant-design/icons';
+import { Empty, Popover } from 'antd';
 import { IProps, ITreeNode, IOnFolderExpand, INodeFactoryArgs } from './interface';
 import { Addon } from '@antv/x6';
 import {
   ContextServiceConstant,
-  ContextRegistry,
+  IContextService,
   GraphCommandRegistry,
   IGraphConfig,
   NsGraph,
   getNodeReactComponent,
   useContextAsState,
-} from '@ali/xflow-core';
+  usePanelContext,
+} from '@ali/xflow';
 import { NsTreePanelData } from './service';
-import { usePanelContext, XFlowNode } from '@ali/xflow-extension';
-const { DirectoryTree, TreeNode } = Tree;
-
-const FolderIcon = ({ expanded }: { expanded: boolean }) => {
-  return expanded ? <FolderOpenFilled /> : <FolderFilled />;
-};
+import { XFlowNode } from './node';
 
 export const defaultNodeFactory = (args: INodeFactoryArgs) => {
   return new XFlowNode(args);
@@ -28,7 +23,7 @@ interface IConfigRenderOptions {
   graphConfig: IGraphConfig;
   commands: GraphCommandRegistry;
   nodeConfig: NsGraph.INodeConfig;
-  contextService: ContextRegistry;
+  contextService: IContextService;
   onMouseDown: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
@@ -44,7 +39,7 @@ export const renderNode = (props: IConfigRenderOptions) => {
 
   return (
     <div onMouseDown={onMouseDown}>
-      {React.createElement(reactComponent, {
+      {React.createElement(reactComponent as React.FC<any>, {
         commands,
         contextService,
         data: nodeConfig,

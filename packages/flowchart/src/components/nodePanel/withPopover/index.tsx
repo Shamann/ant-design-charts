@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover } from 'antd';
-import { NsGraphConfig } from '@ali/xflow-core';
+import { NsGraphConfig } from '@ali/xflow';
 import { getProps } from '../../../util';
 import { ITreeNode } from '../../canvas-node-tree-panel/interface';
 

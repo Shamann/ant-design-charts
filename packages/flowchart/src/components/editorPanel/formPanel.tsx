@@ -1,10 +1,11 @@
 import React from 'react';
-import { ConfigFormPanel as XFlowConfigFormPanel } from '@ali/xflow-extension';
-import { IPosition } from '@ali/xflow-core';
 import {
+  ConfigFormPanel as XFlowConfigFormPanel,
+  IPosition,
   IFormSchamaService,
   IControlMapService,
-} from '@ali/xflow-extension/es/canvas-config-form-panel/interface';
+} from '@ali/xflow';
+
 import { defaultFormSchemaService } from './formSchemaService';
 import { defaultControlMapService } from './controlMapService';
 

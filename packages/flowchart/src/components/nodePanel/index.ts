@@ -15,13 +15,13 @@
  *   }
  * ```
  */
-import { GraphConfig, uuidv4 } from '@ali/xflow-core';
+import { GraphConfig, uuidv4, NsNodeTreePanel } from '@ali/xflow';
 import { getProps } from '../../util';
 import AppContext from '../../context';
 import { withPopover } from './withPopover';
 import { NODE_HEIGHT, NODE_WIDTH, NODEPOOL, SUFFIX } from './constants';
 import * as NodeComponents from './nodes';
-export { searchService } from './service';
+export { searchService, onNodeDrop } from './service';
 
 import { FlowchartConfig } from '../../interface';
 
@@ -66,6 +66,7 @@ export const getregisterNode = () => {
   return nodes.map((item) => {
     const { name, popover, label = '', width = NODE_HEIGHT, height = NODE_HEIGHT, ports } = item;
     return {
+      parentId: '',
       id: uuidv4(),
       renderKey: name,
       name: uuidv4(),
@@ -78,13 +79,14 @@ export const getregisterNode = () => {
   });
 };
 
-export const treeDataService = async () => {
+export const treeDataService: NsNodeTreePanel.ITreeDataService = async () => {
   const customNodes = getregisterNode();
 
   return [
     ...customNodes,
     ...NODEPOOL.map(({ name, ports, width = NODE_WIDTH, height = NODE_HEIGHT }) => {
       return {
+        parentId: '',
         id: name, // 不会被使用
         renderKey: name,
         name: `${name.replace(/\s+/g, '-')}-${SUFFIX}`,

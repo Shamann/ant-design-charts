@@ -6,10 +6,10 @@ import {
   XFlowNodeCommands,
   XFlowEdgeCommands,
   NsEdgeCmd,
-} from '@ali/xflow-core';
+  IControlProps,
+} from '@ali/xflow';
 import useAsync from './useAsync';
-import { usePanelContext, FormItemWrapper } from '@ali/xflow-extension';
-import type { IControlProps } from '@ali/xflow-extension/es/canvas-config-form-panel/interface';
+import { usePanelContext, FormItemWrapper } from '@ali/xflow';
 
 export interface IFormWrapper {
   children: (
@@ -57,6 +57,7 @@ export const FormWrapper: React.FC<IControlProps & IFormWrapper & { type: string
 
   const updateEdge = async (value: object) => {
     const currentEdgeData = await getSelectEdge();
+
     commands.executeCommand(XFlowEdgeCommands.UPDATE_EDGE.id, {
       edgeConfig: {
         ...currentEdgeData,

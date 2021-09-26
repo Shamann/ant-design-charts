@@ -15,7 +15,7 @@ const PositionComponent: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <div style={{ padding: '0 12px' }}>
+    <div>
       <label>X: </label>
       <InputNumber
         value={x}

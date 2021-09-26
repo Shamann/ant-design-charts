@@ -1,6 +1,6 @@
 import { FormWrapper } from '@ant-design/charts';
 import { Input } from 'antd';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const InputComponent: React.FC<any> = (props) => {
   const { config, plugin = {} } = props;
@@ -20,7 +20,7 @@ const InputComponent: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <div style={{ padding: '0 12px' }}>
+    <div>
       <label>标签: </label>
       <Input value={label} onChange={onLabelChange} placeholder={placeholder} disabled={disabled} />
     </div>

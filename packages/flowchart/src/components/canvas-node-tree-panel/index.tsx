@@ -1,17 +1,15 @@
 import React from 'react';
-import { useXflowPrefixCls } from '@ali/xflow-core';
-import { WorkspacePanel } from '@ali/xflow-extension';
+import { useXflowPrefixCls, WorkspacePanel } from '@ali/xflow';
 import { IProps, IPanelProps } from './interface';
 import { NodePanelBody } from './panel-body';
 import { NodePanelHeader } from './panel-header';
-import { NodePanelFooter } from './panel-footer';
 import { usePanelLyaoutStyle } from './utils';
 import { useTreePanelData } from './service';
 
 import './style/index';
 
 export const NodeTreePanelMain: React.FC<IProps> = (props) => {
-  const { headerStyle, bodyStyle, footerStyle } = usePanelLyaoutStyle(props as IPanelProps);
+  const { headerStyle, bodyStyle } = usePanelLyaoutStyle(props as IPanelProps);
 
   const { state, onFolderExpand, onKeywordChange } = useTreePanelData(props);
 
@@ -24,7 +22,6 @@ export const NodeTreePanelMain: React.FC<IProps> = (props) => {
         onKeywordChange={onKeywordChange}
       />
       <NodePanelBody {...props} state={state} style={bodyStyle} onFolderExpand={onFolderExpand} />
-      {/* <NodePanelFooter {...props} state={state} style={footerStyle} /> */}
     </>
   );
 };

@@ -2,39 +2,32 @@ import React from 'react';
 import {
   XFlow,
   XFlowCanvas,
-  XFlowNodeCommands,
   XFlowGraphCommands,
-  ContextServiceUtils,
   NsGraphCmd,
-  NsGraph,
   FrontendApplication,
-} from '@ali/xflow-core';
-import { CanvasScaleToolbar, ContextMenuPanel } from '@ali/xflow-extension';
+  CanvasScaleToolbar,
+  ContextMenuPanel,
+} from '@ali/xflow';
 import { NodeTreePanel } from '../components/canvas-node-tree-panel';
-import { contextServiceConfig } from '../service';
-import { useGraphConfig, useGraphHook } from './config';
-import { onNodeDrop } from '../command';
-import { treeDataService, searchService } from '../components/nodePanel';
+import { treeDataService, searchService, onNodeDrop } from '../components/nodePanel';
 import { FormPanel } from '../components/editorPanel';
 import { ToolbarPanel } from '../components/toolbar';
 import { useMenuConfig } from '../components/menu';
 import Theme from '../theme';
 import { setProps } from '../util';
-
 import AppContext from '../context';
+import { useGraphConfig, useGraphHook } from './service';
 
 import { FlowchartConfig } from '../interface';
 
 import './index.less';
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  setProps(props);
   const { theme = 'light', editorPanelConfig, className, toolbarConfig, data, mode } = props;
+  setProps(props);
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
-
-  // const cmdConfig = useCmdConfig();
 
   const loadData = async (app: FrontendApplication) => {
     if (data) {
@@ -56,8 +49,6 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
       <AppContext.Provider value={{ theme: Theme[theme] }}>
         <XFlow
           className={className}
-          contextConfig={contextServiceConfig}
-          // commandConfig={cmdConfig}
           hookConfig={hookConfig}
           onAppReadyCallback={async (app, registry) => {
             loadData(app);
@@ -75,8 +66,6 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
     <AppContext.Provider value={{ theme: Theme[theme] }}>
       <XFlow
         className={className}
-        contextConfig={contextServiceConfig}
-        // commandConfig={cmdConfig}
         hookConfig={hookConfig}
         onAppReadyCallback={async (app, registry) => {
           loadData(app);

@@ -6,11 +6,11 @@ import {
   ContextServiceConstant,
   useContextAsState,
   createPromiseValue,
-} from '@ali/xflow-core';
-import { usePanelContext } from '@ali/xflow-extension';
+} from '@ali/xflow';
+import { usePanelContext } from '@ali/xflow';
 import { IProps, ITreeNode } from './interface';
 import { TREE_ROOT_ID } from './constants';
-// import { NsTreePanelData} from '@ali/xflow-extension/es/canvas-node-tree-panel/service'
+// import { NsTreePanelData} from '@ali/xflow/es/canvas-node-tree-panel/service'
 export namespace NsTreePanelData {
   export const id = 'TREE_PANEL_DATA';
   export interface IState {

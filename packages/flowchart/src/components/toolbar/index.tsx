@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow-extension';
+import { ToolbarPanel as XFlowToolbarPanel } from '@ali/xflow';
 import { useToolbarConfig } from './util';
 import { ToolbarPanelConfig } from '../../interface';
 
@@ -11,6 +11,7 @@ export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
     className,
     style,
   } = props;
+
   const toolbarConfig = !config || config instanceof Array ? useToolbarConfig() : config;
 
   return (

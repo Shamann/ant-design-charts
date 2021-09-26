@@ -5,8 +5,8 @@ import {
   ContextRegistry,
   ContextServiceConstant,
   GraphCommandRegistry,
-} from '@ali/xflow-core';
-import { PanelConfig } from '@ali/xflow-extension/es/workspace-panel/module';
+} from '@ali/xflow';
+import { PanelConfig } from '@ali/xflow/es/workspace-panel/module';
 import React from 'react';
 
 export interface IPanelProps {
@@ -14,6 +14,16 @@ export interface IPanelProps {
   bodyPosition: IPosition;
   footerPosition: IPosition;
 }
+
+export interface INodeFactoryArgs {
+  data: NsGraph.INodeConfig;
+  width: number;
+  height: number;
+  // X6_NODE_PORTAL_NODE_VIEW
+  view: string;
+  component: React.ReactNode;
+}
+
 export interface IProps extends Partial<IPanelProps> {
   position: IPosition;
   config?: PanelConfig;

@@ -45,7 +45,7 @@ const DemoArea: React.FC = () => {
   return (
     <div style={{ height: 600 }}>
       <Flowchart
-        data={data}
+        // data={data}
         mode={mode}
         onSaveData={(d) => {
           console.log(d);
@@ -92,30 +92,10 @@ const DemoArea: React.FC = () => {
         //     },
         //   ],
         // }}
-        editorPanelConfig={
-          {
-            // controlMapService,
-            // formSchemaService,
-            // position: { width: 240, top: 0, bottom: 0, right: 0 },
-          }
-        }
-        render={() => {
-          return (
-            <Fragment>
-              {/* <FormPanel
-                controlMapService={controlMapService}
-                formSchemaService={formSchemaService}
-                position={{ width: 240, top: 0, bottom: 0, right: 0 }}
-              /> */}
-              {/* <WorkspacePanel
-                className="xflow-workspace-toolbar-bottom"
-                position={{ bottom: 0, left: 240, right: 240, height: 40, lineHeight: 40 }}
-                style={{ borderTop: '1px solid #ccc' }}
-              >
-                <div> Bottom Toolbar </div>
-              </WorkspacePanel> */}
-            </Fragment>
-          );
+        editorPanelConfig={{
+          controlMapService,
+          formSchemaService,
+          position: { width: 240, top: 0, bottom: 0, right: 0 },
         }}
       />
     </div>

@@ -18,7 +18,7 @@ const Input: React.FC<any> = (props) => {
   }, [config]);
 
   return (
-    <div style={{ padding: '0 12px' }}>
+    <div>
       <label>标签: </label>
       <input value={label} onChange={onLabelChange} style={{ width: '100%' }} />
     </div>

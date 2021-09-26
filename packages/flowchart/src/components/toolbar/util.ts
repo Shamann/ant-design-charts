@@ -1,15 +1,15 @@
-import { createToolbarConfig } from '@ali/xflow-extension';
+import { createToolbarConfig } from '@ali/xflow';
 import {
   XFlowNodeCommands,
   XFlowGraphCommands,
   ContextServiceConstant,
-  ContextRegistry,
   ContextServiceUtils,
   NsGraph,
-} from '@ali/xflow-core';
-import { NsGraphCmd } from '@ali/xflow-core/es/command-contributions/interface';
-import { IToolbarItemProps } from '@ali/xflow-core/es/toolbar/interface';
-import { ICommandConfig } from '@ali/xflow-core/es/command/interface';
+  ICommandConfig,
+  IToolbarItemProps,
+  NsGraphCmd,
+} from '@ali/xflow';
+
 import { getProps } from '../../util';
 import { CommandPool } from './constants';
 
@@ -65,7 +65,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
       id: TOOLBAR_ITEMS.UNDO,
       command: TOOLBAR_ITEMS.UNDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.UndoCmd.IArgs>),
-      useContext: async (ctxService: ContextRegistry, setState: any) => {
+      useContext: async (ctxService, setState: any) => {
         const ctx = await ctxService.useContext<ContextServiceConstant.COMMAND_UNDOABLE.IState>(
           ContextServiceConstant.COMMAND_UNDOABLE.id,
         );
@@ -83,7 +83,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
       id: TOOLBAR_ITEMS.REDO,
       command: TOOLBAR_ITEMS.REDO,
       cmdOptions: async () => ({} as ICommandConfig<NsGraphCmd.RedoCmd.IArgs>),
-      useContext: async (ctxService: ContextRegistry, setState: any) => {
+      useContext: async (ctxService, setState: any) => {
         const ctx = await ctxService.useContext<ContextServiceConstant.COMMAND_REDOABLE.IState>(
           ContextServiceConstant.COMMAND_REDOABLE.id,
         );

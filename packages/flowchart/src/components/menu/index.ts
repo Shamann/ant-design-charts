@@ -1,15 +1,20 @@
-import { createCtxMenuConfig, NsMenuItems } from '@ali/xflow-extension';
-import { NsNodeCmd, NsEdgeCmd, ICommandConfig } from '@ali/xflow-core';
-import { IMenu, IMenuItem, MenuItemType } from '@ali/xflow-core/es/menu/interface';
 import {
+  createCtxMenuConfig,
+  NsMenuItems,
+  NsNodeCmd,
+  NsEdgeCmd,
+  ICommandConfig,
+  IMenu,
+  IMenuItem,
+  MenuItemType,
   IconStore,
   XFlowNodeCommands,
   XFlowEdgeCommands,
   ContextServiceUtils,
   NsGraph,
-} from '@ali/xflow-core';
+} from '@ali/xflow';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Edge, Node } from '@antv/x6';
+import { Edge } from '@antv/x6';
 
 /** menuitem 配置 */
 export namespace NsCustomMenuItems {

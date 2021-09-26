@@ -1,1 +1,1 @@
-export { Edge1 } from './edgeTooltip';
+export { LabelEdge } from './label';

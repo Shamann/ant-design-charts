@@ -2,8 +2,7 @@ import React from 'react';
 import { Input } from 'antd';
 import { IProps, IOnKeywordChange } from './interface';
 import { NsTreePanelData } from './service';
-import { usePanelContext } from '@ali/xflow-extension';
-// import './index.less'
+import { usePanelContext } from '@ali/xflow';
 
 export interface IHeaderProps extends IProps {
   onKeywordChange: IOnKeywordChange;
