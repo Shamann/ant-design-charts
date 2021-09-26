@@ -12,16 +12,27 @@ export const defaultFormSchemaService: NsConfigFormPanel.IFormSchamaService = as
             controls: [
               {
                 label: '节点名',
-                name: 'Tab1-1',
-                shape: 'Input',
-                disabled: false,
-                required: false,
-                tooltip: 'set width',
-                value: '',
-                defaultValue: '', // 可以认为是默认值
-                hidden: false,
-                options: [{ title: '', value: '' }],
-                originData: {}, // 原始数据
+                shape: 'node-service',
+                placeholder: '节点名称',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const edgeSchema: NsConfigFormPanel.ISchema = {
+    tabs: [
+      {
+        name: '基本信息',
+        groups: [
+          {
+            name: 'groupName',
+            controls: [
+              {
+                label: '边',
+                shape: 'edge-service',
+                placeholder: '边名称',
               },
             ],
           },
@@ -32,9 +43,11 @@ export const defaultFormSchemaService: NsConfigFormPanel.IFormSchamaService = as
   if (targetType === 'node') {
     return nodeSchema;
   }
+
+  if (targetType === 'edge') {
+    return edgeSchema;
+  }
   return {
     tabs: [],
   };
 };
-
-export const defaultUpdateService: NsConfigFormPanel.IFormValueUpdateService = async (args) => {};

@@ -1,6 +1,4 @@
-import React, { useRef, memo } from 'react';
-/** app 核心组件 */
-/** app 核心组件 */
+import React from 'react';
 import {
   XFlow,
   XFlowCanvas,
@@ -11,28 +9,17 @@ import {
   NsGraph,
   FrontendApplication,
 } from '@ali/xflow-core';
-import { KeyBindings } from '@ali/xflow-core';
-/** app 图缩放组件 */
-import {
-  CanvasScaleToolbar,
-  WorkspacePanel,
-  usePanelContext,
-  DagGraphExtension,
-  FormItemWrapper,
-  ContextMenuPanel,
-  // NodeTreePanel,
-} from '@ali/xflow-extension';
+import { CanvasScaleToolbar, ContextMenuPanel } from '@ali/xflow-extension';
 import { NodeTreePanel } from '../components/canvas-node-tree-panel';
 import { contextServiceConfig } from '../service';
-import { useGraphConfig, keybindingConfig, useGraphHook } from './config';
+import { useGraphConfig, useGraphHook } from './config';
 import { onNodeDrop } from '../command';
 import { treeDataService, searchService } from '../components/nodePanel';
+import { FormPanel } from '../components/editorPanel';
 import { ToolbarPanel } from '../components/toolbar';
-// import { CanvasScaleToolbar } from '../components/canvas-scale-toolbar/components';
 import { useMenuConfig } from '../components/menu';
 import Theme from '../theme';
 import { setProps } from '../util';
-// import { useGraph } from '../hooks/useGraph';
 
 import AppContext from '../context';
 
@@ -42,7 +29,7 @@ import './index.less';
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
   setProps(props);
-  const { theme = 'light', render, className, toolbarConfig, data, mode } = props;
+  const { theme = 'light', editorPanelConfig, className, toolbarConfig, data, mode } = props;
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
@@ -106,8 +93,7 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
           <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
           <ContextMenuPanel config={menuConfig} />
         </XFlowCanvas>
-        {render && render()}
-        <KeyBindings config={keybindingConfig} />
+        <FormPanel {...editorPanelConfig} />
       </XFlow>
     </AppContext.Provider>
   );

@@ -8,6 +8,7 @@ import {
   ContextRegistry,
   NsGraph,
   GraphPluginConfig,
+  IPosition,
   NsGraphConfig,
 } from '@ali/xflow-core';
 import { NsConfigFormPanel } from '@ali/xflow-extension';
@@ -49,7 +50,7 @@ export interface ToolbarPanelConfig extends Omit<ToolbarConfig, 'config'> {
 }
 
 export interface EditorPanelConfig {
-  register: (editorMap: NsConfigFormPanel.IControlMap) => NsConfigFormPanel.IControlMap;
+  controlMapService: (editorMap: NsConfigFormPanel.IControlMap) => NsConfigFormPanel.IControlMap;
   panelService: Promise<
     (args: {
       values: Record<string, any>;
@@ -58,25 +59,10 @@ export interface EditorPanelConfig {
       commands: GraphCommandRegistry;
     }) => NsConfigFormPanel.ISchema
   >;
-  onUpdated?: Promise<
-    (args: {
-      values: Record<string, any>;
-      currentNode: NsGraph.INodeConfig | null;
-      contextService: ContextRegistry;
-      commands: GraphCommandRegistry;
-    }) => void
-  >;
+  position?: IPosition;
 }
 
-export interface IGraph {
-  __proto__: {
-    [key: string]: (params: any) => unknown;
-  };
-  app: FrontendApplication;
-  registry: ExtensionRegistry;
-}
-
-export interface RegisrerNode {
+export interface CustomNode {
   name: string;
   component: NsGraphConfig.INodeRender<any>;
   popover?: React.Component<any>;
@@ -86,9 +72,8 @@ export interface RegisrerNode {
   ports?: any;
 }
 
-export interface RegisrerNodes {
-  nodes: RegisrerNode[];
-  config: unknown;
+export interface RegisterNode {
+  nodes: CustomNode[];
 }
 
 // Flowchart 通用配置
@@ -99,19 +84,19 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
   theme?: 'light' | 'dark';
   /** 模式 */
   mode: 'edit' | 'scan';
-
-  /** 图表渲染完成回调 */
-  render?: () => React.ReactNode;
   /** 点击回调，仅支持 save-graph-data */
   onSaveData?: (data: Datum) => void;
+  /** 自定义节点 */
+  registerNode: RegisterNode;
+  /** toolbar */
+  toolbarConfig: ToolbarPanelConfig;
+  /** form editor */
+  editorPanelConfig?: EditorPanelConfig;
+
   /** xflow config */
   xflowPrefixCls?: string;
   graphConfig?: GraphConfig;
   graphPluginConfig?: GraphPluginConfig;
   contextConfig?: ContextConfig;
   commandConfig?: CommandConfig;
-  toolbarConfig: ToolbarPanelConfig;
-  registerNode: RegisrerNodes;
-  /** editor */
-  editorPanelConfig?: EditorPanelConfig;
 }
