@@ -1,4 +1,3 @@
-// import { EditorShape } from './custom-editor';
 import { Rename } from './rename';
 import { Position } from './position';
 import { EdgeLabel } from './label';

@@ -1,18 +1,18 @@
 export const data = {
   nodes: [
     {
-      id: '05b0cd5f-c6fb-4494-b311-1921cac69f89',
-      renderKey: 'terminator',
-      name: 'custom-terminator',
+      id: '62ba557c-6033-4858-8bb8-21c13c1fa5a7',
+      renderKey: 'Terminal',
+      name: 'Node-Terminal',
       label: 'start',
       width: 60,
       height: 40,
       ports: {
         items: [
-          { group: 'top', id: '09c2fe6a-f3b1-47d9-b56f-63073197ded2' },
-          { group: 'right', id: 'a59fc25a-0ad5-46f7-8ca1-aad99a48d453' },
-          { group: 'bottom', id: 'c3758d15-e20a-49fc-a583-f7941db056d0' },
-          { group: 'left', id: 'b00fdacd-f02e-4223-83e9-54949bb20008' },
+          { group: 'top', id: '3c15be5a-2517-48ee-821f-05ada2790a1e' },
+          { group: 'right', id: 'ce6850b2-c60d-4474-85da-5bb8e09bbba2' },
+          { group: 'bottom', id: 'c1dabf33-e9ee-4ef7-96be-fda6981874fa' },
+          { group: 'left', id: '05324f6b-ce32-40f8-95fa-7bb11b951e25' },
         ],
         groups: {
           top: {
@@ -74,99 +74,22 @@ export const data = {
         },
       },
       isLeaf: true,
-      x: 460,
-      y: 50,
+      x: 140,
+      y: 70,
     },
     {
-      id: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-      renderKey: 'decision',
-      name: 'custom-decision',
-      label: '',
-      width: 80,
-      height: 60,
-      ports: {
-        items: [
-          { group: 'top', id: '1342a2e8-1501-4088-8ae6-47eb5924c8a7' },
-          { group: 'right', id: '36f3d825-5176-4d9e-8a8a-2ae7699c3f24' },
-          { group: 'bottom', id: '601fa7bc-0236-44dc-be4d-01e24bf27b0b' },
-          { group: 'left', id: '63a36983-e3f2-407d-8e3a-07a089a67856' },
-        ],
-        groups: {
-          top: {
-            position: { name: 'top' },
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#31d0c6',
-                strokeWidth: 2,
-                fill: '#fff',
-                style: { visibility: 'hidden' },
-              },
-            },
-            zIndex: 10,
-          },
-          right: {
-            position: { name: 'right' },
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#31d0c6',
-                strokeWidth: 2,
-                fill: '#fff',
-                style: { visibility: 'hidden' },
-              },
-            },
-            zIndex: 10,
-          },
-          bottom: {
-            position: { name: 'bottom' },
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#31d0c6',
-                strokeWidth: 2,
-                fill: '#fff',
-                style: { visibility: 'hidden' },
-              },
-            },
-            zIndex: 10,
-          },
-          left: {
-            position: { name: 'left' },
-            attrs: {
-              circle: {
-                r: 4,
-                magnet: true,
-                stroke: '#31d0c6',
-                strokeWidth: 2,
-                fill: '#fff',
-                style: { visibility: 'hidden' },
-              },
-            },
-            zIndex: 10,
-          },
-        },
-      },
-      isLeaf: true,
-      x: 450,
-      y: 230,
-    },
-    {
-      id: '72becbf2-b5b0-426d-8a15-a0df6f306018',
-      renderKey: 'process',
-      name: 'custom-process',
+      id: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+      renderKey: 'Decision',
+      name: 'Node-Decision',
       label: '',
       width: 60,
       height: 40,
       ports: {
         items: [
-          { group: 'top', id: '4570c126-77b4-47dd-9adf-c1a8e5183f22' },
-          { group: 'right', id: 'b8774bbe-c9da-4e59-a1c2-68c8374f67c3' },
-          { group: 'bottom', id: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1' },
-          { group: 'left', id: 'b4bc1ba8-8bd7-42c1-a89d-1d2b06236a7a' },
+          { group: 'top', id: '0516daa8-6033-4dc9-b20d-cdea607a8c6d' },
+          { group: 'right', id: 'a3a0299e-f083-4599-935d-62b77a3d7e46' },
+          { group: 'bottom', id: '6df450b8-8ede-4f5b-a5ba-9b2721f43b89' },
+          { group: 'left', id: '4a0ac8fd-6d4a-4087-bd87-bcfde967478b' },
         ],
         groups: {
           top: {
@@ -228,22 +151,22 @@ export const data = {
         },
       },
       isLeaf: true,
-      x: 460,
-      y: 143,
+      x: 140,
+      y: 260,
     },
     {
-      id: '0ad04306-453d-405f-9e60-7e48151e43a6',
-      renderKey: 'process',
-      name: 'custom-process',
-      label: '',
+      id: 'a9202ecf-91dc-4d48-a026-0390e9d28832',
+      renderKey: 'Process',
+      name: 'Node-Process',
+      label: 'process',
       width: 60,
       height: 40,
       ports: {
         items: [
-          { group: 'top', id: '4570c126-77b4-47dd-9adf-c1a8e5183f22' },
-          { group: 'right', id: 'b8774bbe-c9da-4e59-a1c2-68c8374f67c3' },
-          { group: 'bottom', id: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1' },
-          { group: 'left', id: 'b4bc1ba8-8bd7-42c1-a89d-1d2b06236a7a' },
+          { group: 'top', id: '8aeb2886-b86b-4f63-8510-a913e11a53f6' },
+          { group: 'right', id: '2b2b2fa1-4e7b-4952-a02c-a6ced0af1840' },
+          { group: 'bottom', id: 'a6295806-251d-4300-a9dc-a2a8d592e4ef' },
+          { group: 'left', id: 'd7e2433e-00a6-4b13-99a5-129ddca1bae5' },
         ],
         groups: {
           top: {
@@ -305,22 +228,22 @@ export const data = {
         },
       },
       isLeaf: true,
-      x: 360,
-      y: 340,
+      x: 140,
+      y: 173,
     },
     {
-      id: '00f9699d-7adf-4b94-8ca9-0a3ddac2d20f',
-      renderKey: 'process',
-      name: 'custom-process',
-      label: '',
+      id: 'a8f2ef5f-1b9e-4867-9bf8-2b70b50c4582',
+      renderKey: 'Terminal',
+      name: 'Node-Terminal',
+      label: 'end',
       width: 60,
       height: 40,
       ports: {
         items: [
-          { group: 'top', id: '4570c126-77b4-47dd-9adf-c1a8e5183f22' },
-          { group: 'right', id: 'b8774bbe-c9da-4e59-a1c2-68c8374f67c3' },
-          { group: 'bottom', id: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1' },
-          { group: 'left', id: 'b4bc1ba8-8bd7-42c1-a89d-1d2b06236a7a' },
+          { group: 'top', id: '3c15be5a-2517-48ee-821f-05ada2790a1e' },
+          { group: 'right', id: 'ce6850b2-c60d-4474-85da-5bb8e09bbba2' },
+          { group: 'bottom', id: 'c1dabf33-e9ee-4ef7-96be-fda6981874fa' },
+          { group: 'left', id: '05324f6b-ce32-40f8-95fa-7bb11b951e25' },
         ],
         groups: {
           top: {
@@ -382,22 +305,22 @@ export const data = {
         },
       },
       isLeaf: true,
-      x: 550,
-      y: 340,
+      x: 140,
+      y: 363,
     },
     {
-      id: 'd4515572-2921-4628-b36e-b2e01892fc75',
-      renderKey: 'terminator',
-      name: 'custom-terminator',
-      label: '',
+      id: '0148a099-194a-422d-bd32-86fa8f4ed3f2',
+      renderKey: 'Process',
+      name: 'Node-Process',
+      label: 'control',
       width: 60,
       height: 40,
       ports: {
         items: [
-          { group: 'top', id: '09c2fe6a-f3b1-47d9-b56f-63073197ded2' },
-          { group: 'right', id: 'a59fc25a-0ad5-46f7-8ca1-aad99a48d453' },
-          { group: 'bottom', id: 'c3758d15-e20a-49fc-a583-f7941db056d0' },
-          { group: 'left', id: 'b00fdacd-f02e-4223-83e9-54949bb20008' },
+          { group: 'top', id: '8aeb2886-b86b-4f63-8510-a913e11a53f6' },
+          { group: 'right', id: '2b2b2fa1-4e7b-4952-a02c-a6ced0af1840' },
+          { group: 'bottom', id: 'a6295806-251d-4300-a9dc-a2a8d592e4ef' },
+          { group: 'left', id: 'd7e2433e-00a6-4b13-99a5-129ddca1bae5' },
         ],
         groups: {
           top: {
@@ -459,22 +382,22 @@ export const data = {
         },
       },
       isLeaf: true,
-      x: 460,
-      y: 430,
+      x: 250,
+      y: 260,
     },
   ],
   edges: [
     {
-      id: '279d9a9e-0cd0-4207-aa98-c1c7f23b9db6',
-      targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-      sourcePortId: 'c3758d15-e20a-49fc-a583-f7941db056d0',
+      id: 'f296eeed-769a-4765-a42d-ba85a1bbaa27',
+      targetPortId: '8aeb2886-b86b-4f63-8510-a913e11a53f6',
+      sourcePortId: 'c1dabf33-e9ee-4ef7-96be-fda6981874fa',
       source: {
-        cell: '05b0cd5f-c6fb-4494-b311-1921cac69f89',
-        port: 'c3758d15-e20a-49fc-a583-f7941db056d0',
+        cell: '62ba557c-6033-4858-8bb8-21c13c1fa5a7',
+        port: 'c1dabf33-e9ee-4ef7-96be-fda6981874fa',
       },
       target: {
-        cell: '72becbf2-b5b0-426d-8a15-a0df6f306018',
-        port: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
+        cell: 'a9202ecf-91dc-4d48-a026-0390e9d28832',
+        port: '8aeb2886-b86b-4f63-8510-a913e11a53f6',
       },
       attrs: {
         line: {
@@ -485,23 +408,23 @@ export const data = {
         },
       },
       data: {
-        targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-        sourcePortId: 'c3758d15-e20a-49fc-a583-f7941db056d0',
-        source: '05b0cd5f-c6fb-4494-b311-1921cac69f89',
-        target: '72becbf2-b5b0-426d-8a15-a0df6f306018',
+        targetPortId: '8aeb2886-b86b-4f63-8510-a913e11a53f6',
+        sourcePortId: 'c1dabf33-e9ee-4ef7-96be-fda6981874fa',
+        source: '62ba557c-6033-4858-8bb8-21c13c1fa5a7',
+        target: 'a9202ecf-91dc-4d48-a026-0390e9d28832',
       },
     },
     {
-      id: '218a69d1-5fa9-4c56-aa35-d070805f859f',
-      targetPortId: '1342a2e8-1501-4088-8ae6-47eb5924c8a7',
-      sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
+      id: 'fe3fd197-0a3f-47fd-842a-aefeba1d98b1',
+      targetPortId: '0516daa8-6033-4dc9-b20d-cdea607a8c6d',
+      sourcePortId: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
       source: {
-        cell: '72becbf2-b5b0-426d-8a15-a0df6f306018',
-        port: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
+        cell: 'a9202ecf-91dc-4d48-a026-0390e9d28832',
+        port: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
       },
       target: {
-        cell: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-        port: '1342a2e8-1501-4088-8ae6-47eb5924c8a7',
+        cell: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+        port: '0516daa8-6033-4dc9-b20d-cdea607a8c6d',
       },
       attrs: {
         line: {
@@ -512,23 +435,23 @@ export const data = {
         },
       },
       data: {
-        targetPortId: '1342a2e8-1501-4088-8ae6-47eb5924c8a7',
-        sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
-        source: '72becbf2-b5b0-426d-8a15-a0df6f306018',
-        target: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
+        targetPortId: '0516daa8-6033-4dc9-b20d-cdea607a8c6d',
+        sourcePortId: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
+        source: 'a9202ecf-91dc-4d48-a026-0390e9d28832',
+        target: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
       },
     },
     {
-      id: 'c413fc55-66c8-4754-9213-ebb37c6de498',
-      targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-      sourcePortId: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
+      id: '7778ce7a-c141-4e2f-a3ef-05e31ccaeef5',
+      targetPortId: '3c15be5a-2517-48ee-821f-05ada2790a1e',
+      sourcePortId: '6df450b8-8ede-4f5b-a5ba-9b2721f43b89',
       source: {
-        cell: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-        port: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
+        cell: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+        port: '6df450b8-8ede-4f5b-a5ba-9b2721f43b89',
       },
       target: {
-        cell: '0ad04306-453d-405f-9e60-7e48151e43a6',
-        port: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
+        cell: 'a8f2ef5f-1b9e-4867-9bf8-2b70b50c4582',
+        port: '3c15be5a-2517-48ee-821f-05ada2790a1e',
       },
       attrs: {
         line: {
@@ -539,23 +462,23 @@ export const data = {
         },
       },
       data: {
-        targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-        sourcePortId: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
-        source: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-        target: '0ad04306-453d-405f-9e60-7e48151e43a6',
+        targetPortId: '3c15be5a-2517-48ee-821f-05ada2790a1e',
+        sourcePortId: '6df450b8-8ede-4f5b-a5ba-9b2721f43b89',
+        source: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+        target: 'a8f2ef5f-1b9e-4867-9bf8-2b70b50c4582',
       },
     },
     {
-      id: '7305d5d9-7275-4472-b141-83c373893dd8',
-      targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-      sourcePortId: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
+      id: '9b655c0e-f03a-4c38-b1a3-3ae4a5bc0e06',
+      targetPortId: 'd7e2433e-00a6-4b13-99a5-129ddca1bae5',
+      sourcePortId: 'a3a0299e-f083-4599-935d-62b77a3d7e46',
       source: {
-        cell: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-        port: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
+        cell: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+        port: 'a3a0299e-f083-4599-935d-62b77a3d7e46',
       },
       target: {
-        cell: '00f9699d-7adf-4b94-8ca9-0a3ddac2d20f',
-        port: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
+        cell: '0148a099-194a-422d-bd32-86fa8f4ed3f2',
+        port: 'd7e2433e-00a6-4b13-99a5-129ddca1bae5',
       },
       attrs: {
         line: {
@@ -566,23 +489,23 @@ export const data = {
         },
       },
       data: {
-        targetPortId: '4570c126-77b4-47dd-9adf-c1a8e5183f22',
-        sourcePortId: '601fa7bc-0236-44dc-be4d-01e24bf27b0b',
-        source: '28f1fe6e-3630-472c-a6fe-adb64a16070b',
-        target: '00f9699d-7adf-4b94-8ca9-0a3ddac2d20f',
+        targetPortId: 'd7e2433e-00a6-4b13-99a5-129ddca1bae5',
+        sourcePortId: 'a3a0299e-f083-4599-935d-62b77a3d7e46',
+        source: '7706d7d9-5646-4455-baf1-bfd51ebfcab1',
+        target: '0148a099-194a-422d-bd32-86fa8f4ed3f2',
       },
     },
     {
-      id: 'afe10813-12b8-4d58-b88d-ee7f3efa8c72',
-      targetPortId: 'b00fdacd-f02e-4223-83e9-54949bb20008',
-      sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
+      id: '6a4872ae-e223-4852-ba99-28655a3c1520',
+      targetPortId: 'ce6850b2-c60d-4474-85da-5bb8e09bbba2',
+      sourcePortId: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
       source: {
-        cell: '0ad04306-453d-405f-9e60-7e48151e43a6',
-        port: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
+        cell: '0148a099-194a-422d-bd32-86fa8f4ed3f2',
+        port: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
       },
       target: {
-        cell: 'd4515572-2921-4628-b36e-b2e01892fc75',
-        port: 'b00fdacd-f02e-4223-83e9-54949bb20008',
+        cell: 'a8f2ef5f-1b9e-4867-9bf8-2b70b50c4582',
+        port: 'ce6850b2-c60d-4474-85da-5bb8e09bbba2',
       },
       attrs: {
         line: {
@@ -593,37 +516,10 @@ export const data = {
         },
       },
       data: {
-        targetPortId: 'b00fdacd-f02e-4223-83e9-54949bb20008',
-        sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
-        source: '0ad04306-453d-405f-9e60-7e48151e43a6',
-        target: 'd4515572-2921-4628-b36e-b2e01892fc75',
-      },
-    },
-    {
-      id: 'a44bb5d6-4ca9-4fdc-a18d-d0a0d36404a1',
-      targetPortId: 'a59fc25a-0ad5-46f7-8ca1-aad99a48d453',
-      sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
-      source: {
-        cell: '00f9699d-7adf-4b94-8ca9-0a3ddac2d20f',
-        port: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
-      },
-      target: {
-        cell: 'd4515572-2921-4628-b36e-b2e01892fc75',
-        port: 'a59fc25a-0ad5-46f7-8ca1-aad99a48d453',
-      },
-      attrs: {
-        line: {
-          stroke: '#A2B1C3',
-          targetMarker: { name: 'block', width: 12, height: 8 },
-          strokeDasharray: '5 5',
-          strokeWidth: 1,
-        },
-      },
-      data: {
-        targetPortId: 'a59fc25a-0ad5-46f7-8ca1-aad99a48d453',
-        sourcePortId: 'eb1c341a-6e66-4ba7-88b3-9f8f0d68fdc1',
-        source: '00f9699d-7adf-4b94-8ca9-0a3ddac2d20f',
-        target: 'd4515572-2921-4628-b36e-b2e01892fc75',
+        targetPortId: 'ce6850b2-c60d-4474-85da-5bb8e09bbba2',
+        sourcePortId: 'a6295806-251d-4300-a9dc-a2a8d592e4ef',
+        source: '0148a099-194a-422d-bd32-86fa8f4ed3f2',
+        target: 'a8f2ef5f-1b9e-4867-9bf8-2b70b50c4582',
       },
     },
   ],

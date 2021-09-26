@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const RegisterNode1 = (props) => {
+export const CustomNode = (props) => {
   const { size = {}, data } = props;
 
   const { width = 60, height = 40 } = size;

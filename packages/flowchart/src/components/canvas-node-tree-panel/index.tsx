@@ -24,7 +24,7 @@ export const NodeTreePanelMain: React.FC<IProps> = (props) => {
         onKeywordChange={onKeywordChange}
       />
       <NodePanelBody {...props} state={state} style={bodyStyle} onFolderExpand={onFolderExpand} />
-      <NodePanelFooter {...props} state={state} style={footerStyle} />
+      {/* <NodePanelFooter {...props} state={state} style={footerStyle} /> */}
     </>
   );
 };

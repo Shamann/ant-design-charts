@@ -1,5 +1,5 @@
 import type { NsConfigFormPanel } from '@ant-design/charts';
-import { controlMapService, ControlShapeEnum } from './custom';
+import { controlMapService } from './custom';
 
 export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
   const { targetType } = args;
@@ -17,6 +17,8 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
                 name: 'Tab1-0',
                 /** 使用自定义shape */
                 shape: 'custom-rename',
+                placeholder: 'rename',
+                disabled: false,
               },
             ],
           },

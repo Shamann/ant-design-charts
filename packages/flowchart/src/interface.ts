@@ -29,13 +29,20 @@ export type Datum = {
   egdes?: unknown[];
 };
 
-export type Command = 'undo' | 'redo' | 'copy' | 'paste' | 'zoom';
-
 export type CommandConfig = XFlowCommandConfig | Array<{ command: Command; text?: string }>;
 
 export type ContextConfig = XFlowContextConfig;
 
-export type CommandItem = { command: Command; text?: string };
+export type Command = 'undo-cmd' | 'redo-cmd' | 'front-node' | 'back-node' | 'save-graph-data';
+
+export type CommandItem = {
+  /** 命令 */
+  command: Command;
+  /** 名称 */
+  text?: string;
+  /** icon */
+  iconName?: string;
+};
 
 export interface ToolbarPanelConfig extends Omit<ToolbarConfig, 'config'> {
   config?: ToolbarConfig['config'] | Array<CommandItem>;
@@ -86,12 +93,17 @@ export interface RegisrerNodes {
 
 // Flowchart 通用配置
 export interface FlowchartConfig extends FlowchartContainerConfig {
-  /** 是否缩放节点大小自适应容器 */
-  autoFit?: boolean;
-  width?: number;
-  height?: number;
-
+  /** 默认数据 */
   data?: Datum;
+  /** 主题 */
+  theme?: 'light' | 'dark';
+  /** 模式 */
+  mode: 'edit' | 'scan';
+
+  /** 图表渲染完成回调 */
+  render?: () => React.ReactNode;
+  /** 点击回调，仅支持 save-graph-data */
+  onSaveData?: (data: Datum) => void;
   /** xflow config */
   xflowPrefixCls?: string;
   graphConfig?: GraphConfig;
@@ -99,21 +111,7 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
   contextConfig?: ContextConfig;
   commandConfig?: CommandConfig;
   toolbarConfig: ToolbarPanelConfig;
-  registerNodes: RegisrerNodes;
+  registerNode: RegisrerNodes;
   /** editor */
   editorPanelConfig?: EditorPanelConfig;
-  onAppConfigReadyCallback?: IConfigReadyCallback;
-  meta: {
-    flowId?: string;
-    [id: string]: any;
-  };
-  /** 模式 */
-  mode: 'edit' | 'scan';
-  /** 是否开启动画 */
-  animate?: boolean;
-  /** 图表渲染完成回调 */
-  // onReady?: (graph: IGraph, registry?: ExtensionRegistry) => void;
-  onReady?: IAppReadyCallback;
-  /** 图表渲染完成回调 */
-  render?: () => React.ReactNode;
 }

@@ -5,6 +5,8 @@ export const searchService: NsNodeTreePanel.ISearchService = async (
   treeNodeList: NsNodeTreePanel.ITreeNode[] = [],
   keyword: string,
 ) => {
-  const list = treeNodeList.filter((i) => i.isDirectory || i.label.includes(keyword));
+  const list = treeNodeList.filter(
+    (i) => i.isDirectory || i.label.includes(keyword) || i.name.includes(keyword),
+  );
   return list;
 };

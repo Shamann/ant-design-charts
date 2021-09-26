@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { AppContext } from '../../index';
-import { NODE_HEIGHT, NODE_WIDTH, NODE_PADDING } from '../../constants';
+import { createPath } from '../../util';
+import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
-export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
+export const OrNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },
@@ -11,6 +12,14 @@ export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
+  const path1 = [
+    ['M', height / 2, NODE_PADDING], // top-center
+    ['L', height / 2, height - 2 * NODE_PADDING], // bottom-center
+  ];
+  const path2 = [
+    ['M', NODE_PADDING, height / 2], // left-center
+    ['L', height - 2 * NODE_PADDING, height / 2], // right-center
+  ];
 
   return (
     <div style={{ width, height, textAlign: 'center' }}>
@@ -25,8 +34,10 @@ export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
           }}
           stroke={stateNodeConfig.stroke}
         />
+        <path d={createPath(path1)} stroke={stateNodeConfig.stroke} />
+        <path d={createPath(path2)} stroke={stateNodeConfig.stroke} />
         <text
-          x={height / 2}
+          x={width / 2}
           y={height / 2}
           fill={stateLabelConfig.fill}
           textAnchor="middle"

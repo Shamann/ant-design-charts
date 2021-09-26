@@ -1,9 +1,6 @@
 /**
  * 全量 Command，用户通过 name 指定，支持配置式和命令式
- * enum Command {Undo, Redo, Copy, Paste, Remove, ZoomIn, ZoomOut}
- * eg:
- *   配置式：<Command name={name}> ReactNode </Command>;
- *   命令式：graphInstance.ZoomIn(factor: number);
+ * enum Command {Undo, Redo, SaveGraphData,frontNode,backNode}
  */
 
 /** undo 操作 */

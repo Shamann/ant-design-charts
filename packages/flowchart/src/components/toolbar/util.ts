@@ -22,7 +22,31 @@ export namespace TOOLBAR_ITEMS {
 }
 
 export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
-  const { config = [] } = getProps('toolbarConfig');
+  const {
+    config = [
+      {
+        command: CommandPool.REDO_CMD,
+        text: '重做',
+      },
+      {
+        command: CommandPool.UNDO_CMD,
+        text: '撤销',
+      },
+      {
+        command: CommandPool.FRONT_NODE,
+        text: '置前',
+      },
+      {
+        command: CommandPool.BACK_NODE,
+        text: '置后',
+      },
+      {
+        command: CommandPool.SAVE_GRAPH_DATA,
+        text: '保存',
+      },
+    ],
+  } = getProps('toolbarConfig') ?? {};
+
   const getIconName = (commandName: string) => {
     if (!Object.values(CommandPool).includes(commandName)) {
       console.warn(`unknown command: ${commandName}`);
@@ -32,6 +56,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
       (item: { command: string; iconName: string }) => item.command === commandName,
     );
   };
+
   /** 生产 toolbar item */
   toolbarConfig.setToolbarItemRegisterFn((registry) => {
     /** 撤销 */
@@ -51,6 +76,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+
     /** 重做 */
     registry.registerToolbarItem({
       ...getIconName(CommandPool.REDO_CMD),
@@ -68,6 +94,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+
     /** 保存数据 */
     registry.registerToolbarItem({
       ...getIconName(CommandPool.SAVE_GRAPH_DATA),
@@ -78,9 +105,9 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         return {
           args: {
             saveGraphDataService: (meta, graphData) => {
-              const { callback } = getIconName(CommandPool.SAVE_GRAPH_DATA);
-              if (callback) {
-                callback(graphData);
+              const onSaveData = getProps('onSaveData');
+              if (onSaveData) {
+                onSaveData(graphData);
               }
             },
           },
@@ -92,7 +119,6 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
           ContextServiceConstant.GRAPH_META.id,
         );
         const meta = await ctx.getValidValue();
-        console.log(meta, 'meta');
 
         if (meta.flowId) {
           setState((state) => {
@@ -106,6 +132,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+
     /** 前置 */
     registry.registerToolbarItem({
       ...getIconName(CommandPool.FRONT_NODE),
@@ -133,6 +160,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         });
       },
     });
+
     /** 后置 */
     registry.registerToolbarItem({
       ...getIconName(CommandPool.BACK_NODE),

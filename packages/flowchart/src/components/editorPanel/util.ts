@@ -1,7 +1,7 @@
 import type { NsConfigFormPanel } from '@ali/xflow-extension';
 
 export const defaultFormSchemaService: NsConfigFormPanel.IFormSchamaService = async (args) => {
-  const { currentNode } = args;
+  const { targetType } = args;
   const nodeSchema: NsConfigFormPanel.ISchema = {
     tabs: [
       {
@@ -29,7 +29,7 @@ export const defaultFormSchemaService: NsConfigFormPanel.IFormSchamaService = as
       },
     ],
   };
-  if (currentNode) {
+  if (targetType === 'node') {
     return nodeSchema;
   }
   return {

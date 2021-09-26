@@ -17,7 +17,13 @@ export const NodePanelHeader: React.FC<IHeaderProps> = (props) => {
 
   return (
     <React.Fragment>
-      <div className={`${prefixClz}-header`} style={props.style}>
+      <div
+        className={`${prefixClz}-header`}
+        style={{
+          zIndex: 1,
+          ...props.style,
+        }}
+      >
         {panelProps.header && React.isValidElement(panelProps.header) && panelProps.header}
         {panelProps.searchService && (
           <div className={`${prefixClz}-header-search`}>

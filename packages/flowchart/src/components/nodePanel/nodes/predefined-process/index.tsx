@@ -3,9 +3,6 @@ import { NsGraphConfig } from '@ali/xflow-core';
 import { AppContext } from '../../index';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
-import './index.less';
-
-export { popover as PredefinedProcessNodePopover } from './popover';
 
 export const PredefinedProcessNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
@@ -27,18 +24,7 @@ export const PredefinedProcessNode: NsGraphConfig.INodeRender = (props) => {
   ];
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      // viewBox={`0 0 40 30`}
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-    >
-      <defs>
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="0" stdDeviation="0.5" floodColor="cyan" />
-        </filter>
-      </defs>
+    <svg width={width} height={height}>
       <path
         d={createPath(path)}
         fill={stateNodeConfig.fill}

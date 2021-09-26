@@ -2,9 +2,6 @@ import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { AppContext } from '../../index';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
-import './index.less';
-
-export { popover as TerminalNodePopover } from './popover';
 
 export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
@@ -23,7 +20,12 @@ export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
       width={width}
       height={height}
     >
-      <rect />
+      {/* 一次注册，多次调用 */}
+      <defs>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="0" stdDeviation="0.5" floodColor="#fff" />
+        </filter>
+      </defs>
       <rect
         x={NODE_PADDING}
         y={NODE_PADDING}
@@ -33,6 +35,10 @@ export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
         height={height - 2 * NODE_PADDING}
         fill={stateNodeConfig.fill}
         stroke={stateNodeConfig.stroke}
+        style={{
+          fill: '#fff',
+          filter: 'url(#shadow)',
+        }}
       />
       <text
         x={width / 2}

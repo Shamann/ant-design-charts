@@ -13,7 +13,7 @@ import {
 } from '@ali/xflow-core';
 import { Edge, Shape } from '@antv/x6';
 import { IEvent } from '@ali/xflow-core/es/hooks/interface';
-import { NodeConstants, registerNode } from '../../components/nodePanel';
+import { NODE_HEIGHT, setNodeRender } from '../../components/nodePanel';
 
 import { registerEdge, DefaultEdgeConfig } from '../../components/edgePanel';
 import { movedNode, resizeNode, changePortsVisible } from './events';
@@ -111,17 +111,17 @@ const XFlowEdge = Shape.Edge.registry.register(
 
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config, getProps) => {
-  const { mode = 'edit', registerNodes } = getProps();
+  const { mode = 'edit', registerNode } = getProps();
   // config.setNodeTypeParser((node) => node?.renderKey);
   // config.setEdgeTypeParser((edge) => edge?.renderKey);
   registerEdge(config);
-  registerNode(config, registerNodes);
+  setNodeRender(config, registerNode);
   config.setX6Config({
     grid: true,
     resizing: {
       enabled: true,
-      minWidth: NodeConstants.NODE_HEIGHT,
-      minHeight: NodeConstants.NODE_HEIGHT,
+      minWidth: NODE_HEIGHT,
+      minHeight: NODE_HEIGHT,
       preserveAspectRatio: (shape) => {
         const { data } = shape;
         return data?.name === 'custom-circle';

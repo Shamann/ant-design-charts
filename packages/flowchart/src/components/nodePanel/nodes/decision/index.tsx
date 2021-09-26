@@ -2,12 +2,10 @@ import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow-core';
 import { AppContext } from '../../index';
 import { createPath } from '../../util';
-import { NODE_HEIGHT, NODE_PADDING } from '../../constants';
-
-export { popover as DecisionNodePopover } from './popover';
+import { NODE_HEIGHT, NODE_PADDING, NODE_WIDTH } from '../../constants';
 
 export const DecisionNode: NsGraphConfig.INodeRender = (props) => {
-  const { size = { width: NODE_HEIGHT, height: NODE_HEIGHT }, data } = props;
+  const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },
   } = useContext(AppContext) as any;
@@ -25,7 +23,15 @@ export const DecisionNode: NsGraphConfig.INodeRender = (props) => {
 
   return (
     <svg width={width} height={height}>
-      <path d={createPath(path)} fill={stateNodeConfig.fill} stroke={stateNodeConfig.stroke} />
+      <path
+        d={createPath(path)}
+        fill={stateNodeConfig.fill}
+        stroke={stateNodeConfig.stroke}
+        style={{
+          fill: '#fff',
+          filter: 'url(#shadow)',
+        }}
+      />
       <text
         x={width / 2}
         y={height / 2}
