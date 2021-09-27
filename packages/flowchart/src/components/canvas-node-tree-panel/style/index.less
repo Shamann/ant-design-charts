@@ -23,18 +23,19 @@
   }
 
   &-body {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    padding: 8px 0;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    padding-top: 48px;
     overflow-x: hidden;
     overflow-y: auto;
     background: @body-bg;
+    cursor: grab;
   }
 
   &-node-wrapper {
+    display: flex;
+    justify-content: center;
     cursor: pointer;
   }
 }

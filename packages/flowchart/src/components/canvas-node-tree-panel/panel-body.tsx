@@ -209,13 +209,7 @@ export const NodePanelBody: React.FC<IBodyProps> = (props) => {
   return (
     <React.Fragment>
       {/* <div className={`${prefixClz}-body`} style={props.style}> */}
-      <div
-        className={`${prefixClz}-body`}
-        style={{
-          position: 'absolute',
-          paddingTop: 48,
-        }}
-      >
+      <div className={`${prefixClz}-body`}>
         {!state.keyword && renderTree(state.treeData)}
         {state.searchList.length > 0 && (
           <ul className={`${prefixClz}-body-list`}>
