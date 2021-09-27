@@ -2,7 +2,7 @@
  * 节点面板
  * 内置多种节点，同时提供用户注册机制
  * ```ts
- * nodePanelConfig: {
+ * nodePanelProps: {
  *  registerNode:{
  *   nodes: [
  *     {
@@ -25,7 +25,7 @@ import { NODE_HEIGHT, NODE_WIDTH, NODEPOOL, SUFFIX } from './constants';
 import * as NodeComponents from './nodes';
 export { searchService, onNodeDrop } from './service';
 
-import { FlowchartConfig } from '../../interface';
+import { FlowchartProps } from '../../interface';
 
 export { NodeComponents, NODE_HEIGHT, NODE_WIDTH, AppContext };
 
@@ -64,8 +64,7 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
 };
 
 export const getregisterNode = () => {
-  const { registerNode } =
-    (getProps('nodePanelConfig') as FlowchartConfig['nodePanelConfig']) ?? {};
+  const { registerNode } = (getProps('nodePanelProps') as FlowchartProps['nodePanelProps']) ?? {};
 
   return (registerNode?.nodes || []).map((item) => {
     const { name, popover, label = '', width = NODE_HEIGHT, height = NODE_HEIGHT, ports } = item;
@@ -79,6 +78,7 @@ export const getregisterNode = () => {
       width,
       height,
       ports: ports || getPorts(),
+      originData: { ...item },
     };
   });
 };
@@ -106,10 +106,10 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async () => {
 
 export const setNodeRender = (
   config: GraphConfig,
-  nodePanelConfig: FlowchartConfig['nodePanelConfig'],
+  nodePanelProps: FlowchartProps['nodePanelProps'],
 ) => {
   // 自定义节点
-  const { registerNode } = nodePanelConfig ?? {};
+  const { registerNode } = nodePanelProps ?? {};
   const nodes = registerNode?.nodes || [];
   if (nodes.length) {
     nodes.forEach((item) => {

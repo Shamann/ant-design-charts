@@ -27,9 +27,17 @@ export const NodeTreePanelMain: React.FC<IProps> = (props) => {
 };
 
 export const NodeTreePanel: React.FC<IProps> = (props) => {
+  const { show = true } = props;
+  if (!show) {
+    return null;
+  }
   const prefixClz = useXflowPrefixCls('node-panel');
   return (
-    <WorkspacePanel {...props} className={prefixClz}>
+    <WorkspacePanel
+      position={{ width: 240, top: 0, bottom: 0, left: 0 }}
+      className={prefixClz}
+      {...props}
+    >
       <NodeTreePanelMain {...props} prefixClz={prefixClz} />
     </WorkspacePanel>
   );

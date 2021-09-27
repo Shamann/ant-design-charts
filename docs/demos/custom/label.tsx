@@ -4,9 +4,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 const InputComponent: React.FC<any> = (props) => {
   const { config, plugin = {} } = props;
-  const { placeholder, disabled, data } = config;
+  const { placeholder, disabled } = config;
   const { updateEdge } = plugin;
-  const [label, setLabel] = useState<string>(data?.label);
+  const [label, setLabel] = useState<string>(config?.label);
 
   const onLabelChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
@@ -16,7 +16,7 @@ const InputComponent: React.FC<any> = (props) => {
   };
 
   useEffect(() => {
-    setLabel(data?.label);
+    setLabel(config?.label);
   }, [config]);
 
   return (

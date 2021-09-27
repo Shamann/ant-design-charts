@@ -18,16 +18,28 @@ import { setProps } from '../util';
 import AppContext from '../context';
 import { useGraphConfig, useGraphHook } from './service';
 
-import { FlowchartConfig } from '../interface';
+import { FlowchartProps } from '../interface';
 
 import './index.less';
 
-const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { theme = 'light', detailPanelConfig, className, toolbarPanelConfig, data } = props;
+const Flowchart: React.FC<FlowchartProps> = (props) => {
+  const {
+    className,
+    style,
+    theme = 'light',
+    detailPanelProps,
+    toolbarPanelProps,
+    nodePanelProps,
+    scaleToolbarPanelProps,
+    contextMenuPanelProps,
+    data,
+  } = props;
   setProps(props);
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
   const hookConfig = useGraphHook();
+  const { show = true } = scaleToolbarPanelProps ?? {};
+  const { show: showMenu = true } = contextMenuPanelProps ?? {};
 
   const loadData = async (app: FrontendApplication) => {
     if (data) {
@@ -48,23 +60,28 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
     <AppContext.Provider value={{ theme: Theme[theme] }}>
       <XFlow
         className={className}
+        style={style}
         hookConfig={hookConfig}
         onAppReadyCallback={async (app, registry) => {
+          console.log(app);
+
           loadData(app);
         }}
       >
-        <ToolbarPanel {...toolbarPanelConfig} />
+        <ToolbarPanel {...toolbarPanelProps} />
         <NodeTreePanel
           searchService={searchService}
           treeDataService={treeDataService}
           onNodeDrop={onNodeDrop}
-          position={{ width: 240, top: 0, bottom: 0, left: 0 }}
+          {...nodePanelProps}
         />
         <XFlowCanvas config={graphConfig} position={{ top: 40, left: 240, right: 240, bottom: 0 }}>
-          <CanvasScaleToolbar position={{ top: 12, left: 12 }} />
-          <ContextMenuPanel config={menuConfig} />
+          {show && (
+            <CanvasScaleToolbar position={{ top: 12, left: 12 }} {...scaleToolbarPanelProps} />
+          )}
+          {showMenu && <ContextMenuPanel config={menuConfig} />}
         </XFlowCanvas>
-        <FormPanel {...detailPanelConfig} />
+        <FormPanel {...detailPanelProps} />
       </XFlow>
     </AppContext.Provider>
   );

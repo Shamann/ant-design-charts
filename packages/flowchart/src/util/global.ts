@@ -1,4 +1,4 @@
-import { FlowchartConfig } from '../interface';
+import { FlowchartProps } from '../interface';
 
 // 解决 xflow hooks 获取不到上层配置
 export const globalProps = {
@@ -6,7 +6,7 @@ export const globalProps = {
 };
 
 /** 设置全局状态 */
-export const setProps = (props: FlowchartConfig) => {
+export const setProps = (props: FlowchartProps) => {
   globalProps.config = props;
 };
 

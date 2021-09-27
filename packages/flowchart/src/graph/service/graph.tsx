@@ -101,10 +101,10 @@ export const useGraphHook = createHookConfig((config) => {
 
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config, getProps) => {
-  const { nodePanelConfig } = getProps();
+  const { nodePanelProps } = getProps();
   config.setEdgeTypeParser((edge) => edge?.renderKey as string);
   registerEdge(config);
-  setNodeRender(config, nodePanelConfig);
+  setNodeRender(config, nodePanelProps);
   config.setX6Config({
     grid: true,
     resizing: {

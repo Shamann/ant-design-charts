@@ -23,15 +23,15 @@ import { formSchemaService, controlMapService } from './service';
 import { CustomNode } from './node';
 
 /** 注册icon 类型 */
-const registerIcon = () => {
-  IconStore.set('SaveOutlined', SaveOutlined);
-  IconStore.set('RollbackOutlined', RollbackOutlined);
-  IconStore.set('RedoOutlined', RedoOutlined);
-  IconStore.set('BackwardOutlined', BackwardOutlined);
-  IconStore.set('ForwardOutlined', ForwardOutlined);
-};
+// const registerIcon = () => {
+//   IconStore.set('SaveOutlined', SaveOutlined);
+//   IconStore.set('RollbackOutlined', RollbackOutlined);
+//   IconStore.set('RedoOutlined', RedoOutlined);
+//   IconStore.set('BackwardOutlined', BackwardOutlined);
+//   IconStore.set('ForwardOutlined', ForwardOutlined);
+// };
 
-registerIcon();
+// registerIcon();
 
 const DemoArea: React.FC = () => {
   const [mode, setMode] = useState('edit');
@@ -50,7 +50,7 @@ const DemoArea: React.FC = () => {
         onSaveData={(d) => {
           console.log(d);
         }}
-        // popoverConfig={{
+        // popoverProps={{
         //   title: () => {
         //     return <div>title</div>;
         //   },
@@ -59,38 +59,41 @@ const DemoArea: React.FC = () => {
         //   },
         //   // antd/popover 额外配置
         // }}
-        // nodeConfig={{
-        //   registerNode: {
-        //     nodes: [
-        //       {
-        //         component: CustomNode,
-        //         popover: () => <div>节点1</div>,
-        //         name: 'custom-node',
-        //         width: 60,
-        //         height: 40,
-        //         label: '节点1',
-        //       },
-        //     ],
-        //   },
-        // }}
-        // toolbarPanelConfig={{
-        //   commands: [
-        //     {
-        //       command: 'redo-cmd',
-        //       text: '重做',
-        //       iconName: 'RedoOutlined',
-        //     },
-        //     {
-        //       command: 'undo-cmd',
-        //       text: '撤销',
-        //     },
-        //     {
-        //       command: 'save-graph-data',
-        //       text: '保存',
-        //     },
-        //   ],
-        // }}
-        detailPanelConfig={{
+        nodePanelProps={{
+          registerNode: {
+            nodes: [
+              {
+                component: CustomNode,
+                popover: () => <div>节点1</div>,
+                name: 'custom-node',
+                width: 60,
+                height: 40,
+                label: '节点1',
+                data1: {
+                  name: '小王',
+                },
+              },
+            ],
+          },
+        }}
+        toolbarPanelProps={{
+          commands: [
+            {
+              command: 'redo-cmd',
+              // text: '重做',
+              icon: RedoOutlined,
+            },
+            {
+              command: 'undo-cmd',
+              text: '撤销',
+            },
+            {
+              command: 'save-graph-data',
+              text: '保存',
+            },
+          ],
+        }}
+        detailPanelProps={{
           controlMapService,
           formSchemaService,
           position: { width: 240, top: 0, bottom: 0, right: 0 },

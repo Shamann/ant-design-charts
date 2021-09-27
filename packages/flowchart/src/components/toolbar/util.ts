@@ -1,4 +1,4 @@
-import { createToolbarConfig } from '@ali/xflow';
+import { createToolbarConfig, uuidv4 } from '@ali/xflow';
 import {
   XFlowNodeCommands,
   XFlowGraphCommands,
@@ -8,10 +8,12 @@ import {
   ICommandConfig,
   IToolbarItemProps,
   NsGraphCmd,
+  IconStore,
 } from '@ali/xflow';
 
 import { getProps } from '../../util';
 import { CommandPool } from './constants';
+import { CommandItem } from '../../interface';
 
 export namespace TOOLBAR_ITEMS {
   export const BACK_NODE = XFlowNodeCommands.BACK_NODE.id;
@@ -22,7 +24,7 @@ export namespace TOOLBAR_ITEMS {
 }
 
 export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
-  const {
+  let {
     commands = [
       {
         command: CommandPool.REDO_CMD,
@@ -45,16 +47,31 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         text: '保存',
       },
     ],
-  } = getProps('toolbarPanelConfig') ?? {};
+  } = getProps('toolbarPanelProps') ?? {};
+
+  const registerIcon = () => {
+    commands = commands.map((item: CommandItem) => {
+      const { icon } = item;
+      if (icon) {
+        const iconName = uuidv4();
+        IconStore.set(iconName, icon);
+        return {
+          ...item,
+          iconName,
+        };
+      }
+      return { ...item };
+    });
+  };
+
+  registerIcon();
 
   const getIconName = (commandName: string) => {
     if (!Object.values(CommandPool).includes(commandName)) {
       console.warn(`unknown command: ${commandName}`);
       return {};
     }
-    return commands.find(
-      (item: { command: string; iconName: string }) => item.command === commandName,
-    );
+    return commands.find((item: CommandItem) => item.command === commandName);
   };
 
   /** 生产 toolbar item */
@@ -105,9 +122,9 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         return {
           args: {
             saveGraphDataService: (meta, graphData) => {
-              const onSaveData = getProps('onSaveData');
-              if (onSaveData) {
-                onSaveData(graphData);
+              const onSave = getProps('onSave');
+              if (onSave) {
+                onSave(graphData);
               }
             },
           },

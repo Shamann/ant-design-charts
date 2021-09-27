@@ -25,7 +25,8 @@ export interface INodeFactoryArgs {
 }
 
 export interface IProps extends Partial<IPanelProps> {
-  position: IPosition;
+  show?: boolean;
+  position?: IPosition;
   config?: PanelConfig;
   style?: React.CSSProperties;
   prefixClz?: string;

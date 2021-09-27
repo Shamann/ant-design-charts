@@ -6,7 +6,7 @@ import { ITreeNode } from '../../canvas-node-tree-panel/interface';
 
 export const withPopover =
   (props: NsGraphConfig.INodeProps<any>) => (WrappedComponent: NsGraphConfig.INodeRender) => {
-    const { content, title, extra } = getProps('popoverConfig') ?? {};
+    const { content, title, extra } = getProps('popoverProps') ?? {};
     const { data } = props;
 
     if (!content) {

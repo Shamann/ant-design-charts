@@ -72,8 +72,8 @@ export const FormWrapper: React.FC<IControlProps & IFormWrapper & { type: string
 
   return (
     <FormItemWrapper schema={controlSchema}>
-      {(config) => {
-        return children({ ...config, ...controlSchema, data }, { updateNode, updateEdge });
+      {() => {
+        return children({ ...(data as object) }, { updateNode, updateEdge });
       }}
     </FormItemWrapper>
   );

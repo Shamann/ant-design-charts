@@ -18,6 +18,7 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
                 shape: 'custom-rename',
                 placeholder: 'rename',
                 disabled: false,
+                a: 1,
               },
             ],
           },

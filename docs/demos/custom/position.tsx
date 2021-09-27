@@ -1,17 +1,16 @@
 import { FormWrapper } from '@ant-design/charts';
 import { InputNumber } from 'antd';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const PositionComponent: React.FC<any> = (props) => {
   const { config, plugin = {} } = props;
-  const { data } = config;
   const { updateNode } = plugin;
 
-  const [x, setX] = useState<string>(data?.x);
-  const [y, setY] = useState<string>(data?.y);
+  const [x, setX] = useState<string>(config?.x);
+  const [y, setY] = useState<string>(config?.y);
   useEffect(() => {
-    setX(data?.x);
-    setY(data?.y);
+    setX(config?.x);
+    setY(config?.y);
   }, [config]);
 
   return (
