@@ -45,7 +45,7 @@ const DemoArea: React.FC = () => {
   return (
     <div style={{ height: 600 }}>
       <Flowchart
-        // data={data}
+        data={data}
         mode={mode}
         onSaveData={(d) => {
           console.log(d);
@@ -58,22 +58,23 @@ const DemoArea: React.FC = () => {
         //     return <div>123</div>;
         //   },
         //   // antd/popover 额外配置
-        //   extra: {},
         // }}
-        // registerNode={{
-        //   nodes: [
-        //     {
-        //       component: CustomNode,
-        //       popover: () => <div>节点1</div>,
-        //       name: 'custom-node',
-        //       width: 60,
-        //       height: 40,
-        //       label: '节点1',
-        //     },
-        //   ],
+        // nodeConfig={{
+        //   registerNode: {
+        //     nodes: [
+        //       {
+        //         component: CustomNode,
+        //         popover: () => <div>节点1</div>,
+        //         name: 'custom-node',
+        //         width: 60,
+        //         height: 40,
+        //         label: '节点1',
+        //       },
+        //     ],
+        //   },
         // }}
-        // toolbarConfig={{
-        //   config: [
+        // toolbarPanelConfig={{
+        //   commands: [
         //     {
         //       command: 'redo-cmd',
         //       text: '重做',
@@ -86,13 +87,10 @@ const DemoArea: React.FC = () => {
         //     {
         //       command: 'save-graph-data',
         //       text: '保存',
-        //       callback: (graphData) => {
-        //         console.log(graphData);
-        //       },
         //     },
         //   ],
         // }}
-        editorPanelConfig={{
+        detailPanelConfig={{
           controlMapService,
           formSchemaService,
           position: { width: 240, top: 0, bottom: 0, right: 0 },

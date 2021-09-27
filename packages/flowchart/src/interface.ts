@@ -1,21 +1,14 @@
 import {
-  CommandConfig as XFlowCommandConfig,
-  ContextConfig as XFlowContextConfig,
-  IAppReadyCallback,
   GraphConfig,
-  IConfigReadyCallback,
   GraphCommandRegistry,
   ContextRegistry,
   NsGraph,
-  GraphPluginConfig,
   IPosition,
   NsGraphConfig,
+  NsConfigFormPanel,
+  IToolbarLayout,
 } from '@ali/xflow';
-import { NsConfigFormPanel } from '@ali/xflow';
-import { IProps as ToolbarConfig } from '@ali/xflow/es/toolbar-panel/components';
-// import { GraphPluginConfig } from '@ali/xflow/es/graph-plugin-module/config';
-import { FrontendApplication } from '@ali/xflow/es/xflow-main/application';
-import { ExtensionRegistry } from '@ali/xflow/es/xflow-main/components/extension-registry';
+import { PopoverProps as AntDPopoverConfig } from 'antd/es/popover';
 
 export interface FlowchartContainerConfig {
   style?: React.CSSProperties;
@@ -30,12 +23,31 @@ export type Datum = {
   egdes?: unknown[];
 };
 
-export type CommandConfig = XFlowCommandConfig | Array<{ command: Command; text?: string }>;
+export interface CustomNode {
+  name: string;
+  component: NsGraphConfig.INodeRender<any>;
+  popover?: React.Component<any>;
+  label?: string;
+  width?: number;
+  height?: number;
+  ports?: NsGraph.INodeConfig['ports'];
+  [key: string]: unknown;
+}
 
-export type ContextConfig = XFlowContextConfig;
+export interface RegisterNode {
+  nodes: CustomNode[];
+}
+
+export interface NodePanelConfig {
+  style?: React.CSSProperties;
+  className?: string;
+  /** 自定义节点 */
+  registerNode?: RegisterNode;
+  /** 节点位置 */
+  position?: IPosition;
+}
 
 export type Command = 'undo-cmd' | 'redo-cmd' | 'front-node' | 'back-node' | 'save-graph-data';
-
 export type CommandItem = {
   /** 命令 */
   command: Command;
@@ -44,14 +56,23 @@ export type CommandItem = {
   /** icon */
   iconName?: string;
 };
-
-export interface ToolbarPanelConfig extends Omit<ToolbarConfig, 'config'> {
-  config?: ToolbarConfig['config'] | Array<CommandItem>;
+export interface ToolbarPanelConfig {
+  commands?: CommandItem[];
+  position?: IPosition;
+  layout?: IToolbarLayout;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
-export interface EditorPanelConfig {
+export interface ScaleToolbarPanelConfig {
+  position?: IPosition;
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export interface DetailPanelConfig {
   controlMapService: (editorMap: NsConfigFormPanel.IControlMap) => NsConfigFormPanel.IControlMap;
-  panelService: Promise<
+  formSchemaService: Promise<
     (args: {
       values: Record<string, any>;
       currentNode: NsGraph.INodeConfig | null;
@@ -60,20 +81,25 @@ export interface EditorPanelConfig {
     }) => NsConfigFormPanel.ISchema
   >;
   position?: IPosition;
+  style?: React.CSSProperties;
+  prefixClz?: string;
+  className?: string;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+  footerText?: string;
+  headerText?: string;
 }
 
-export interface CustomNode {
-  name: string;
-  component: NsGraphConfig.INodeRender<any>;
-  popover?: React.Component<any>;
-  label?: string;
-  width?: number;
-  height?: number;
-  ports?: any;
+export interface GraphEvents {
+  /** 节点点击事件 */
+  handleNodeClick?: (node: NsGraph.INodeConfig) => void;
+  /** 边点击事件 */
+  handleEdgeClick?: (edge: NsGraph.IEdgeConfig) => void;
 }
 
-export interface RegisterNode {
-  nodes: CustomNode[];
+export interface PopoverConfig extends Omit<AntDPopoverConfig, 'title' | 'content'> {
+  title?: (data: NsGraph.INodeConfig) => React.ReactNode;
+  content?: (data: NsGraph.INodeConfig) => React.ReactNode;
 }
 
 // Flowchart 通用配置
@@ -86,17 +112,18 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
   mode: 'edit' | 'scan';
   /** 点击回调，仅支持 save-graph-data */
   onSaveData?: (data: Datum) => void;
-  /** 自定义节点 */
-  registerNode: RegisterNode;
+  /** 节点面板配置 */
+  nodePanelConfig?: NodePanelConfig;
   /** toolbar */
-  toolbarConfig: ToolbarPanelConfig;
+  toolbarPanelConfig?: ToolbarPanelConfig;
+  /** scale toolbar */
+  scaleToolbarPanelConfig?: ScaleToolbarPanelConfig;
   /** form editor */
-  editorPanelConfig?: EditorPanelConfig;
-
-  /** xflow config */
-  xflowPrefixCls?: string;
+  detailPanelConfig?: DetailPanelConfig;
+  /** 主画布配置 */
   graphConfig?: GraphConfig;
-  graphPluginConfig?: GraphPluginConfig;
-  contextConfig?: ContextConfig;
-  commandConfig?: CommandConfig;
+  /** events */
+  events?: GraphEvents;
+  /** popover */
+  popoverConfig?: PopoverConfig;
 }

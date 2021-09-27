@@ -14,7 +14,6 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
             controls: [
               {
                 label: '重命名',
-                name: 'Tab1-0',
                 /** 使用自定义shape */
                 shape: 'custom-rename',
                 placeholder: 'rename',
@@ -32,7 +31,6 @@ export const formSchemaService: NsConfigFormPanel.IFormSchamaService = async (ar
             controls: [
               {
                 label: 'X',
-                name: 'Tab1-1',
                 /** 使用自定义shape */
                 shape: 'custom-position',
               },

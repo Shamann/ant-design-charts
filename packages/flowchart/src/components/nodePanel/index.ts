@@ -2,7 +2,8 @@
  * 节点面板
  * 内置多种节点，同时提供用户注册机制
  * ```ts
- * registerNode:{
+ * nodePanelConfig: {
+ *  registerNode:{
  *   nodes: [
  *     {
  *       component: CustomNode, // 函数组件
@@ -13,6 +14,7 @@
  *      },
  *     ],
  *   }
+ * }
  * ```
  */
 import { GraphConfig, uuidv4, NsNodeTreePanel } from '@ali/xflow';
@@ -62,8 +64,10 @@ const getPorts = (position = ['top', 'right', 'bottom', 'left']) => {
 };
 
 export const getregisterNode = () => {
-  const { nodes = [] } = (getProps('registerNode') as FlowchartConfig['registerNode']) ?? {};
-  return nodes.map((item) => {
+  const { registerNode } =
+    (getProps('nodePanelConfig') as FlowchartConfig['nodePanelConfig']) ?? {};
+
+  return (registerNode?.nodes || []).map((item) => {
     const { name, popover, label = '', width = NODE_HEIGHT, height = NODE_HEIGHT, ports } = item;
     return {
       parentId: '',
@@ -102,10 +106,11 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async () => {
 
 export const setNodeRender = (
   config: GraphConfig,
-  registerNode: FlowchartConfig['registerNode'],
+  nodePanelConfig: FlowchartConfig['nodePanelConfig'],
 ) => {
   // 自定义节点
-  const { nodes = [] } = registerNode ?? {};
+  const { registerNode } = nodePanelConfig ?? {};
+  const nodes = registerNode?.nodes || [];
   if (nodes.length) {
     nodes.forEach((item) => {
       const { name, component } = item;

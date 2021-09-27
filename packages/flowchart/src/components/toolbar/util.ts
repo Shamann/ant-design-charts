@@ -23,7 +23,7 @@ export namespace TOOLBAR_ITEMS {
 
 export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
   const {
-    config = [
+    commands = [
       {
         command: CommandPool.REDO_CMD,
         text: '重做',
@@ -45,14 +45,14 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
         text: '保存',
       },
     ],
-  } = getProps('toolbarConfig') ?? {};
+  } = getProps('toolbarPanelConfig') ?? {};
 
   const getIconName = (commandName: string) => {
     if (!Object.values(CommandPool).includes(commandName)) {
       console.warn(`unknown command: ${commandName}`);
       return {};
     }
-    return config.find(
+    return commands.find(
       (item: { command: string; iconName: string }) => item.command === commandName,
     );
   };
@@ -184,7 +184,7 @@ export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
   toolbarConfig.setOptions({
     mainGroups: [
       {
-        items: config.map((item: { command: string }) => `xflow:${item.command}`),
+        items: commands.map((item: { command: string }) => `xflow:${item.command}`),
       },
     ],
   });

@@ -5,8 +5,8 @@ import {
   ContextRegistry,
   ContextServiceConstant,
   GraphCommandRegistry,
+  PanelConfig,
 } from '@ali/xflow';
-import { PanelConfig } from '@ali/xflow/es/workspace-panel/module';
 import React from 'react';
 
 export interface IPanelProps {

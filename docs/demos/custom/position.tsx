@@ -25,6 +25,9 @@ const PositionComponent: React.FC<any> = (props) => {
             x: value,
           });
         }}
+        style={{
+          width: 80,
+        }}
       />
       <label>Y: </label>
       <InputNumber
@@ -34,6 +37,9 @@ const PositionComponent: React.FC<any> = (props) => {
           updateNode({
             y: value,
           });
+        }}
+        style={{
+          width: 80,
         }}
       />
     </div>

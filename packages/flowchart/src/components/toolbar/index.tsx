@@ -5,14 +5,13 @@ import { ToolbarPanelConfig } from '../../interface';
 
 export const ToolbarPanel: React.FC<ToolbarPanelConfig> = (props) => {
   const {
-    config,
     layout = 'horizontal',
     position = { top: 0, left: 240, right: 240, bottom: 0 },
     className,
     style,
   } = props;
 
-  const toolbarConfig = !config || config instanceof Array ? useToolbarConfig() : config;
+  const toolbarConfig = useToolbarConfig();
 
   return (
     <XFlowToolbarPanel

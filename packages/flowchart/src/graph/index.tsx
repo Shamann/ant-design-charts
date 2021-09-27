@@ -23,7 +23,7 @@ import { FlowchartConfig } from '../interface';
 import './index.less';
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { theme = 'light', editorPanelConfig, className, toolbarConfig, data, mode } = props;
+  const { theme = 'light', detailPanelConfig, className, toolbarPanelConfig, data, mode } = props;
   setProps(props);
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
@@ -71,7 +71,7 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
           loadData(app);
         }}
       >
-        <ToolbarPanel {...toolbarConfig} />
+        <ToolbarPanel {...toolbarPanelConfig} />
         <NodeTreePanel
           searchService={searchService}
           treeDataService={treeDataService}
@@ -79,10 +79,10 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
           position={{ width: 240, top: 0, bottom: 0, left: 0 }}
         />
         <XFlowCanvas config={graphConfig} position={{ top: 40, left: 240, right: 240, bottom: 0 }}>
-          <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
+          <CanvasScaleToolbar position={{ top: 12, left: 12 }} />
           <ContextMenuPanel config={menuConfig} />
         </XFlowCanvas>
-        <FormPanel {...editorPanelConfig} />
+        <FormPanel {...detailPanelConfig} />
       </XFlow>
     </AppContext.Provider>
   );
