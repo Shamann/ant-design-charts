@@ -23,7 +23,7 @@ import { FlowchartConfig } from '../interface';
 import './index.less';
 
 const Flowchart: React.FC<FlowchartConfig> = (props) => {
-  const { theme = 'light', detailPanelConfig, className, toolbarPanelConfig, data, mode } = props;
+  const { theme = 'light', detailPanelConfig, className, toolbarPanelConfig, data } = props;
   setProps(props);
   const graphConfig = useGraphConfig(props);
   const menuConfig = useMenuConfig();
@@ -43,24 +43,6 @@ const Flowchart: React.FC<FlowchartConfig> = (props) => {
       });
     }
   };
-
-  if (mode === 'scan') {
-    return (
-      <AppContext.Provider value={{ theme: Theme[theme] }}>
-        <XFlow
-          className={className}
-          hookConfig={hookConfig}
-          onAppReadyCallback={async (app, registry) => {
-            loadData(app);
-          }}
-        >
-          <XFlowCanvas config={graphConfig} position={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-            <CanvasScaleToolbar position={{ top: 12, right: 12 }} />
-          </XFlowCanvas>
-        </XFlow>
-      </AppContext.Provider>
-    );
-  }
 
   return (
     <AppContext.Provider value={{ theme: Theme[theme] }}>

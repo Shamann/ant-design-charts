@@ -101,7 +101,7 @@ export const useGraphHook = createHookConfig((config) => {
 
 /**  graphConfig hook  */
 export const useGraphConfig = createGraphConfig((config, getProps) => {
-  const { mode = 'edit', nodePanelConfig } = getProps();
+  const { nodePanelConfig } = getProps();
   config.setEdgeTypeParser((edge) => edge?.renderKey as string);
   registerEdge(config);
   setNodeRender(config, nodePanelConfig);
@@ -224,7 +224,8 @@ export const useGraphConfig = createGraphConfig((config, getProps) => {
       }
     },
   });
-  const isEdit = mode === 'edit';
+  const isEdit = true;
+
   config.setEvents([
     {
       eventName: 'node:click',

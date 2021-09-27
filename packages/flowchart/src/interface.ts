@@ -108,8 +108,6 @@ export interface FlowchartConfig extends FlowchartContainerConfig {
   data?: Datum;
   /** 主题 */
   theme?: 'light' | 'dark';
-  /** 模式 */
-  mode: 'edit' | 'scan';
   /** 点击回调，仅支持 save-graph-data */
   onSaveData?: (data: Datum) => void;
   /** 节点面板配置 */
