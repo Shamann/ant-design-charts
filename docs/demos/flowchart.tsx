@@ -39,7 +39,7 @@ const DemoArea: React.FC = () => {
       <Flowchart
         data={data}
         onSave={(d) => {
-          console.log(d);
+          console.log(d, JSON.stringify(d));
         }}
         // popoverProps={{
         //   title: () => {
