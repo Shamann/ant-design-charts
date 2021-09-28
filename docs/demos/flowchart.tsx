@@ -34,20 +34,11 @@ import { CustomNode } from './node';
 // registerIcon();
 
 const DemoArea: React.FC = () => {
-  const [mode, setMode] = useState('edit');
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setMode('scan');
-  //   }, 1000);
-  // }, []);
-
   return (
     <div style={{ height: 600 }}>
       <Flowchart
         data={data}
-        mode={mode}
-        onSaveData={(d) => {
+        onSave={(d) => {
           console.log(d);
         }}
         // popoverProps={{
@@ -59,45 +50,45 @@ const DemoArea: React.FC = () => {
         //   },
         //   // antd/popover 额外配置
         // }}
-        nodePanelProps={{
-          registerNode: {
-            nodes: [
-              {
-                component: CustomNode,
-                popover: () => <div>节点1</div>,
-                name: 'custom-node',
-                width: 60,
-                height: 40,
-                label: '节点1',
-                data1: {
-                  name: '小王',
-                },
-              },
-            ],
-          },
-        }}
-        toolbarPanelProps={{
-          commands: [
-            {
-              command: 'redo-cmd',
-              // text: '重做',
-              icon: RedoOutlined,
-            },
-            {
-              command: 'undo-cmd',
-              text: '撤销',
-            },
-            {
-              command: 'save-graph-data',
-              text: '保存',
-            },
-          ],
-        }}
-        detailPanelProps={{
-          controlMapService,
-          formSchemaService,
-          position: { width: 240, top: 0, bottom: 0, right: 0 },
-        }}
+        // nodePanelProps={{
+        //   registerNode: {
+        //     nodes: [
+        //       {
+        //         component: CustomNode,
+        //         popover: () => <div>节点1</div>,
+        //         name: 'custom-node',
+        //         width: 60,
+        //         height: 40,
+        //         label: '节点1',
+        //         data1: {
+        //           name: '小王',
+        //         },
+        //       },
+        //     ],
+        //   },
+        // }}
+        // toolbarPanelProps={{
+        //   commands: [
+        //     {
+        //       command: 'redo-cmd',
+        //       // text: '重做',
+        //       icon: RedoOutlined,
+        //     },
+        //     {
+        //       command: 'undo-cmd',
+        //       text: '撤销',
+        //     },
+        //     {
+        //       command: 'save-graph-data',
+        //       text: '保存',
+        //     },
+        //   ],
+        // }}
+        // detailPanelProps={{
+        //   controlMapService,
+        //   formSchemaService,
+        //   position: { width: 240, top: 0, bottom: 0, right: 0 },
+        // }}
       />
     </div>
   );

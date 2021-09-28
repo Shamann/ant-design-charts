@@ -11,19 +11,18 @@ export const ConnectorNode: NsGraphConfig.INodeRender = (props) => {
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
+  const availableR = height - 2 * NODE_PADDING;
 
   return (
     <div style={{ width, height, textAlign: 'center' }}>
       <svg width={height} height={height}>
-        <circle
-          cx={height / 2}
-          cy={height / 2}
-          r={height / 2 - NODE_PADDING}
+        <path
+          d={`M ${NODE_PADDING},${height / 2} a ${availableR / 2} ${availableR / 2} 0 1 1 0 1 z`}
+          fill={stateNodeConfig.fill}
+          stroke={stateNodeConfig.stroke}
           style={{
             fill: '#fff',
-            filter: 'url(#shadow)',
           }}
-          stroke={stateNodeConfig.stroke}
         />
         <text
           x={height / 2}

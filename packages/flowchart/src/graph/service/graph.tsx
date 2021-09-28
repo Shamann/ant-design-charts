@@ -12,7 +12,7 @@ import {
   IEvent,
 } from '@ali/xflow';
 import { Edge, Shape } from '@antv/x6';
-import { NODE_HEIGHT, setNodeRender } from '../../components/nodePanel';
+import { NODE_HEIGHT, setNodeRender, ASPECTRATIONODE } from '../../components/nodePanel';
 
 import { registerEdge, DefaultEdgeConfig } from '../../components/edgePanel/index';
 import { movedNode, resizeNode, changePortsVisible, setEdgeSelected } from './events';
@@ -113,7 +113,7 @@ export const useGraphConfig = createGraphConfig((config, getProps) => {
       minHeight: NODE_HEIGHT,
       preserveAspectRatio: (shape) => {
         const { data } = shape;
-        return data?.name === 'custom-circle';
+        return ASPECTRATIONODE.includes(data.name);
       },
     },
     snapline: {

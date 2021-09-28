@@ -2,8 +2,6 @@
 export const NODE_WIDTH = 60;
 export const NODE_HEIGHT = 40;
 
-export const SUFFIX = 'Node';
-
 // svg 绘制起始点，解决边不清晰的问题
 export const NODE_PADDING = 1;
 
@@ -58,4 +56,32 @@ export const NODEPOOL = [
   {
     name: 'Manual Input',
   },
+  {
+    name: 'Preparation',
+  },
+  {
+    name: 'Delay',
+  },
+  {
+    name: 'Manual Operation',
+  },
+  {
+    name: 'Display',
+  },
+  {
+    name: 'Off Page Link',
+  },
+  {
+    name: 'Note Left',
+    label: '≣',
+  },
+  {
+    name: 'Note Right',
+    label: '≣',
+  },
+  {
+    name: 'Internal Storage',
+  },
 ];
+// 缩放时保存同比例
+export const ASPECTRATIONODE = ['Connector', 'Or'];

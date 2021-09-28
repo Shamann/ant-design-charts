@@ -49,7 +49,6 @@ export const MultiDocumentNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
       <path
@@ -57,7 +56,6 @@ export const MultiDocumentNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
       <text

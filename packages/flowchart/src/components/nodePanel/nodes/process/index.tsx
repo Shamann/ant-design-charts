@@ -29,10 +29,10 @@ export const ProcessNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
-      <text
+      <span>{data.label}</span>
+      {/* <text
         x={width / 2}
         y={height / 2}
         fill={stateLabelConfig.fill}
@@ -40,7 +40,7 @@ export const ProcessNode: NsGraphConfig.INodeRender = (props) => {
         alignmentBaseline="middle"
       >
         {data?.label}
-      </text>
+      </text> */}
       Sorry, your browser does not support inline SVG.
     </svg>
   );

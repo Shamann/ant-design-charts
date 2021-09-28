@@ -21,13 +21,13 @@ import { GraphConfig, uuidv4, NsNodeTreePanel } from '@ali/xflow';
 import { getProps } from '../../util';
 import AppContext from '../../context';
 import { withPopover } from './withPopover';
-import { NODE_HEIGHT, NODE_WIDTH, NODEPOOL, SUFFIX } from './constants';
+import { NODE_HEIGHT, NODE_WIDTH, NODEPOOL, ASPECTRATIONODE } from './constants';
 import * as NodeComponents from './nodes';
 export { searchService, onNodeDrop } from './service';
 
 import { FlowchartProps } from '../../interface';
 
-export { NodeComponents, NODE_HEIGHT, NODE_WIDTH, AppContext };
+export { NodeComponents, NODE_HEIGHT, NODE_WIDTH, AppContext, ASPECTRATIONODE };
 
 /** 和 graph config 注册的节点保持一致 */
 const getAnchorStyle = (position: string) => {
@@ -88,13 +88,14 @@ export const treeDataService: NsNodeTreePanel.ITreeDataService = async () => {
 
   return [
     ...customNodes,
-    ...NODEPOOL.map(({ name, ports, width = NODE_WIDTH, height = NODE_HEIGHT }) => {
+    ...NODEPOOL.map(({ name, ports, width = NODE_WIDTH, height = NODE_HEIGHT, label = '' }) => {
       return {
         parentId: '',
         id: name, // 不会被使用
         renderKey: name,
-        name: `${name.replace(/\s+/g, '-')}-${SUFFIX}`,
-        label: '',
+        // name: `${name.replace(/\s+/g, '-')}`,
+        name,
+        label,
         popoverContent: () => name,
         width,
         height,

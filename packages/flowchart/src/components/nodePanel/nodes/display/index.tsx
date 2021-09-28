@@ -4,7 +4,7 @@ import { AppContext } from '../../index';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
-export const DataIONode: NsGraphConfig.INodeRender = (props) => {
+export const DisplayNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },
@@ -12,19 +12,34 @@ export const DataIONode: NsGraphConfig.INodeRender = (props) => {
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
-
-  const slope = height / 2; // 用于计算斜率 tan(&) =  slope / height
-
+  const sx = Math.min(height, width) / 3;
+  const dx = Math.min(Math.tan(Math.PI / 6) * (height / 2), width / 3);
   const path = [
-    ['M', slope - NODE_PADDING, NODE_PADDING], // top-left
-    ['L', width - 2 * NODE_PADDING, NODE_PADDING], // top-right
-    ['L', width - slope, height - 2 * NODE_PADDING], // bottom-right
-    ['L', NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
+    ['M', dx, NODE_PADDING], // top-left
+    ['L', width - sx, NODE_PADDING], // top-right
+    ['C', width - 2 * NODE_PADDING, NODE_PADDING, width - 2 * NODE_PADDING, height / 2],
+    ['', width - 2 * NODE_PADDING, height / 2],
+    [
+      'C',
+      width - 2 * NODE_PADDING,
+      height / 2,
+      width - 2 * NODE_PADDING,
+      height - 2 * NODE_PADDING,
+    ],
+    ['', width - sx, height - 2 * NODE_PADDING], // bottom-right
+    ['L', dx, height - 2 * NODE_PADDING], // bottom-left
+    ['L', NODE_PADDING, height / 2],
     ['Z'],
   ];
 
   return (
-    <svg width={width} height={height}>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      // viewBox={`0 0 40 30`}
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+    >
       <path
         d={createPath(path)}
         fill={stateNodeConfig.fill}

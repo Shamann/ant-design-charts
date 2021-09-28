@@ -29,7 +29,6 @@ export const ManualInputNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
       <text

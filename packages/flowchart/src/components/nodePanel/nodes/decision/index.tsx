@@ -29,7 +29,6 @@ export const DecisionNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
       <text

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { NsGraphConfig } from '@ali/xflow';
 import { AppContext } from '../../index';
+import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
 export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
@@ -11,6 +12,26 @@ export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
+  const rx = Math.min(height, width) / 2;
+  const path = [
+    ['M', rx, NODE_PADDING], // top-left
+    ['L', width - rx, NODE_PADDING], // top-right
+    ['C', width - 2 * NODE_PADDING, NODE_PADDING, width - 2 * NODE_PADDING, height / 2],
+    ['', width - 2 * NODE_PADDING, height / 2],
+    [
+      'C',
+      width - 2 * NODE_PADDING,
+      height / 2,
+      width - 2 * NODE_PADDING,
+      height - 2 * NODE_PADDING,
+    ],
+    ['', width - rx, height - 2 * NODE_PADDING], // bottom-right
+    ['L', rx, height - 2 * NODE_PADDING], // bottom-left
+    ['C', NODE_PADDING, height - 2 * NODE_PADDING, NODE_PADDING, height / 2],
+    ['', NODE_PADDING, height / 2],
+    ['C', NODE_PADDING, height / 2, NODE_PADDING, NODE_PADDING],
+    ['', rx, NODE_PADDING],
+  ];
 
   return (
     <svg
@@ -21,23 +42,17 @@ export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
       height={height}
     >
       {/* 一次注册，多次调用 */}
-      <defs>
+      {/* <defs>
         <filter id="shadow">
           <feDropShadow dx="0" dy="0" stdDeviation="0.5" floodColor="#fff" />
         </filter>
-      </defs>
-      <rect
-        x={NODE_PADDING}
-        y={NODE_PADDING}
-        rx={height / 2}
-        ry={height / 2}
-        width={width - 2 * NODE_PADDING}
-        height={height - 2 * NODE_PADDING}
+      </defs> */}
+      <path
+        d={createPath(path)}
         fill={stateNodeConfig.fill}
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
       <text

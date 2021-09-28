@@ -14,13 +14,20 @@ export const PredefinedProcessNode: NsGraphConfig.INodeRender = (props) => {
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
   const struckOffset = width / 8;
-  const struckWidth = 1;
   const path = [
     ['M', NODE_PADDING, NODE_PADDING], // top-left
     ['L', width - 2 * NODE_PADDING, NODE_PADDING], // top-right
     ['L', width - 2 * NODE_PADDING, height - 2 * NODE_PADDING], // bottom-right
     ['L', NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
     ['Z'],
+  ];
+  const path1 = [
+    ['M', struckOffset, NODE_PADDING],
+    ['L', struckOffset, height - 2 * NODE_PADDING],
+  ];
+  const path2 = [
+    ['M', width - struckOffset, NODE_PADDING], // left-center
+    ['L', width - struckOffset, height - 2 * NODE_PADDING], // right-center
   ];
 
   return (
@@ -31,23 +38,10 @@ export const PredefinedProcessNode: NsGraphConfig.INodeRender = (props) => {
         stroke={stateNodeConfig.stroke}
         style={{
           fill: '#fff',
-          filter: 'url(#shadow)',
         }}
       />
-      <rect
-        x={struckOffset}
-        y={NODE_PADDING}
-        width={struckWidth}
-        height={height - 2 * NODE_PADDING}
-        fill={stateNodeConfig.stroke}
-      />
-      <rect
-        x={width - struckOffset}
-        y={NODE_PADDING}
-        width={struckWidth}
-        height={height - 2 * NODE_PADDING}
-        fill={stateNodeConfig.stroke}
-      />
+      <path d={createPath(path1)} stroke={stateNodeConfig.stroke} />
+      <path d={createPath(path2)} stroke={stateNodeConfig.stroke} />
       <text
         x={width / 2}
         y={height / 2}

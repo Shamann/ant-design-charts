@@ -4,7 +4,7 @@ import { AppContext } from '../../index';
 import { createPath } from '../../util';
 import { NODE_WIDTH, NODE_HEIGHT, NODE_PADDING } from '../../constants';
 
-export const DataIONode: NsGraphConfig.INodeRender = (props) => {
+export const PreparationNode: NsGraphConfig.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data } = props;
   const {
     theme: { NodeConfig, LabelConfig },
@@ -12,14 +12,14 @@ export const DataIONode: NsGraphConfig.INodeRender = (props) => {
   const stateNodeConfig = NodeConfig?.normal;
   const stateLabelConfig = LabelConfig?.normal;
   const { width, height } = size;
-
-  const slope = height / 2; // 用于计算斜率 tan(&) =  slope / height
-
+  const rx = Math.tan(Math.PI / 6) * (height / 2);
   const path = [
-    ['M', slope - NODE_PADDING, NODE_PADDING], // top-left
-    ['L', width - 2 * NODE_PADDING, NODE_PADDING], // top-right
-    ['L', width - slope, height - 2 * NODE_PADDING], // bottom-right
-    ['L', NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
+    ['M', rx, NODE_PADDING], // top-left
+    ['L', width - rx, NODE_PADDING], // top-right
+    ['L', width - 2 * NODE_PADDING, height / 2],
+    ['L', width - rx, height - 2 * NODE_PADDING], // bottom-right
+    ['L', rx, height - 2 * NODE_PADDING], // bottom-left
+    ['L', NODE_PADDING, height / 2],
     ['Z'],
   ];
 
