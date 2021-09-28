@@ -34,8 +34,8 @@ export const InternalStorageNode: NsGraphConfig.INodeRender = (props) => {
       viewBox={`0 0 ${width} ${height}`}
       // viewBox={`0 0 40 30`}
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
+      width="100%"
+      height="100%"
     >
       <path
         d={createPath(path)}

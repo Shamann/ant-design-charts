@@ -36,10 +36,9 @@ export const TerminalNode: NsGraphConfig.INodeRender = (props) => {
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
-      // viewBox={`0 0 40 30`}
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
+      width="100%"
+      height="100%"
     >
       {/* 一次注册，多次调用 */}
       {/* <defs>
